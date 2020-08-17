@@ -4,7 +4,7 @@ import * as clubActions from "../../redux/actions/clubActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
-import ClubList from "./clubList";
+import ClubList from "./ClubList";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 

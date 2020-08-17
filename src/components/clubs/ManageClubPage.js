@@ -73,6 +73,7 @@ ManageClubPage.propTypes = {
   clubs: PropTypes.array.isRequired,
   loadClubs: PropTypes.func.isRequired,
   saveClub: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 const getClubById = (clubs, id) => {
