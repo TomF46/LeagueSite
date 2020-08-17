@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import ClubList from "./clubList";
 import { toast } from "react-toastify";
+import { confirmAlert } from "react-confirm-alert";
 
 const ClubsPage = ({ clubs, actions, loading, history }) => {
   useEffect(() => {
@@ -16,7 +17,24 @@ const ClubsPage = ({ clubs, actions, loading, history }) => {
     }
   }, [clubs]);
 
-  const handleDeleteClub = async (club) => {
+  const handleDeleteClub = (club) => {
+    confirmAlert({
+      title: "Confirm deletion",
+      message: `Are you sure you want to delete ${club.name}?`,
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => deleteClub(club),
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
+  };
+
+  const deleteClub = async (club) => {
     toast.success("Club deleted");
     try {
       await actions.deleteClub(club);
