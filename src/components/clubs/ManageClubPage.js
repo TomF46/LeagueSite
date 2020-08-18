@@ -47,7 +47,11 @@ const ManageClubPage = ({ clubs, loadClubs, saveClub, history, ...props }) => {
     saveClub(club)
       .then(() => {
         toast.success("Club saved");
-        history.push("/clubs");
+        if (club.id) {
+          history.push("/club/" + club.id);
+        } else {
+          history.push("/clubs");
+        }
       })
       .catch((err) => {
         setSaving(false);

@@ -57,10 +57,10 @@ const ClubPage = ({
     });
   };
 
-  const deleteSquadOpto = async (club) => {
+  const deleteSquadOpto = async (squad) => {
     toast.success("Squad deleted");
     try {
-      await deleteSquad(club);
+      await deleteSquad(squad);
     } catch (error) {
       toast.error("Delete failed. " + error.message, { autoClose: false });
     }

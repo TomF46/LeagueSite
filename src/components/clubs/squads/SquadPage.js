@@ -1,13 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { newSquad } from "../../../../tools/mockData";
+import { newSquad, newClub } from "../../../../tools/mockData";
 import { loadSquads } from "../../../redux/actions/squadActions";
 import { loadClubs } from "../../../redux/actions/clubActions";
-import { loadPlayers } from "../../../redux/actions/playerActions";
+import {
+  loadPlayers,
+  deletePlayer,
+} from "../../../redux/actions/playerActions";
 import PropTypes from "prop-types";
 import Spinner from "../../common/Spinner";
 import SquadDetail from "./SquadDetail";
 import PlayerList from "./players/PlayerList";
+import { confirmAlert } from "react-confirm-alert";
+import { toast } from "react-toastify";
 
 const SquadPage = ({
   squads,
@@ -19,6 +24,7 @@ const SquadPage = ({
   squadPlayers,
   players,
   loadPlayers,
+  deletePlayer,
   ...props
 }) => {
   const [squad, setSquad] = useState({ ...props.squad });
@@ -52,7 +58,31 @@ const SquadPage = ({
     }
   }, [props.players]);
 
-  const handlePlayerDelete = () => {};
+  const handlePlayerDelete = (player) => {
+    confirmAlert({
+      title: "Confirm deletion",
+      message: `Are you sure you want to delete ${player.firstName} ${player.lastName}?`,
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => deletePlayerOpto(player),
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
+  };
+
+  const deletePlayerOpto = async (player) => {
+    toast.success("Squad deleted");
+    try {
+      await deletePlayer(player);
+    } catch (error) {
+      toast.error("Delete failed. " + error.message, { autoClose: false });
+    }
+  };
 
   return squads.length === 0 ? (
     <Spinner />
@@ -80,7 +110,9 @@ const SquadPage = ({
         <button
           style={{ marginBottom: 20 }}
           className="btn btn-primary add-club"
-          onClick={() => history.push("/club/" + club.id + "/squad")}
+          onClick={() =>
+            history.push("/club/" + club.id + "/squad/" + squad.id + "/player")
+          }
         >
           Add Player
         </button>
@@ -95,11 +127,12 @@ SquadPage.propTypes = {
   clubId: PropTypes.any.isRequired,
   squads: PropTypes.array.isRequired,
   loadSquads: PropTypes.func.isRequired,
-  clubs: PropTypes.object.isRequired,
+  clubs: PropTypes.array.isRequired,
   loadClubs: PropTypes.func.isRequired,
   players: PropTypes.array.isRequired,
   loadPlayers: PropTypes.func.isRequired,
   squadPlayers: PropTypes.array.isRequired,
+  deletePlayer: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };
 
@@ -108,7 +141,7 @@ const getSquadById = (squads, id) => {
 };
 
 const getClubById = (clubs, id) => {
-  return clubs.find((club) => club.id == id);
+  return clubs.find((club) => club.id == id) || null;
 };
 
 const getSquadPlayers = (players, squad) => {
@@ -120,7 +153,8 @@ const mapStateToProps = (state, ownProps) => {
   const squad =
     id && state.squads.length > 0 ? getSquadById(state.squads, id) : newSquad;
   const clubId = ownProps.match.params.clubId;
-  const club = getClubById(state.clubs, clubId);
+  const club =
+    state.clubs.length > 0 ? getClubById(state.clubs, clubId) : newClub;
   const squadPlayers = squad.id ? getSquadPlayers(state.players, squad) : [];
   return {
     clubId,
@@ -137,6 +171,7 @@ const mapDispatchToProps = {
   loadSquads,
   loadClubs,
   loadPlayers,
+  deletePlayer,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SquadPage);
