@@ -17,9 +17,7 @@ const SquadList = ({ squads, onDeleteClick }) => (
           return (
             <tr key={squad.id}>
               <td>
-                <Link
-                  to={"/club/" + squad.clubId + "/squad/" + squad.id + "/edit"}
-                >
+                <Link to={"/club/" + squad.clubId + "/squad/" + squad.id}>
                   {squad.name}
                 </Link>
               </td>

@@ -8,6 +8,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ClubPage from "./clubs/ClubPage";
 import ManageSquadPage from "./clubs/squads/ManageSquadPage";
+import SquadPage from "./clubs/squads/SquadPage";
 
 const App = () => (
   <div className="container-fluid">
@@ -19,6 +20,7 @@ const App = () => (
         path="/club/:clubId/squad/:squadId/edit"
         component={ManageSquadPage}
       />
+      <Route path="/club/:clubId/squad/:squadId" component={SquadPage} />
       <Route path="/club/:clubId/squad/" component={ManageSquadPage} />
       <Route path="/club/:id/edit" component={ManageClubPage} />
       <Route path="/club/:id" component={ClubPage} />
