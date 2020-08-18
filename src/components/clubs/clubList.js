@@ -16,7 +16,7 @@ const ClubList = ({ clubs, onDeleteClick }) => (
         return (
           <tr key={club.id}>
             <td>
-              <Link to={"/club/" + club.id}>{club.name}</Link>
+              <Link to={`/club/${club.id}`}>{club.name}</Link>
             </td>
             <td>{club.location}</td>
             <td>

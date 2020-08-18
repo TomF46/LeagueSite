@@ -64,17 +64,11 @@ const PlayerPage = ({
           className="btn btn-primary add-club"
           onClick={() =>
             history.push(
-              "/club/" +
-                club.id +
-                "/squad/" +
-                squad.id +
-                "/player/" +
-                player.id +
-                "/edit"
+              `/club/${club.id}/squad/${squad.id}/player/${player.id}/edit`
             )
           }
         >
-          Edit {player.firstName + " " + player.lastName}
+          Edit {`${player.firstName} ${player.lastName}W`}
         </button>
         <PlayerDetail player={player} squad={squad} club={club} />
       </>

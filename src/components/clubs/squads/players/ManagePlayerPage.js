@@ -63,11 +63,9 @@ const ManagePlayerPage = ({
         toast.success("Player saved");
         console.log(player);
         if (player.id) {
-          history.push(
-            "/club/" + clubId + "/squad/" + squadId + "/player/" + player.id
-          );
+          history.push(`/club/${clubId}/squad/${squadId}/player/${player.id}`);
         } else {
-          history.push("/club/" + clubId + "/squad/" + squadId);
+          history.push(`/club/${clubId}/squad/${squadId}`);
         }
       })
       .catch((err) => {

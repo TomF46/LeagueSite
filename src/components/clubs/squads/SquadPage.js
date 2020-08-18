@@ -93,9 +93,7 @@ const SquadPage = ({
         <button
           style={{ marginBottom: 20 }}
           className="btn btn-primary add-club"
-          onClick={() =>
-            history.push("/club/" + clubId + "/squad/" + squad.id + "/edit")
-          }
+          onClick={() => history.push(`/club/${clubId}/squad/${squad.id}/edit`)}
         >
           Edit {squad.name}
         </button>
@@ -111,7 +109,7 @@ const SquadPage = ({
           style={{ marginBottom: 20 }}
           className="btn btn-primary add-club"
           onClick={() =>
-            history.push("/club/" + club.id + "/squad/" + squad.id + "/player")
+            history.push(`/club/${club.id}/squad/${squad.id}/player`)
           }
         >
           Add Player

@@ -75,7 +75,7 @@ const ClubPage = ({
         <button
           style={{ marginBottom: 20 }}
           className="btn btn-primary add-club"
-          onClick={() => history.push("/club/" + club.id + "/edit")}
+          onClick={() => history.push(`/club/${club.id}/edit`)}
         >
           Edit {club.name}
         </button>
@@ -87,7 +87,7 @@ const ClubPage = ({
         <button
           style={{ marginBottom: 20 }}
           className="btn btn-primary add-club"
-          onClick={() => history.push("/club/" + club.id + "/squad")}
+          onClick={() => history.push(`/club/${club.id}/squad`)}
         >
           Add Squad
         </button>
