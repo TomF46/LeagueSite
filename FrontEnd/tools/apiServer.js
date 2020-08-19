@@ -46,7 +46,7 @@ server.use((req, res, next) => {
 });
 
 server.get("/squads/", (req, res) => {
-  let results = db.squads.map((squad) => {
+  let results = res.map((squad) => {
     squad.clubName =
       db.clubs.find((club) => club.id == squad.clubId).name || null;
     return squad;
@@ -59,12 +59,37 @@ server.get("/squads/", (req, res) => {
 });
 
 server.get("/players/", (req, res) => {
-  let results = db.players.map((player) => {
+  let results = res.map((player) => {
     player.clubName =
       db.clubs.find((club) => club.id == player.clubId).name || null;
     player.squadName =
       db.squads.find((squad) => squad.id == player.squadId).name || null;
     return player;
+  });
+  if (results) {
+    res.status(200).jsonp(results);
+  } else {
+    res.status(400);
+  }
+});
+
+server.get("/transfers/", (req, res) => {
+  console.log(db);
+  debugger;
+  let results = db.transfers.map((transfer) => {
+    let player = db.players.find((player) => player.id == transfer.playerId);
+    transfer.playerName = `${player.firstName} ${player.lastName}`;
+    let from = db.squads.find((squad) => squad.id == transfer.fromId);
+    let fromSquadName = from.name;
+    let fromClubName =
+      db.clubs.find((club) => club.id == from.clubId).name || null;
+    transfer.fromTeamName = `${fromClubName} ${fromSquadName}`;
+    let to = db.squads.find((squad) => squad.id == transfer.toId);
+    let toSquadName = to.name;
+    let toClubName = db.clubs.find((club) => club.id == to.clubId).name || null;
+    transfer.toTeamName = `${toClubName} ${toSquadName}`;
+
+    return transfer;
   });
   if (results) {
     res.status(200).jsonp(results);

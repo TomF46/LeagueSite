@@ -59,6 +59,21 @@ const leagues = [
   { id: 2, name: "Division 2" },
 ];
 
+const transfers = [
+  {
+    id: 1,
+    playerId: 2,
+    fromId: 3,
+    toId: 4,
+  },
+  {
+    id: 2,
+    playerId: 1,
+    fromId: 1,
+    toId: 4,
+  },
+];
+
 const newClub = {
   id: null,
   name: "",
@@ -86,6 +101,13 @@ const newLeague = {
   name: "",
 };
 
+const newTransfer = {
+  id: null,
+  playerId: null,
+  fromId: null,
+  toId: null,
+};
+
 module.exports = {
   clubs,
   newClub,
@@ -95,4 +117,6 @@ module.exports = {
   newPlayer,
   leagues,
   newLeague,
+  transfers,
+  newTransfer,
 };
