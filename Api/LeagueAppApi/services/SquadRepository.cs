@@ -24,7 +24,7 @@ namespace LeagueAppApi.Services
             return _context.Squads.Include(x => x.Club).FirstOrDefault(x => x.Id == id);
         }
 
-        public int AddSquad(SquadCreationDto squadDto)
+        public Squad AddSquad(SquadCreationDto squadDto)
         {
 
             var parentClub = _context.Clubs.FirstOrDefault(club => club.Id == squadDto.ClubId);
@@ -37,13 +37,18 @@ namespace LeagueAppApi.Services
             };
             _context.Squads.Add(squad);
             _context.SaveChanges();
-            return squad.Id;
+            return squad;
 
         }
 
         public bool Save()
         {
             return (_context.SaveChanges() >= 0);
+        }
+
+        public void DeleteSquad(Squad squad)
+        {
+            _context.Squads.Remove(squad);
         }
     }
 }

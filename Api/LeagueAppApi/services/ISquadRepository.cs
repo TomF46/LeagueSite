@@ -6,8 +6,9 @@ namespace LeagueAppApi.Services
         IEnumerable<Squad> GetAllSquads();
 
         Squad GetSquad(int id);
-        int AddSquad(SquadCreationDto squad);
+        Squad AddSquad(SquadCreationDto squad);
         bool Save();
+        void DeleteSquad(Squad squad);
 
     }
 }

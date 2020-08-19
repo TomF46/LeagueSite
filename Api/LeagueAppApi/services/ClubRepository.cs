@@ -23,7 +23,7 @@ namespace LeagueAppApi.Services
             return _context.Clubs.Include(x => x.Squads).FirstOrDefault(x => x.Id == id);
         }
 
-        public int AddClub(ClubCreationDto clubDto)
+        public Club AddClub(ClubCreationDto clubDto)
         {
             var club = new Club
             {
@@ -32,7 +32,7 @@ namespace LeagueAppApi.Services
             };
             _context.Clubs.Add(club);
             _context.SaveChanges();
-            return club.Id;
+            return club;
         }
 
         public bool Save()
@@ -40,6 +40,9 @@ namespace LeagueAppApi.Services
             return (_context.SaveChanges() >= 0);
         }
 
-
+        public void DeleteClub(Club club)
+        {
+            _context.Clubs.Remove(club);
+        }
     }
 }

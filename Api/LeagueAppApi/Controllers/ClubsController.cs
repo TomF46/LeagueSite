@@ -91,10 +91,10 @@ namespace LeagueAppApi.Controllers
         public ActionResult<Club> PostClub(ClubCreationDto club)
         {
 
-            var createdClubId = _clubRepository.AddClub(club);
+            var createdClub = _clubRepository.AddClub(club);
             if (!_clubRepository.Save()) throw new Exception("Failed to create club");
 
-            return CreatedAtAction("GetClub", new { id = createdClubId }, club);
+            return CreatedAtAction("GetClub", new { id = createdClub.Id }, new ClubSimpleDto { Id = createdClub.Id, Name = createdClub.Name, Location = createdClub.Location });
         }
 
         // DELETE: api/Clubs/5

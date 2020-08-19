@@ -91,24 +91,24 @@ namespace LeagueAppApi.Controllers
         [HttpPost]
         public ActionResult<Squad> PostSquad(SquadCreationDto squad)
         {
-            var createdSquadId = _squadRepository.AddSquad(squad);
+            var savedObject = _squadRepository.AddSquad(squad);
             if (!_squadRepository.Save()) throw new Exception("Failed to create squad");
 
-            return CreatedAtAction("GetSquad", new { id = createdSquadId }, squad);
+            return CreatedAtAction("GetSquad", new { id = savedObject.Id }, new SquadSimpleDto { Id = savedObject.Id, Name = savedObject.Name, ClubId = savedObject.Club.Id });
         }
 
         // DELETE: api/Squads/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Squad>> DeleteSquad(int id)
+        public ActionResult<Squad> DeleteSquad(int id)
         {
-            var squad = await _context.Squads.FindAsync(id);
+            var squad = _squadRepository.GetSquad(id);
             if (squad == null)
             {
                 return NotFound();
             }
 
-            _context.Squads.Remove(squad);
-            await _context.SaveChangesAsync();
+            _squadRepository.DeleteSquad(squad);
+            if (!_squadRepository.Save()) throw new Exception("Failed to delete squad");
 
             return squad;
         }
