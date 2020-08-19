@@ -99,16 +99,16 @@ namespace LeagueAppApi.Controllers
 
         // DELETE: api/Clubs/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Club>> DeleteClub(int id)
+        public ActionResult<Club> DeleteClub(int id)
         {
-            var club = await _context.Clubs.FindAsync(id);
+            var club = _clubRepository.GetClub(id);
             if (club == null)
             {
                 return NotFound();
             }
 
-            _context.Clubs.Remove(club);
-            await _context.SaveChangesAsync();
+            _clubRepository.DeleteClub(club);
+            if (!_clubRepository.Save()) throw new Exception("Failed to delete squad");
 
             return club;
         }
