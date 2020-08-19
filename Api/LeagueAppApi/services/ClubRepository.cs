@@ -44,5 +44,14 @@ namespace LeagueAppApi.Services
         {
             _context.Clubs.Remove(club);
         }
+
+        public void UpdateClub(ClubUpdateDto club)
+        {
+            var clubToUpdate = GetClub(club.Id);
+            clubToUpdate.Name = club.Name;
+            clubToUpdate.Location = club.Location;
+            _context.SaveChanges();
+            return;
+        }
     }
 }

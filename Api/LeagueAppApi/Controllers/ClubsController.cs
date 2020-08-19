@@ -56,32 +56,18 @@ namespace LeagueAppApi.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutClub(int id, Club club)
+        public IActionResult PutClub(ClubUpdateDto club)
         {
-            if (id != club.Id)
-            {
-                return BadRequest();
-            }
+            var productToUpdate = _clubRepository.GetClub(club.Id);
 
-            _context.Entry(club).State = EntityState.Modified;
+            if (productToUpdate == null) return NotFound();
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ClubExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _clubRepository.UpdateClub(club);
 
-            return NoContent();
+            if (!_clubRepository.Save()) throw new Exception("Failed to update club");
+
+            return Ok(club);
+
         }
 
         // POST: api/Clubs

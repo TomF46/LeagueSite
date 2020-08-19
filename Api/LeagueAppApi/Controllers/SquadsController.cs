@@ -57,32 +57,18 @@ namespace LeagueAppApi.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutSquad(int id, Squad squad)
+        public IActionResult PutSquad(SquadUpdateDto squad)
         {
-            if (id != squad.Id)
-            {
-                return BadRequest();
-            }
+            var squadToUpdate = _squadRepository.GetSquad(squad.Id);
 
-            _context.Entry(squad).State = EntityState.Modified;
+            if (squadToUpdate == null) return NotFound();
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!SquadExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            _squadRepository.UpdateSquad(squad);
 
-            return NoContent();
+            if (!_squadRepository.Save()) throw new Exception("Failed to update squad");
+
+            return Ok(squad);
+
         }
 
         // POST: api/Squads

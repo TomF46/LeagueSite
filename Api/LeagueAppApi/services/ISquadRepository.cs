@@ -9,6 +9,7 @@ namespace LeagueAppApi.Services
         Squad AddSquad(SquadCreationDto squad);
         bool Save();
         void DeleteSquad(Squad squad);
+        void UpdateSquad(SquadUpdateDto squad);
 
     }
 }

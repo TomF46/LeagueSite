@@ -9,6 +9,7 @@ namespace LeagueAppApi.Services
         Club AddClub(ClubCreationDto club);
         bool Save();
         void DeleteClub(Club club);
+        void UpdateClub(ClubUpdateDto club);
 
     }
 }

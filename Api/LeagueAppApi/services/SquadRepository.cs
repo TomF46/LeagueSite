@@ -50,5 +50,13 @@ namespace LeagueAppApi.Services
         {
             _context.Squads.Remove(squad);
         }
+
+        public void UpdateSquad(SquadUpdateDto squad)
+        {
+            var squadToUpdate = GetSquad(squad.Id);
+            squadToUpdate.Name = squad.Name;
+            _context.SaveChanges();
+            return;
+        }
     }
 }
