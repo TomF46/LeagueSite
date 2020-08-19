@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LeagueAppApi.Models;
+using LeagueAppApi.Services;
 
 namespace LeagueAppApi.Controllers
 {
@@ -14,17 +15,27 @@ namespace LeagueAppApi.Controllers
     public class ClubsController : ControllerBase
     {
         private readonly LeagueAppContext _context;
+        private readonly IClubRepository _clubRepository;
 
-        public ClubsController(LeagueAppContext context)
+        public ClubsController(LeagueAppContext context, IClubRepository clubRepository)
         {
             _context = context;
+            _clubRepository = clubRepository;
         }
 
         // GET: api/Clubs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Club>>> GetClubs()
+        public ActionResult<IEnumerable<ClubSimpleDto>> GetClubs()
         {
-            return await _context.Clubs.ToListAsync();
+            var clubs = _clubRepository.GetAllClubs();
+            var clubsDto = clubs.Select(club => new ClubSimpleDto
+            {
+                Id = club.Id,
+                Name = club.Name,
+                Location = club.Location
+            });
+
+            return Ok(clubsDto);
         }
 
         // GET: api/Clubs/5

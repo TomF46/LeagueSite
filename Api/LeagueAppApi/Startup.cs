@@ -12,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.EntityFrameworkCore;
 using LeagueAppApi.Models;
+using LeagueAppApi.Services;
 
 namespace LeagueAppApi
 {
@@ -38,6 +39,16 @@ namespace LeagueAppApi
                     .AllowAnyMethod()
                     .AllowAnyHeader();
             }));
+
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
+            services.AddSwaggerGen();
+
+            services.AddScoped<IClubRepository, ClubRepository>();
+            services.AddScoped<ISquadRepository, SquadRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -49,6 +60,15 @@ namespace LeagueAppApi
             }
 
             app.UseHttpsRedirection();
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
+            app.UseCors("allow");
 
             app.UseRouting();
 
