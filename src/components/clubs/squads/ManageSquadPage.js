@@ -54,7 +54,6 @@ const ManageSquadPage = ({
     saveSquad(squad)
       .then(() => {
         toast.success("Squad saved");
-        console.log(squad);
         if (squad.id) {
           history.push(`/club/${clubId}/squad/${squad.id}`);
         } else {

@@ -1,19 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const PlayerDetail = ({ player, club, squad }) => (
+const PlayerDetail = ({ player }) => (
   <div>
     <p>Name: {`${player.firstName} ${player.lastName}`}</p>
     <p>Position: {player.position}</p>
-    <p>Club: {club.name}</p>
-    <p>Squad: {squad.name}</p>
+    <p>Club: {player.clubName}</p>
+    <p>Squad: {player.squadName}</p>
   </div>
 );
 
 PlayerDetail.propTypes = {
   player: PropTypes.object.isRequired,
-  club: PropTypes.object.isRequired,
-  squad: PropTypes.object.isRequired,
 };
 
 export default PlayerDetail;

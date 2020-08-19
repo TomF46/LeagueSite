@@ -61,7 +61,6 @@ const ManagePlayerPage = ({
     savePlayer(player)
       .then(() => {
         toast.success("Player saved");
-        console.log(player);
         if (player.id) {
           history.push(`/club/${clubId}/squad/${squadId}/player/${player.id}`);
         } else {

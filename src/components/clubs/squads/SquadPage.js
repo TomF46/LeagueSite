@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { newSquad, newClub } from "../../../../tools/mockData";
+import { newSquad } from "../../../../tools/mockData";
 import { loadSquads } from "../../../redux/actions/squadActions";
-import { loadClubs } from "../../../redux/actions/clubActions";
 import {
   loadPlayers,
   deletePlayer,
@@ -19,8 +18,6 @@ const SquadPage = ({
   loadSquads,
   clubId,
   history,
-  clubs,
-  loadClubs,
   squadPlayers,
   players,
   loadPlayers,
@@ -28,12 +25,11 @@ const SquadPage = ({
   ...props
 }) => {
   const [squad, setSquad] = useState({ ...props.squad });
-  const [club, setClub] = useState({ ...props.club });
 
   useEffect(() => {
     if (squads.length === 0) {
       loadSquads().catch((err) => {
-        alert("Loading clubs failed, " + err);
+        alert("Loading squads failed, " + err);
       });
     } else {
       setSquad({ ...props.squad });
@@ -44,16 +40,6 @@ const SquadPage = ({
     if (players.length === 0) {
       loadPlayers().catch((err) => {
         alert("Loading clubs failed, " + err);
-      });
-    } else {
-      setClub({ ...props.club });
-    }
-  }, [props.club]);
-
-  useEffect(() => {
-    if (clubs.length === 0) {
-      loadClubs().catch((err) => {
-        alert("Loading players failed, " + err);
       });
     }
   }, [props.players]);
@@ -97,7 +83,7 @@ const SquadPage = ({
         >
           Edit {squad.name}
         </button>
-        <SquadDetail squad={squad} club={club} />
+        <SquadDetail squad={squad} />
 
         {squads.length > 0 && (
           <PlayerList
@@ -109,7 +95,7 @@ const SquadPage = ({
           style={{ marginBottom: 20 }}
           className="btn btn-primary add-club"
           onClick={() =>
-            history.push(`/club/${club.id}/squad/${squad.id}/player`)
+            history.push(`/club/${clubId}/squad/${squad.id}/player`)
           }
         >
           Add Player
@@ -121,12 +107,9 @@ const SquadPage = ({
 
 SquadPage.propTypes = {
   squad: PropTypes.object.isRequired,
-  club: PropTypes.object.isRequired,
   clubId: PropTypes.any.isRequired,
   squads: PropTypes.array.isRequired,
   loadSquads: PropTypes.func.isRequired,
-  clubs: PropTypes.array.isRequired,
-  loadClubs: PropTypes.func.isRequired,
   players: PropTypes.array.isRequired,
   loadPlayers: PropTypes.func.isRequired,
   squadPlayers: PropTypes.array.isRequired,
@@ -138,10 +121,6 @@ const getSquadById = (squads, id) => {
   return squads.find((storedSquad) => storedSquad.id == id) || null;
 };
 
-const getClubById = (clubs, id) => {
-  return clubs.find((club) => club.id == id) || null;
-};
-
 const getSquadPlayers = (players, squad) => {
   return players.filter((storedPlayer) => storedPlayer.squadId == squad.id);
 };
@@ -151,23 +130,18 @@ const mapStateToProps = (state, ownProps) => {
   const squad =
     id && state.squads.length > 0 ? getSquadById(state.squads, id) : newSquad;
   const clubId = ownProps.match.params.clubId;
-  const club =
-    state.clubs.length > 0 ? getClubById(state.clubs, clubId) : newClub;
   const squadPlayers = squad.id ? getSquadPlayers(state.players, squad) : [];
   return {
     clubId,
-    club,
     squad,
     squadPlayers,
     squads: state.squads,
-    clubs: state.clubs,
     players: state.players,
   };
 };
 
 const mapDispatchToProps = {
   loadSquads,
-  loadClubs,
   loadPlayers,
   deletePlayer,
 };

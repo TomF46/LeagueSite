@@ -15,6 +15,7 @@ const jsonServer = require("json-server");
 const server = jsonServer.create();
 const path = require("path");
 const router = jsonServer.router(path.join(__dirname, "db.json"));
+const db = require("./db.json");
 
 // Can pass a limited number of options to this to override (some) defaults. See https://github.com/typicode/json-server#api
 const middlewares = jsonServer.defaults({
@@ -42,6 +43,34 @@ server.use((req, res, next) => {
   }
   // Continue to JSON Server router
   next();
+});
+
+server.get("/squads/", (req, res) => {
+  let results = db.squads.map((squad) => {
+    squad.clubName =
+      db.clubs.find((club) => club.id == squad.clubId).name || null;
+    return squad;
+  });
+  if (results) {
+    res.status(200).jsonp(results);
+  } else {
+    res.status(400);
+  }
+});
+
+server.get("/players/", (req, res) => {
+  let results = db.players.map((player) => {
+    player.clubName =
+      db.clubs.find((club) => club.id == player.clubId).name || null;
+    player.squadName =
+      db.squads.find((squad) => squad.id == player.squadId).name || null;
+    return player;
+  });
+  if (results) {
+    res.status(200).jsonp(results);
+  } else {
+    res.status(400);
+  }
 });
 
 // Use default router

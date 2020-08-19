@@ -5,10 +5,10 @@ const clubs = [
 ];
 
 const squads = [
-  { id: 1, clubId: 1, name: "Mens seconds" },
-  { id: 2, clubId: 1, name: "Mens firsts" },
-  { id: 3, clubId: 2, name: "Mens firsts" },
-  { id: 4, clubId: 3, name: "Mens firsts" },
+  { id: 1, clubId: 1, name: "Mens seconds", league: 1 },
+  { id: 2, clubId: 1, name: "Mens firsts", league: 1 },
+  { id: 3, clubId: 2, name: "Mens firsts", league: 1 },
+  { id: 4, clubId: 3, name: "Mens firsts", league: 2 },
 ];
 
 const players = [
@@ -54,6 +54,11 @@ const players = [
   },
 ];
 
+const leagues = [
+  { id: 1, name: "Division 1" },
+  { id: 2, name: "Division 2" },
+];
+
 const newClub = {
   id: null,
   name: "",
@@ -64,6 +69,7 @@ const newSquad = {
   id: null,
   clubId: null,
   name: "",
+  league: null,
 };
 
 const newPlayer = {
@@ -75,6 +81,11 @@ const newPlayer = {
   clubId: null,
 };
 
+const newLeague = {
+  id: null,
+  name: "",
+};
+
 module.exports = {
   clubs,
   newClub,
@@ -82,4 +93,6 @@ module.exports = {
   newSquad,
   players,
   newPlayer,
+  leagues,
+  newLeague,
 };
