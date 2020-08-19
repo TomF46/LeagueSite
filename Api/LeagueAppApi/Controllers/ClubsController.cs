@@ -40,16 +40,16 @@ namespace LeagueAppApi.Controllers
 
         // GET: api/Clubs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Club>> GetClub(int id)
+        public ActionResult<Club> GetClub(int id)
         {
-            var club = await _context.Clubs.FindAsync(id);
+            var club = _clubRepository.GetClub(id);
 
             if (club == null)
             {
                 return NotFound();
             }
 
-            return club;
+            return Ok(club);
         }
 
         // PUT: api/Clubs/5

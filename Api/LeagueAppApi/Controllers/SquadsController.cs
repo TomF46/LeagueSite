@@ -41,16 +41,16 @@ namespace LeagueAppApi.Controllers
 
         // GET: api/Squads/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Squad>> GetSquad(int id)
+        public ActionResult<Squad> GetSquad(int id)
         {
-            var squad = await _context.Squads.FindAsync(id);
+            var squad = _squadRepository.GetSquad(id);
 
             if (squad == null)
             {
                 return NotFound();
             }
 
-            return squad;
+            return Ok(squad);
         }
 
         // PUT: api/Squads/5
