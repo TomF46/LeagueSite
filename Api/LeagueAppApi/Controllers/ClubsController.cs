@@ -88,12 +88,13 @@ namespace LeagueAppApi.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Club>> PostClub(Club club)
+        public ActionResult<Club> PostClub(ClubCreationDto club)
         {
-            _context.Clubs.Add(club);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetClub", new { id = club.Id }, club);
+            var createdClubId = _clubRepository.AddClub(club);
+            if (!_clubRepository.Save()) throw new Exception("Failed to create club");
+
+            return CreatedAtAction("GetClub", new { id = createdClubId }, club);
         }
 
         // DELETE: api/Clubs/5

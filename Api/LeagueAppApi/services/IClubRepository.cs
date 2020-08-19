@@ -6,6 +6,8 @@ namespace LeagueAppApi.Services
         IEnumerable<Club> GetAllClubs();
 
         Club GetClub(int id);
+        int AddClub(ClubCreationDto club);
+        bool Save();
 
     }
 }

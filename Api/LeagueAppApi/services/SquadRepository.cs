@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using LeagueAppApi.Models;
@@ -12,6 +13,7 @@ namespace LeagueAppApi.Services
         {
             _context = context;
         }
+
         public IEnumerable<Squad> GetAllSquads()
         {
             return _context.Squads.Include(x => x.Club);
@@ -20,6 +22,28 @@ namespace LeagueAppApi.Services
         public Squad GetSquad(int id)
         {
             return _context.Squads.Include(x => x.Club).FirstOrDefault(x => x.Id == id);
+        }
+
+        public int AddSquad(SquadCreationDto squadDto)
+        {
+
+            var parentClub = _context.Clubs.FirstOrDefault(club => club.Id == squadDto.ClubId);
+            if (parentClub == null) throw new Exception("Parent club does not exist"); //TODO return error nicely
+
+            var squad = new Squad
+            {
+                Name = squadDto.Name,
+                Club = parentClub
+            };
+            _context.Squads.Add(squad);
+            _context.SaveChanges();
+            return squad.Id;
+
+        }
+
+        public bool Save()
+        {
+            return (_context.SaveChanges() >= 0);
         }
     }
 }

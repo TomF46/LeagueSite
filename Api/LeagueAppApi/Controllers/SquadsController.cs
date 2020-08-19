@@ -89,15 +89,12 @@ namespace LeagueAppApi.Controllers
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
-        public async Task<ActionResult<Squad>> PostSquad(SquadCreationDto squad)
+        public ActionResult<Squad> PostSquad(SquadCreationDto squad)
         {
-            var squadToStore = new Squad();
-            squadToStore.Name = squad.Name;
-            squadToStore.Club = _context.Clubs.FirstOrDefault(club => club.Id == squad.ClubId);
-            _context.Squads.Add(squadToStore);
-            await _context.SaveChangesAsync();
+            var createdSquadId = _squadRepository.AddSquad(squad);
+            if (!_squadRepository.Save()) throw new Exception("Failed to create squad");
 
-            return CreatedAtAction("GetSquad", new { id = squadToStore.Id }, squadToStore);
+            return CreatedAtAction("GetSquad", new { id = createdSquadId }, squad);
         }
 
         // DELETE: api/Squads/5

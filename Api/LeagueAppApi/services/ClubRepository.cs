@@ -12,6 +12,7 @@ namespace LeagueAppApi.Services
         {
             _context = context;
         }
+
         public IEnumerable<Club> GetAllClubs()
         {
             return _context.Clubs;
@@ -21,6 +22,24 @@ namespace LeagueAppApi.Services
         {
             return _context.Clubs.Include(x => x.Squads).FirstOrDefault(x => x.Id == id);
         }
+
+        public int AddClub(ClubCreationDto clubDto)
+        {
+            var club = new Club
+            {
+                Name = clubDto.Name,
+                Location = clubDto.Location
+            };
+            _context.Clubs.Add(club);
+            _context.SaveChanges();
+            return club.Id;
+        }
+
+        public bool Save()
+        {
+            return (_context.SaveChanges() >= 0);
+        }
+
 
     }
 }
