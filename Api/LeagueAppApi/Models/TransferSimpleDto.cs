@@ -1,3 +1,5 @@
+using System;
+
 public class TransferSimpleDto
 {
     public int Id { get; set; }
@@ -8,5 +10,6 @@ public class TransferSimpleDto
     public string FromSquadDisplayName { get; set; }
     public int ToSquadId { get; set; }
     public string ToSquadDisplayName { get; set; }
+    public DateTime DateCreated { get; set; }
 
 }

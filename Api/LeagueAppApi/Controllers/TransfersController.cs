@@ -34,7 +34,8 @@ namespace LeagueAppApi.Controllers
                 FromSquadId = transfer.FromSquad.Id,
                 FromSquadDisplayName = transfer.FromSquad.DisplayName,
                 ToSquadId = transfer.ToSquad.Id,
-                ToSquadDisplayName = transfer.ToSquad.DisplayName
+                ToSquadDisplayName = transfer.ToSquad.DisplayName,
+                DateCreated = transfer.DateCreated
             });
 
 
@@ -70,7 +71,8 @@ namespace LeagueAppApi.Controllers
                 FromSquadId = savedObject.FromSquad.Id,
                 FromSquadDisplayName = savedObject.FromSquad.DisplayName,
                 ToSquadId = savedObject.ToSquad.Id,
-                ToSquadDisplayName = savedObject.ToSquad.DisplayName
+                ToSquadDisplayName = savedObject.ToSquad.DisplayName,
+                DateCreated = savedObject.DateCreated
             });
         }
 

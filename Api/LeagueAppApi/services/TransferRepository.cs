@@ -43,7 +43,8 @@ namespace LeagueAppApi.Services
             {
                 Player = player,
                 FromSquad = fromSquad,
-                ToSquad = toSquad
+                ToSquad = toSquad,
+                DateCreated = DateTime.Now
             };
             _context.Transfers.Add(transfer);
             _context.SaveChanges();

@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Moment from "react-moment";
 
 const TransferList = ({ transfers }) => (
   <table className="table">
@@ -18,7 +19,9 @@ const TransferList = ({ transfers }) => (
             <td>{transfer.playerDisplayName}</td>
             <td>{transfer.fromSquadDisplayName}</td>
             <td>{transfer.toSquadDisplayName}</td>
-            <td></td>
+            <td>
+              <Moment format="DD/MM/YYYY">{transfer.dateCreated}</Moment>
+            </td>
           </tr>
         );
       })}
