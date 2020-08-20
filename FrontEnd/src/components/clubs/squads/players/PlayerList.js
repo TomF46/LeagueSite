@@ -21,7 +21,7 @@ const PlayerList = ({ players, onDeleteClick }) => (
                 <Link
                   to={`/club/${player.clubId}/squad/${player.squadId}/player/${player.id}`}
                 >
-                  {`${player.firstName} ${player.lastName}`}
+                  {player.displayName}
                 </Link>
               </td>
               <td>

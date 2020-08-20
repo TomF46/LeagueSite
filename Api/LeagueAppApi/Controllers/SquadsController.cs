@@ -30,7 +30,8 @@ namespace LeagueAppApi.Controllers
             {
                 Id = squad.Id,
                 Name = squad.Name,
-                ClubId = squad.Club.Id
+                ClubId = squad.Club.Id,
+                ClubName = squad.Club.Name
             });
 
 
@@ -74,7 +75,7 @@ namespace LeagueAppApi.Controllers
             var savedObject = _squadRepository.AddSquad(squad);
             if (!_squadRepository.Save()) throw new Exception("Failed to create squad");
 
-            return CreatedAtAction("GetSquad", new { id = savedObject.Id }, new SquadSimpleDto { Id = savedObject.Id, Name = savedObject.Name, ClubId = savedObject.Club.Id });
+            return CreatedAtAction("GetSquad", new { id = savedObject.Id }, new SquadSimpleDto { Id = savedObject.Id, Name = savedObject.Name, ClubId = savedObject.Club.Id, ClubName = savedObject.Club.Name });
         }
 
         // DELETE: api/Squads/5

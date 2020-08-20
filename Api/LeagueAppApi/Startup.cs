@@ -49,6 +49,8 @@ namespace LeagueAppApi
 
             services.AddScoped<IClubRepository, ClubRepository>();
             services.AddScoped<ISquadRepository, SquadRepository>();
+            services.AddScoped<IPlayerRepository, PlayerRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

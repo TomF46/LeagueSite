@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const PlayerDetail = ({ player }) => (
   <div>
-    <p>Name: {`${player.firstName} ${player.lastName}`}</p>
+    <p>Name: {player.displayName}</p>
     <p>Position: {player.position}</p>
     <p>Club: {player.clubName}</p>
     <p>Squad: {player.squadName}</p>

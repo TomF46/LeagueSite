@@ -27,7 +27,7 @@ const TransferForm = ({
         defaultOption="Select Player"
         options={players.map((player) => ({
           value: player.id,
-          text: `${player.firstName} ${player.lastName}`,
+          text: player.displayName,
         }))}
         onChange={onChange}
         error={errors.player}

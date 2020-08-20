@@ -31,7 +31,7 @@ const PlayerPage = ({
   ) : (
     <>
       <>
-        <h1>{`${player.firstName} ${player.lastName}`}</h1>
+        <h1>{player.displayName}</h1>
         <button
           style={{ marginBottom: 20 }}
           className="btn btn-primary add-club"
@@ -41,7 +41,7 @@ const PlayerPage = ({
             )
           }
         >
-          Edit {`${player.firstName} ${player.lastName}`}
+          Edit {player.displayName}
         </button>
         <PlayerDetail player={player} />
       </>

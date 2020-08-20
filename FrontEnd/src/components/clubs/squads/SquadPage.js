@@ -47,7 +47,7 @@ const SquadPage = ({
   const handlePlayerDelete = (player) => {
     confirmAlert({
       title: "Confirm deletion",
-      message: `Are you sure you want to delete ${player.firstName} ${player.lastName}?`,
+      message: `Are you sure you want to delete ${player.displayName}?`,
       buttons: [
         {
           label: "Yes",
@@ -129,6 +129,7 @@ const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.squadId;
   const squad =
     id && state.squads.length > 0 ? getSquadById(state.squads, id) : newSquad;
+  console.log(squad);
   const clubId = ownProps.match.params.clubId;
   const squadPlayers = squad.id ? getSquadPlayers(state.players, squad) : [];
   return {
