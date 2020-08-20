@@ -113,7 +113,7 @@ const mapStateToProps = (state) => {
   return {
     squads: state.squads,
     players: state.players,
-    loading: state.apiCallsInProgrss > 0,
+    loading: state.apiCallsInProgress > 0,
   };
 };
 

@@ -45,7 +45,7 @@ TransfersPage.propTypes = {
 const mapStateToProps = (state) => {
   return {
     transfers: state.transfers,
-    loading: state.apiCallsInProgrss > 0,
+    loading: state.apiCallsInProgress > 0,
   };
 };
 

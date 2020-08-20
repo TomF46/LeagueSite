@@ -74,7 +74,7 @@ ClubsPage.propTypes = {
 const mapStateToProps = (state) => {
   return {
     clubs: state.clubs,
-    loading: state.apiCallsInProgrss > 0,
+    loading: state.apiCallsInProgress > 0,
   };
 };
 
