@@ -30,11 +30,11 @@ namespace LeagueAppApi.Controllers
             {
                 Id = transfer.Id,
                 PlayerId = transfer.Player.Id,
-                PlayerDisplayName = transfer.Player.FirstName + " " + transfer.Player.LastName,
+                PlayerDisplayName = transfer.Player.DisplayName,
                 FromSquadId = transfer.FromSquad.Id,
-                FromSquadDisplayName = transfer.FromSquad.Club.Name + " " + transfer.FromSquad.Name,
+                FromSquadDisplayName = transfer.FromSquad.DisplayName,
                 ToSquadId = transfer.ToSquad.Id,
-                ToSquadDisplayName = transfer.ToSquad.Club.Name + " " + transfer.ToSquad.Name
+                ToSquadDisplayName = transfer.ToSquad.DisplayName
             });
 
 
@@ -66,11 +66,11 @@ namespace LeagueAppApi.Controllers
             {
                 Id = savedObject.Id,
                 PlayerId = savedObject.Player.Id,
-                PlayerDisplayName = savedObject.Player.FirstName + " " + savedObject.Player.LastName,
+                PlayerDisplayName = savedObject.Player.DisplayName,
                 FromSquadId = savedObject.FromSquad.Id,
-                FromSquadDisplayName = savedObject.FromSquad.Club.Name + " " + savedObject.FromSquad.Name,
+                FromSquadDisplayName = savedObject.FromSquad.DisplayName,
                 ToSquadId = savedObject.ToSquad.Id,
-                ToSquadDisplayName = savedObject.ToSquad.Club.Name + " " + savedObject.ToSquad.Name
+                ToSquadDisplayName = savedObject.ToSquad.DisplayName
             });
         }
 
