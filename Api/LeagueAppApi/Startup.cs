@@ -50,6 +50,8 @@ namespace LeagueAppApi
             services.AddScoped<IClubRepository, ClubRepository>();
             services.AddScoped<ISquadRepository, SquadRepository>();
             services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<ITransferRepository, TransferRepository>();
+
 
         }
 

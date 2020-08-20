@@ -104,8 +104,8 @@ const newLeague = {
 const newTransfer = {
   id: null,
   playerId: null,
-  fromId: null,
-  toId: null,
+  fromSquadId: null,
+  toSquadId: null,
 };
 
 module.exports = {

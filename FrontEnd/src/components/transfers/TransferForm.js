@@ -34,9 +34,9 @@ const TransferForm = ({
       />
 
       <SelectInput
-        name="toId"
+        name="toSquadId"
         label="to Team"
-        value={transfer.toId || ""}
+        value={transfer.toSquadId || ""}
         defaultOption="Select Team"
         options={squads.map((squad) => ({
           value: squad.id,

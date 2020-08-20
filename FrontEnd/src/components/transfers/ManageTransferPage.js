@@ -48,10 +48,10 @@ const TransferPage = ({
   }
 
   function formIsValid() {
-    const { playerId, toId } = transfer;
+    const { playerId, toSquadId } = transfer;
     const errors = {};
     if (!playerId) errors.player = "Player name is required";
-    if (!toId) errors.to = "Destination team is required";
+    if (!toSquadId) errors.to = "Destination team is required";
 
     setErrors(errors);
     return Object.keys(errors).length === 0;
@@ -63,10 +63,13 @@ const TransferPage = ({
     let player = players.find((player) => player.id == transfer.playerId);
 
     let playerCurrentSquad = squads.find((squad) => squad.id == player.squadId);
-    transfer.fromId = playerCurrentSquad.id;
+    transfer.fromSquadId = playerCurrentSquad.id;
     setSaving(true);
     saveTransfer(transfer)
       .then(() => {
+        loadPlayers().catch((error) => {
+          alert("Loading players failed " + error);
+        });
         toast.success("Transfer complete.");
         history.push("/transfers");
       })

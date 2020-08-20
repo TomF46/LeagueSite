@@ -15,9 +15,9 @@ const TransferList = ({ transfers }) => (
       {transfers.map((transfer) => {
         return (
           <tr key={transfer.id}>
-            <td>{transfer.playerName}</td>
-            <td>{transfer.fromTeamName}</td>
-            <td>{transfer.toTeamName}</td>
+            <td>{transfer.playerDisplayName}</td>
+            <td>{transfer.fromSquadDisplayName}</td>
+            <td>{transfer.toSquadDisplayName}</td>
             <td></td>
           </tr>
         );

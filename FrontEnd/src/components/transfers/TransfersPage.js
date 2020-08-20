@@ -5,23 +5,32 @@ import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import TransferList from "./transferList";
 
-const TransfersPage = ({ transfers, loading, loadTransfers }) => {
+const TransfersPage = ({ transfers, loading, loadTransfers, history }) => {
   useEffect(() => {
     if (transfers.length === 0) {
-      loadTransfers()
-        .then((res) => {
-          console.log(transfers);
-        })
-        .catch((error) => {
-          alert("Loading transfers failed " + error);
-        });
+      loadTransfers().catch((error) => {
+        alert("Loading transfers failed " + error);
+      });
     }
   }, [transfers]);
 
   return (
     <>
       <h2>Transfers</h2>
-      {loading ? <Spinner /> : <TransferList transfers={transfers} />}
+      {loading ? (
+        <Spinner />
+      ) : (
+        <>
+          <button
+            style={{ marginBottom: 20 }}
+            className="btn btn-primary add-transfer"
+            onClick={() => history.push("/transfer")}
+          >
+            Add Transfer
+          </button>
+          <TransferList transfers={transfers} />
+        </>
+      )}
     </>
   );
 };
@@ -30,6 +39,7 @@ TransfersPage.propTypes = {
   transfers: PropTypes.array.isRequired,
   loadTransfers: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = (state) => {

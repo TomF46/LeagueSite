@@ -14,6 +14,10 @@ const Navigation = () => (
       <NavLink to="/clubs" activeStyle={activeStyle}>
         Clubs
       </NavLink>
+      {" | "}
+      <NavLink to="/transfers" activeStyle={activeStyle}>
+        Transfers
+      </NavLink>
     </nav>
   </div>
 );
