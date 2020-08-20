@@ -14,12 +14,10 @@ namespace LeagueAppApi.Controllers
     [ApiController]
     public class ClubsController : ControllerBase
     {
-        private readonly LeagueAppContext _context;
         private readonly IClubRepository _clubRepository;
 
-        public ClubsController(LeagueAppContext context, IClubRepository clubRepository)
+        public ClubsController(IClubRepository clubRepository)
         {
-            _context = context;
             _clubRepository = clubRepository;
         }
 
@@ -53,8 +51,6 @@ namespace LeagueAppApi.Controllers
         }
 
         // PUT: api/Clubs/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public IActionResult PutClub(ClubUpdateDto club)
         {
@@ -71,8 +67,6 @@ namespace LeagueAppApi.Controllers
         }
 
         // POST: api/Clubs
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public ActionResult<Club> PostClub(ClubCreationDto club)
         {
@@ -97,11 +91,6 @@ namespace LeagueAppApi.Controllers
             if (!_clubRepository.Save()) throw new Exception("Failed to delete squad");
 
             return club;
-        }
-
-        private bool ClubExists(int id)
-        {
-            return _context.Clubs.Any(e => e.Id == id);
         }
     }
 }

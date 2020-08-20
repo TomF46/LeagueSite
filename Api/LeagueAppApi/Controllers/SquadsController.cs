@@ -14,12 +14,10 @@ namespace LeagueAppApi.Controllers
     [ApiController]
     public class SquadsController : ControllerBase
     {
-        private readonly LeagueAppContext _context;
         private readonly ISquadRepository _squadRepository;
 
-        public SquadsController(LeagueAppContext context, ISquadRepository squadRepository)
+        public SquadsController(ISquadRepository squadRepository)
         {
-            _context = context;
             _squadRepository = squadRepository;
         }
 
@@ -54,8 +52,6 @@ namespace LeagueAppApi.Controllers
         }
 
         // PUT: api/Squads/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPut("{id}")]
         public IActionResult PutSquad(SquadUpdateDto squad)
         {
@@ -72,8 +68,6 @@ namespace LeagueAppApi.Controllers
         }
 
         // POST: api/Squads
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
         [HttpPost]
         public ActionResult<Squad> PostSquad(SquadCreationDto squad)
         {
@@ -97,11 +91,6 @@ namespace LeagueAppApi.Controllers
             if (!_squadRepository.Save()) throw new Exception("Failed to delete squad");
 
             return squad;
-        }
-
-        private bool SquadExists(int id)
-        {
-            return _context.Squads.Any(e => e.Id == id);
         }
     }
 }
