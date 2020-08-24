@@ -17,17 +17,17 @@ const TransfersPage = ({ transfers, loading, loadTransfers, history }) => {
   return (
     <>
       <h2>Transfers</h2>
+      <button
+        style={{ marginBottom: 20 }}
+        className="btn btn-primary add-transfer"
+        onClick={() => history.push("/transfer")}
+      >
+        Add Transfer
+      </button>
       {loading ? (
         <Spinner />
       ) : (
         <>
-          <button
-            style={{ marginBottom: 20 }}
-            className="btn btn-primary add-transfer"
-            onClick={() => history.push("/transfer")}
-          >
-            Add Transfer
-          </button>
           <TransferList transfers={transfers} />
         </>
       )}
