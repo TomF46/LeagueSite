@@ -6,7 +6,7 @@ using LeagueAppApi.Models;
 using LeagueAppApi.Services;
 using Microsoft.EntityFrameworkCore;
 
-namespace FixtureAppApi.Services
+namespace LeagueAppApi.Services
 {
     public class FixtureRepository : IFixtureRepository
     {
