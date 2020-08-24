@@ -4,14 +4,16 @@ using LeagueAppApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LeagueAppApi.Migrations
 {
     [DbContext(typeof(LeagueAppContext))]
-    partial class LeagueAppContextModelSnapshot : ModelSnapshot
+    [Migration("20200824153157_AddSeasonModel")]
+    partial class AddSeasonModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,45 +37,6 @@ namespace LeagueAppApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Clubs");
-                });
-
-            modelBuilder.Entity("Fixture", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AwayScore")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("AwayTeamId")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Complete")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTime?>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("HomeScore")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HomeTeamId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("SeasonId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AwayTeamId");
-
-                    b.HasIndex("HomeTeamId");
-
-                    b.HasIndex("SeasonId");
-
-                    b.ToTable("Fixtures");
                 });
 
             modelBuilder.Entity("League", b =>
@@ -198,21 +161,6 @@ namespace LeagueAppApi.Migrations
                     b.HasIndex("ToSquadId");
 
                     b.ToTable("Transfers");
-                });
-
-            modelBuilder.Entity("Fixture", b =>
-                {
-                    b.HasOne("Squad", "AwayTeam")
-                        .WithMany()
-                        .HasForeignKey("AwayTeamId");
-
-                    b.HasOne("Squad", "HomeTeam")
-                        .WithMany()
-                        .HasForeignKey("HomeTeamId");
-
-                    b.HasOne("Season", "Season")
-                        .WithMany("Fixtures")
-                        .HasForeignKey("SeasonId");
                 });
 
             modelBuilder.Entity("Player", b =>
