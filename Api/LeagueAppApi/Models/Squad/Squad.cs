@@ -7,6 +7,7 @@ public class Squad
     public string Name { get; set; }
     public Club Club { get; set; }
     public ICollection<Player> Players { get; set; }
+    public League League { get; set; }
     [NotMapped]
     public string DisplayName
     {

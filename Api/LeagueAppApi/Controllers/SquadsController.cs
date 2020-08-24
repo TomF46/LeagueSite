@@ -31,7 +31,9 @@ namespace LeagueAppApi.Controllers
                 Id = squad.Id,
                 Name = squad.Name,
                 ClubId = squad.Club.Id,
-                ClubName = squad.Club.Name
+                ClubName = squad.Club.Name,
+                LeagueName = squad.League == null ? null : squad.League.Name
+
             });
 
 
@@ -75,7 +77,15 @@ namespace LeagueAppApi.Controllers
             var savedObject = _squadRepository.AddSquad(squad);
             if (!_squadRepository.Save()) throw new Exception("Failed to create squad");
 
-            return CreatedAtAction("GetSquad", new { id = savedObject.Id }, new SquadSimpleDto { Id = savedObject.Id, Name = savedObject.Name, ClubId = savedObject.Club.Id, ClubName = savedObject.Club.Name });
+            return CreatedAtAction("GetSquad", new { id = savedObject.Id },
+             new SquadSimpleDto
+             {
+                 Id = savedObject.Id,
+                 Name = savedObject.Name,
+                 ClubId = savedObject.Club.Id,
+                 ClubName = savedObject.Club.Name,
+                 LeagueName = savedObject.League == null ? null : savedObject.League.Name
+             });
         }
 
         // DELETE: api/Squads/5
@@ -92,6 +102,18 @@ namespace LeagueAppApi.Controllers
             if (!_squadRepository.Save()) throw new Exception("Failed to delete squad");
 
             return squad;
+        }
+
+        // POST: api/Leagues
+        [HttpPost]
+        [Route("AddToLeague")]
+        public ActionResult AddToLeague(AddToLeagueDto relation)
+        {
+
+            _squadRepository.AddToLeague(relation);
+            if (!_squadRepository.Save()) throw new Exception("Failed to add to league");
+
+            return Ok();
         }
     }
 }

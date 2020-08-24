@@ -12,5 +12,6 @@ namespace LeagueAppApi.Models
         public DbSet<Squad> Squads { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Transfer> Transfers { get; set; }
+        public DbSet<League> Leagues { get; set; }
     }
 }

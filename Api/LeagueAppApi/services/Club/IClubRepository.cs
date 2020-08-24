@@ -10,6 +10,5 @@ namespace LeagueAppApi.Services
         bool Save();
         void DeleteClub(Club club);
         void UpdateClub(ClubUpdateDto club);
-
     }
 }

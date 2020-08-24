@@ -16,12 +16,12 @@ namespace LeagueAppApi.Services
 
         public IEnumerable<Squad> GetAllSquads()
         {
-            return _context.Squads.Include(x => x.Club);
+            return _context.Squads.Include(x => x.Club).Include(x => x.League);
         }
 
         public Squad GetSquad(int id)
         {
-            return _context.Squads.Include(x => x.Club).FirstOrDefault(x => x.Id == id);
+            return _context.Squads.Include(x => x.Club).Include(x => x.League).FirstOrDefault(x => x.Id == id);
         }
 
         public Squad AddSquad(SquadCreationDto squadDto)
@@ -57,6 +57,20 @@ namespace LeagueAppApi.Services
             squadToUpdate.Name = squad.Name;
             _context.SaveChanges();
             return;
+        }
+
+        public void AddToLeague(AddToLeagueDto relation)
+        {
+
+            var squadToAdd = GetSquad(relation.SquadId);
+
+            var league = _context.Leagues.FirstOrDefault(league => league.Id == relation.LeagueId);
+            if (league == null) throw new Exception("League  does not exist"); //TODO return error nicely
+
+            squadToAdd.League = league;
+            _context.SaveChanges();
+            return;
+
         }
     }
 }
