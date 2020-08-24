@@ -13,6 +13,10 @@ export default function SquadReducer(state = initialState.squads, action) {
       return state.filter((squad) => squad.id != action.squad.id);
     case types.LOAD_SQUADS_SUCCESS:
       return action.squads;
+    case types.ADD_SQUAD_TO_LEAGUE_SUCCESS:
+      return state.map((squad) =>
+        squad.id === action.squad.id ? action.squad : squad
+      );
     default:
       return state;
   }

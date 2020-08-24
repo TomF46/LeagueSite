@@ -32,10 +32,16 @@ const newTransfer = {
   toSquadId: null,
 };
 
+const newLeageAddition = {
+  squadId: null,
+  leagueId: null,
+};
+
 module.exports = {
   newClub,
   newSquad,
   newPlayer,
   newLeague,
   newTransfer,
+  newLeageAddition,
 };

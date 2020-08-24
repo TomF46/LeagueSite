@@ -59,7 +59,7 @@ namespace LeagueAppApi.Services
             return;
         }
 
-        public void AddToLeague(AddToLeagueDto relation)
+        public Squad AddToLeague(AddToLeagueDto relation)
         {
 
             var squadToAdd = GetSquad(relation.SquadId);
@@ -69,7 +69,7 @@ namespace LeagueAppApi.Services
 
             squadToAdd.League = league;
             _context.SaveChanges();
-            return;
+            return squadToAdd;
 
         }
     }

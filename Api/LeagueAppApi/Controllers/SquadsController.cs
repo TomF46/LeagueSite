@@ -32,6 +32,7 @@ namespace LeagueAppApi.Controllers
                 Name = squad.Name,
                 ClubId = squad.Club.Id,
                 ClubName = squad.Club.Name,
+                LeagueId = squad.League == null ? (int?)null : squad.League.Id,
                 LeagueName = squad.League == null ? null : squad.League.Name
 
             });
@@ -84,6 +85,7 @@ namespace LeagueAppApi.Controllers
                  Name = savedObject.Name,
                  ClubId = savedObject.Club.Id,
                  ClubName = savedObject.Club.Name,
+                 LeagueId = savedObject.League == null ? (int?)null : savedObject.League.Id,
                  LeagueName = savedObject.League == null ? null : savedObject.League.Name
              });
         }
@@ -107,13 +109,13 @@ namespace LeagueAppApi.Controllers
         // POST: api/Leagues
         [HttpPost]
         [Route("AddToLeague")]
-        public ActionResult AddToLeague(AddToLeagueDto relation)
+        public ActionResult<Squad> AddToLeague(AddToLeagueDto relation)
         {
 
-            _squadRepository.AddToLeague(relation);
+            var addedSquad = _squadRepository.AddToLeague(relation);
             if (!_squadRepository.Save()) throw new Exception("Failed to add to league");
 
-            return Ok();
+            return addedSquad;
         }
     }
 }

@@ -28,6 +28,16 @@ export function saveSquad(squad) {
     .catch(handleError);
 }
 
+export function AddSquadToLeague(req) {
+  return fetch(baseUrl + "AddToLeague", {
+    method: "POST", // POST for create, PUT to update when id already exists.
+    headers: { "content-type": "application/json" },
+    body: JSON.stringify(req),
+  })
+    .then(handleResponse)
+    .catch(handleError);
+}
+
 export function deleteSquad(squadId) {
   return fetch(baseUrl + squadId, { method: "DELETE" })
     .then(handleResponse)

@@ -18,6 +18,10 @@ const Navigation = () => (
       <NavLink to="/transfers" activeStyle={activeStyle}>
         Transfers
       </NavLink>
+      {" | "}
+      <NavLink to="/leagues" activeStyle={activeStyle}>
+        Leagues
+      </NavLink>
     </nav>
   </div>
 );

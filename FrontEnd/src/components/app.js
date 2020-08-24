@@ -13,6 +13,9 @@ import ManagePlayerPage from "./clubs/squads/players/ManagePlayerPage";
 import PlayerPage from "./clubs/squads/players/PlayerPage";
 import TransfersPage from "./transfers/TransfersPage";
 import ManageTransferPage from "./transfers/ManageTransferPage";
+import LeaguesPage from "./leagues/LeaguesPage";
+import LeaguePage from "./leagues/LeaguePage";
+import ManageLeaguePage from "./leagues/ManageLeaguePage";
 
 const App = () => (
   <div className="container-fluid">
@@ -43,6 +46,10 @@ const App = () => (
       <Route path="/club" component={ManageClubPage} />
       <Route path="/transfers" component={TransfersPage} />
       <Route path="/transfer" component={ManageTransferPage} />
+      <Route path="/leagues" component={LeaguesPage} />
+      <Route path="/league/:id/edit" component={ManageLeaguePage} />
+      <Route path="/league/:id" component={LeaguePage} />
+      <Route path="/league" component={ManageLeaguePage} />
     </Switch>
     <ToastContainer autoClose={3000} hideProgressBar />
   </div>

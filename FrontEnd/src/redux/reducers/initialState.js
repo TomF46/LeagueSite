@@ -3,5 +3,6 @@ export default {
   squads: [],
   players: [],
   transfers: [],
+  leagues: [],
   apiCallsInProgress: 0,
 };

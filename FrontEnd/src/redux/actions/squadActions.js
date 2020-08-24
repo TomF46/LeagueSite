@@ -18,6 +18,10 @@ export function deleteSquadOptimistic(squad) {
   return { type: types.DELETE_SQUAD_OPTIMISTIC, squad };
 }
 
+export function AddSquadToLeagueSuccess(squad) {
+  return { type: types.ADD_SQUAD_TO_LEAGUE_SUCCESS, squad };
+}
+
 export function loadSquads() {
   return function (dispatch) {
     dispatch(beginApiCall());
@@ -55,5 +59,14 @@ export function deleteSquad(squad) {
   return function (dispatch) {
     dispatch(deleteSquadOptimistic(squad));
     return squadApi.deleteSquad(squad.id);
+  };
+}
+
+export function addSquadToLeague(relation) {
+  return function (dispatch) {
+    dispatch(beginApiCall());
+    return squadApi.AddSquadToLeague(relation).then((squad) => {
+      dispatch(AddSquadToLeagueSuccess(squad));
+    });
   };
 }

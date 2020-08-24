@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { loadTransfers } from "../../redux/actions/transferActions";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
-import TransferList from "./transferList";
+import TransferList from "./TransferList";
 
 const TransfersPage = ({ transfers, loading, loadTransfers, history }) => {
   useEffect(() => {
