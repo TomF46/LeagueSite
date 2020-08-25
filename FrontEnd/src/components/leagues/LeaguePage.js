@@ -82,6 +82,7 @@ const LeaguePage = ({
           alert("Loading leagues failed " + error);
         });
         toast.success("Team added.");
+        setSaving(false);
         history.push(`/league/${league.id}`);
       })
       .catch((error) => {

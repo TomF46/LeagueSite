@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using LeagueAppApi.Models;
 using Microsoft.EntityFrameworkCore;
@@ -9,9 +10,11 @@ namespace LeagueAppApi.Services
     public class SeasonRepository : ISeasonRepository
     {
         private LeagueAppContext _context;
-        public SeasonRepository(LeagueAppContext context)
+        private IFixtureRepository _fixtureRepository;
+        public SeasonRepository(LeagueAppContext context, IFixtureRepository fixtureRepository)
         {
             _context = context;
+            _fixtureRepository = fixtureRepository;
         }
 
         public IEnumerable<Season> GetAllSeasons()
@@ -28,13 +31,20 @@ namespace LeagueAppApi.Services
         {
 
             //TODO create fixtures
+            var league = _context.Leagues.Include(x => x.ParticipantSquads).FirstOrDefault(league => league.Id == seasonDto.LeagueId);
+            if (league == null) throw new Exception("League does not exist"); //TODO return error nicely
 
             var season = new Season
             {
                 Name = seasonDto.Name,
-                Active = seasonDto.Active
+                Active = seasonDto.Active,
+                League = league
             };
+
+            season.Fixtures = CreateSeasonFixtures(season);
+
             _context.Seasons.Add(season);
+
             _context.SaveChanges();
             return season;
 
@@ -47,6 +57,8 @@ namespace LeagueAppApi.Services
 
         public void DeleteSeason(Season season)
         {
+            var fixturesToRemove = _context.Fixtures.Where(x => x.Season.Id == season.Id);
+            _context.Fixtures.RemoveRange(fixturesToRemove);
             _context.Seasons.Remove(season);
         }
 
@@ -57,6 +69,38 @@ namespace LeagueAppApi.Services
             seasonToUpdate.Active = season.Active;
             _context.SaveChanges();
             return;
+        }
+
+        private ICollection<Fixture> CreateSeasonFixtures(Season season)
+        {
+            var participants = season.League.ParticipantSquads;
+            var fixtures = participants.SelectMany((team1, index) =>
+            participants.Skip(index + 1).
+            Select(team2 => new Fixture
+            {
+                Date = DateTime.Now,
+                Complete = false,
+                Season = season,
+                HomeTeam = team1,
+                AwayTeam = team2
+            })).ToList();
+
+            var OppositeFixtures = participants.SelectMany((team1, index) =>
+            participants.Skip(index + 1).
+            Select(team2 => new Fixture
+            {
+                Date = DateTime.Now,
+                Complete = false,
+                Season = season,
+                HomeTeam = team2,
+                AwayTeam = team1
+            })).ToList();
+
+            fixtures.AddRange(OppositeFixtures);
+
+
+
+            return fixtures;
         }
     }
 }
