@@ -18,12 +18,12 @@ namespace LeagueAppApi.Services
 
         public IEnumerable<Fixture> GetAllFixtures()
         {
-            return _context.Fixtures.Include(x => x.HomeTeam).Include(x => x.AwayTeam);
+            return _context.Fixtures.Include(x => x.HomeTeam).Include(x => x.AwayTeam).Include(x => x.Season);
         }
 
         public Fixture GetFixture(int id)
         {
-            return _context.Fixtures.Include(x => x.HomeTeam).Include(x => x.AwayTeam).FirstOrDefault(x => x.Id == id);
+            return _context.Fixtures.Include(x => x.HomeTeam).Include(x => x.AwayTeam).Include(x => x.Season).FirstOrDefault(x => x.Id == id);
         }
 
         public Fixture AddFixture(FixtureCreationDto fixtureDto)
