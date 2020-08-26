@@ -31,6 +31,7 @@ namespace LeagueAppApi.Controllers
                 Id = season.Id,
                 Name = season.Name,
                 Active = season.Active,
+                LeagueId = season.League.Id,
                 LeagueName = season.League.Name
             });
 
@@ -39,7 +40,7 @@ namespace LeagueAppApi.Controllers
 
         // GET: api/Seasons/5
         [HttpGet("{id}")]
-        public ActionResult<Season> GetSeason(int id)
+        public ActionResult<SeasonDetailDto> GetSeason(int id)
         {
             var season = _seasonRepository.GetSeason(id);
 
@@ -48,7 +49,29 @@ namespace LeagueAppApi.Controllers
                 return NotFound();
             }
 
-            return Ok(season);
+            var dto = new SeasonDetailDto
+            {
+                Id = season.Id,
+                Name = season.Name,
+                LeagueName = season.League.Name,
+                LeagueId = season.League.Id,
+                Active = season.Active,
+                Fixtures = season.Fixtures.Select(fixture => new FixtureSimpleDto
+                {
+                    Id = fixture.Id,
+                    Date = fixture.Date,
+                    SeasonId = fixture.Season.Id,
+                    Complete = fixture.Complete,
+                    HomeTeamId = fixture.HomeTeam.Id,
+                    HomeTeamName = fixture.HomeTeam.DisplayName,
+                    HomeScore = fixture.HomeScore,
+                    AwayTeamId = fixture.AwayTeam.Id,
+                    AwayTeamName = fixture.AwayTeam.DisplayName,
+                    AwayScore = fixture.AwayScore
+                }).ToList()
+            };
+
+            return Ok(dto);
         }
 
         // PUT: api/Seasons/5
@@ -75,7 +98,7 @@ namespace LeagueAppApi.Controllers
             var createdSeason = _seasonRepository.AddSeason(season);
             if (!_seasonRepository.Save()) throw new Exception("Failed to create season");
 
-            return CreatedAtAction("GetSeason", new { id = createdSeason.Id }, new SeasonSimpleDto { Id = createdSeason.Id, Name = createdSeason.Name, Active = createdSeason.Active, LeagueName = createdSeason.League.Name });
+            return CreatedAtAction("GetSeason", new { id = createdSeason.Id }, new SeasonSimpleDto { Id = createdSeason.Id, Name = createdSeason.Name, Active = createdSeason.Active, LeagueId = createdSeason.League.Id, LeagueName = createdSeason.League.Name });
         }
 
         // DELETE: api/Seasons/5

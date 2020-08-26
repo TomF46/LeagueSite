@@ -54,6 +54,7 @@ namespace LeagueAppApi
             services.AddScoped<ILeagueRepository, LeagueRepository>();
             services.AddScoped<ISeasonRepository, SeasonRepository>();
             services.AddScoped<IFixtureRepository, FixtureRepository>();
+            services.AddScoped<IResultRepository, ResultRepository>();
 
         }
 

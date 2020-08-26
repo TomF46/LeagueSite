@@ -45,7 +45,7 @@ namespace LeagueAppApi.Controllers
 
         // GET: api/Fixtures/5
         [HttpGet("{id}")]
-        public ActionResult<Fixture> GetFixture(int id)
+        public ActionResult<FixtureSimpleDto> GetFixture(int id)
         {
             var fixture = _fixtureRepository.GetFixture(id);
 
@@ -54,7 +54,21 @@ namespace LeagueAppApi.Controllers
                 return NotFound();
             }
 
-            return Ok(fixture);
+            var dto = new FixtureSimpleDto
+            {
+                Id = fixture.Id,
+                Date = fixture.Date,
+                SeasonId = fixture.Season.Id,
+                HomeTeamId = fixture.HomeTeam.Id,
+                HomeTeamName = fixture.HomeTeam.DisplayName,
+                HomeScore = fixture.HomeScore,
+                AwayTeamId = fixture.AwayTeam.Id,
+                AwayTeamName = fixture.AwayTeam.DisplayName,
+                AwayScore = fixture.AwayScore,
+                Complete = fixture.Complete
+            };
+
+            return Ok(dto);
         }
 
         // PUT: api/Fixtures/5

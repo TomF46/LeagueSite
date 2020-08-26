@@ -37,6 +37,19 @@ const newLeageAddition = {
   leagueId: null,
 };
 
+const newSeason = {
+  id: null,
+  name: "",
+  leagueId: null,
+  active: false,
+};
+
+const newResult = {
+  fixtureId: null,
+  homeScore: 0,
+  awayScore: 0,
+};
+
 module.exports = {
   newClub,
   newSquad,
@@ -44,4 +57,6 @@ module.exports = {
   newLeague,
   newTransfer,
   newLeageAddition,
+  newSeason,
+  newResult,
 };

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { loadLeagues } from "../../redux/actions/leagueActions";
+import { loadSeasons } from "../../redux/actions/seasonActions";
+
 import {
   loadSquads,
   deleteSquad,
@@ -13,6 +15,7 @@ import LeagueDetail from "./LeagueDetail";
 import ParticipantList from "./ParticipantList";
 import AddTeamForm from "./AddTeamForm";
 import { toast } from "react-toastify";
+import SeasonList from "./seasons/SeasonList";
 const LeaguePage = ({
   leagues,
   squads,
@@ -20,6 +23,9 @@ const LeaguePage = ({
   loadLeagues,
   loadSquads,
   addSquadToLeague,
+  seasons,
+  leagueSeasons,
+  loadSeasons,
   history,
   ...props
 }) => {
@@ -45,6 +51,14 @@ const LeaguePage = ({
       });
     }
   }, [props.squads]);
+
+  useEffect(() => {
+    if (seasons.length === 0) {
+      loadSeasons().catch((err) => {
+        alert("Loading seasons failed, " + err);
+      });
+    }
+  }, [props.seasons]);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -107,6 +121,7 @@ const LeaguePage = ({
         <LeagueDetail league={league} />
 
         {squads.length > 0 && <ParticipantList participants={leagueSquads} />}
+
         <AddTeamForm
           squads={squads}
           leagueAddition={leagueAddition}
@@ -115,6 +130,15 @@ const LeaguePage = ({
           onSave={handleSave}
           saving={saving}
         />
+        {seasons.length > 0 && <SeasonList seasons={leagueSeasons} />}
+
+        <button
+          style={{ marginBottom: 20 }}
+          className="btn btn-primary add-season"
+          onClick={() => history.push(`/league/${league.id}/season`)}
+        >
+          Add season
+        </button>
       </>
     </>
   );
@@ -125,9 +149,13 @@ LeaguePage.propTypes = {
   leagues: PropTypes.array.isRequired,
   squads: PropTypes.array.isRequired,
   leagueSquads: PropTypes.array.isRequired,
+  seasons: PropTypes.array.isRequired,
+  leagueSeasons: PropTypes.array.isRequired,
   loadLeagues: PropTypes.func.isRequired,
   loadSquads: PropTypes.func.isRequired,
+  loadSeasons: PropTypes.func.isRequired,
   deleteSquad: PropTypes.func.isRequired,
+  addSquadToLeague: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };
 
@@ -139,6 +167,10 @@ const getLeagueSquads = (squads, league) => {
   return squads.filter((storedSquad) => storedSquad.leagueId == league.id);
 };
 
+const getLeagueSeasons = (seasons, league) => {
+  return seasons.filter((storedSeason) => storedSeason.leagueId == league.id);
+};
+
 const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.id;
   const league =
@@ -147,11 +179,15 @@ const mapStateToProps = (state, ownProps) => {
       : newLeague;
   const leagueSquads =
     state.squads.length > 0 ? getLeagueSquads(state.squads, league) : [];
+  const leagueSeasons =
+    state.seasons.length > 0 ? getLeagueSeasons(state.seasons, league) : [];
   return {
     league,
     leagueSquads,
+    leagueSeasons,
     leagues: state.leagues,
     squads: state.squads,
+    seasons: state.seasons,
   };
 };
 
@@ -160,6 +196,7 @@ const mapDispatchToProps = {
   loadSquads,
   deleteSquad,
   addSquadToLeague,
+  loadSeasons,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeaguePage);

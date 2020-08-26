@@ -24,7 +24,7 @@ namespace LeagueAppApi.Services
 
         public Season GetSeason(int id)
         {
-            return _context.Seasons.Include(x => x.League).FirstOrDefault(x => x.Id == id);
+            return _context.Seasons.Include(x => x.League).Include(x => x.Fixtures).ThenInclude(x => x.HomeTeam).ThenInclude(x => x.Club).Include(x => x.Fixtures).ThenInclude(x => x.AwayTeam).ThenInclude(x => x.Club).FirstOrDefault(x => x.Id == id);
         }
 
         public Season AddSeason(SeasonCreationDto seasonDto)

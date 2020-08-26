@@ -16,6 +16,10 @@ import ManageTransferPage from "./transfers/ManageTransferPage";
 import LeaguesPage from "./leagues/LeaguesPage";
 import LeaguePage from "./leagues/LeaguePage";
 import ManageLeaguePage from "./leagues/ManageLeaguePage";
+import SeasonPage from "./leagues/seasons/SeasonPage";
+import ManageSeasonPage from "./leagues/seasons/ManageSeasonPage";
+import FixturePage from "./leagues/seasons/fixtures/FixturePage";
+import ManageResultPage from "./leagues/seasons/fixtures/ManageResultPage";
 
 const App = () => (
   <div className="container-fluid">
@@ -47,6 +51,20 @@ const App = () => (
       <Route path="/transfers" component={TransfersPage} />
       <Route path="/transfer" component={ManageTransferPage} />
       <Route path="/leagues" component={LeaguesPage} />
+      <Route
+        path="/league/:leagueId/season/:seasonId/fixture/:id/result"
+        component={ManageResultPage}
+      />
+      <Route
+        path="/league/:leagueId/season/:seasonId/fixture/:id"
+        component={FixturePage}
+      />
+      <Route
+        path="/league/:leagueId/season/:id/edit"
+        component={ManageSeasonPage}
+      />
+      <Route path="/league/:leagueId/season/:id" component={SeasonPage} />
+      <Route path="/league/:leagueId/season" component={ManageSeasonPage} />
       <Route path="/league/:id/edit" component={ManageLeaguePage} />
       <Route path="/league/:id" component={LeaguePage} />
       <Route path="/league" component={ManageLeaguePage} />

@@ -23,7 +23,7 @@ namespace LeagueAppApi.Services
 
         public Fixture GetFixture(int id)
         {
-            return _context.Fixtures.Include(x => x.HomeTeam).Include(x => x.AwayTeam).Include(x => x.Season).FirstOrDefault(x => x.Id == id);
+            return _context.Fixtures.Include(x => x.HomeTeam).ThenInclude(x => x.Club).Include(x => x.AwayTeam).ThenInclude(x => x.Club).Include(x => x.Season).FirstOrDefault(x => x.Id == id);
         }
 
         public Fixture AddFixture(FixtureCreationDto fixtureDto)

@@ -4,6 +4,7 @@ import squads from "./squadReducer";
 import players from "./playerReducer";
 import transfers from "./transferReducer";
 import leagues from "./leagueReducer";
+import seasons from "./seasonReducer";
 
 import apiCallsInProgress from "./apiStatusReducer";
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   players,
   transfers,
   leagues,
+  seasons,
   apiCallsInProgress,
 });
 
