@@ -5,6 +5,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../../../common/Spinner";
 import FixtureDetail from "./FixtureDetail";
+import { toast } from "react-toastify";
 
 const FixturePage = ({ id, leagueId, seasonId, history }) => {
   const [fixture, setFixture] = useState(null);
@@ -22,6 +23,14 @@ const FixturePage = ({ id, leagueId, seasonId, history }) => {
   }, [id, fixture]);
 
   function removeResult(fixture) {
+    //Premptivley chance view
+    setFixture({
+      fixtureId: fixture.id,
+      homeScore: 0,
+      awayScore: 0,
+      complete: false,
+    });
+    toast.success("Result removed");
     ResultApi.deleteResult(fixture)
       .then(() => {
         FixtureApi.getFixtureById(id)
@@ -30,6 +39,7 @@ const FixturePage = ({ id, leagueId, seasonId, history }) => {
           })
           .catch((error) => {
             console.log("Error getting the fixture data " + error);
+            toast.error("Failed to remove");
           });
       })
       .catch((err) => {
