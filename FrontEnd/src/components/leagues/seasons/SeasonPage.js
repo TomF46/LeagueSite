@@ -3,10 +3,9 @@ import * as SeasonApi from "../../../api/seasonApi";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../../common/Spinner";
-import { toast } from "react-toastify";
 import FixtureList from "./fixtures/FixtureList";
 
-const SeasonPage = ({ id, leagueId, history, ...props }) => {
+const SeasonPage = ({ id, history }) => {
   const [season, setSeason] = useState(null);
 
   useEffect(() => {
@@ -33,6 +32,16 @@ const SeasonPage = ({ id, leagueId, history, ...props }) => {
         style={{ marginBottom: 20 }}
         className="btn btn-primary edit season"
         onClick={() =>
+          history.push(`/league/${season.leagueId}/season/${season.id}/table`)
+        }
+      >
+        View league table
+      </button>{" "}
+      <br></br>
+      <button
+        style={{ marginBottom: 20 }}
+        className="btn btn-primary edit season"
+        onClick={() =>
           history.push(`/league/${season.leagueId}/season/${season.id}/edit`)
         }
       >
@@ -44,6 +53,8 @@ const SeasonPage = ({ id, leagueId, history, ...props }) => {
 };
 
 SeasonPage.propTypes = {
+  id: PropTypes.any.isRequired,
+  leagueId: PropTypes.any.isRequired,
   history: PropTypes.object.isRequired,
 };
 

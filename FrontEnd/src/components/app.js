@@ -20,6 +20,7 @@ import SeasonPage from "./leagues/seasons/SeasonPage";
 import ManageSeasonPage from "./leagues/seasons/ManageSeasonPage";
 import FixturePage from "./leagues/seasons/fixtures/FixturePage";
 import ManageResultPage from "./leagues/seasons/fixtures/ManageResultPage";
+import LeagueTablePage from "./leagues/seasons/LeagueTablePage";
 
 const App = () => (
   <div className="container-fluid">
@@ -63,6 +64,12 @@ const App = () => (
         path="/league/:leagueId/season/:id/edit"
         component={ManageSeasonPage}
       />
+      <Route
+        path="/league/:leagueId/season/:seasonId/table"
+        exact
+        component={LeagueTablePage}
+      />
+
       <Route path="/league/:leagueId/season/:id" component={SeasonPage} />
       <Route path="/league/:leagueId/season" component={ManageSeasonPage} />
       <Route path="/league/:id/edit" component={ManageLeaguePage} />
