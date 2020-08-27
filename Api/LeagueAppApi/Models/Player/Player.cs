@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
 public class Player
@@ -14,4 +15,5 @@ public class Player
 
     public Squad Squad { get; set; }
     public Club Club { get; set; }
+    public ICollection<GoalRecord> Goals { get; set; }
 }

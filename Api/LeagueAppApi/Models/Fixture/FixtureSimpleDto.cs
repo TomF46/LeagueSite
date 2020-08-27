@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 
 public class FixtureSimpleDto
 {
@@ -13,6 +14,8 @@ public class FixtureSimpleDto
 
     public string AwayTeamName { get; set; }
     public int HomeScore { get; set; }
+    public ICollection<FixtureScorerDto> HomeGoalScorers { get; set; }
     public int AwayScore { get; set; }
+    public ICollection<FixtureScorerDto> AwayGoalScorers { get; set; }
     public bool Complete { get; set; }
 }

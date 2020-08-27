@@ -1,5 +1,6 @@
 
 using System;
+using System.Collections.Generic;
 
 public class Fixture
 {
@@ -10,5 +11,7 @@ public class Fixture
     public Squad AwayTeam { get; set; }
     public int HomeScore { get; set; }
     public int AwayScore { get; set; }
+    public ICollection<GoalRecord> Goals { get; set; }
+
     public bool Complete { get; set; }
 }

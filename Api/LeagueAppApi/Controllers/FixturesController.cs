@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LeagueAppApi.Models;
 using LeagueAppApi.Services;
+using System.Collections.ObjectModel;
 
 namespace LeagueAppApi.Controllers
 {
@@ -62,13 +63,27 @@ namespace LeagueAppApi.Controllers
                 HomeTeamId = fixture.HomeTeam.Id,
                 HomeTeamName = fixture.HomeTeam.DisplayName,
                 HomeScore = fixture.HomeScore,
+                HomeGoalScorers = GetGoalScorers(fixture.Goals, SideEnum.Home),
                 AwayTeamId = fixture.AwayTeam.Id,
                 AwayTeamName = fixture.AwayTeam.DisplayName,
                 AwayScore = fixture.AwayScore,
+                AwayGoalScorers = GetGoalScorers(fixture.Goals, SideEnum.Away),
+
                 Complete = fixture.Complete
             };
 
             return Ok(dto);
+        }
+
+        private ICollection<FixtureScorerDto> GetGoalScorers(ICollection<GoalRecord> goals, SideEnum side)
+        {
+            var goalsDto = goals.Where(g => g.Side == side).Select(g => new FixtureScorerDto
+            {
+                PlayerId = g.Player.Id,
+                PlayerDisplayName = g.Player.DisplayName
+            }).ToList();
+
+            return goalsDto;
         }
 
         // PUT: api/Fixtures/5
