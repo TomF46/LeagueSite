@@ -11,9 +11,9 @@ const LeagueForm = ({
 }) => {
   return (
     <form onSubmit={onSave}>
-      <h2>{league.id ? "Edit" : "Add"} League</h2>
+      <h2 className="title is-2">{league.id ? "Edit" : "Add"} League</h2>
       {errors.onSave && (
-        <div className="alert alert-danger" role="alert">
+        <div className="help is-danger" role="alert">
           {errors.onSave}
         </div>
       )}
@@ -22,10 +22,10 @@ const LeagueForm = ({
         label="Name"
         value={league.name}
         onChange={onChange}
-        error={errors.category}
+        error={errors.name}
       />
 
-      <button type="submit" disabled={saving} className="btn btn-primary">
+      <button type="submit" disabled={saving} className="button is-primary">
         {saving ? "Saving..." : "Save"}
       </button>
     </form>

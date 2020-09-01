@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Moment from "react-moment";
 
 const TransferList = ({ transfers }) => (
-  <table className="table">
+  <table className="table is-striped is-fullwidth">
     <thead>
       <tr>
         <th>Name</th>

@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const SeasonList = ({ seasons }) => (
   <>
-    <h3>Seasons</h3>
-    <table className="table">
+    <h3 className="title is-3">Seasons</h3>
+    <table className="table is-striped is-fullwidth">
       <thead>
         <tr>
           <th>Name</th>

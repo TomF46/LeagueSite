@@ -16,10 +16,10 @@ const TransfersPage = ({ transfers, loading, loadTransfers, history }) => {
 
   return (
     <>
-      <h2>Transfers</h2>
+      <h2 className="title is-2">Transfers</h2>
       <button
         style={{ marginBottom: 20 }}
-        className="btn btn-primary add-transfer"
+        className="button is-primary add-transfer"
         onClick={() => history.push("/transfer")}
       >
         Add Transfer

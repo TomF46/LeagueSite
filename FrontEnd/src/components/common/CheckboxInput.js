@@ -2,26 +2,20 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const CheckboxInput = ({ name, label, onChange, value, error }) => {
-  let wrapperClass = "form-group";
-  if (error && error.length > 0) {
-    wrapperClass += " " + "has-error";
-  }
-
   return (
-    <div className={wrapperClass}>
-      <div className="form-check">
-        <input
-          className="form-check-input"
-          type="checkbox"
-          name={name}
-          value={value}
-          onChange={onChange}
-        />
-        <label className="form-check-label" htmlFor={name}>
+    <div className="field">
+      <div className="control">
+        <label className="checkbox" htmlFor={name}>
+          <input
+            type="checkbox"
+            name={name}
+            value={value}
+            onChange={onChange}
+          />
           {label}
         </label>
       </div>
-      {error && <div className="alert alert-danger">{error}</div>}
+      {error && <div className="help is-danger">{error}</div>}
     </div>
   );
 };

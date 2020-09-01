@@ -110,10 +110,10 @@ const LeaguePage = ({
   ) : (
     <>
       <>
-        <h1>{league.name}</h1>
+        <h1 className="title is-1">{league.name}</h1>
         <button
           style={{ marginBottom: 20 }}
-          className="btn btn-primary add-league"
+          className="button is-primary edit-league"
           onClick={() => history.push(`/league/${league.id}/edit`)}
         >
           Edit {league.name}
@@ -134,7 +134,7 @@ const LeaguePage = ({
 
         <button
           style={{ marginBottom: 20 }}
-          className="btn btn-primary add-season"
+          className="button is-primary add-season"
           onClick={() => history.push(`/league/${league.id}/season`)}
         >
           Add season

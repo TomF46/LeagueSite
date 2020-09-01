@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 
 const FixtureDetail = ({ fixture }) => (
   <div>
-    <h2>
+    <h2 className="title is-2">
       {fixture.homeTeamName} - {fixture.awayTeamName}
     </h2>
     {fixture.complete ? (

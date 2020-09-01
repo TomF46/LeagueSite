@@ -36,6 +36,7 @@ const ManageClubPage = ({ clubs, loadClubs, saveClub, history, ...props }) => {
     if (!name) errors.name = "Name is required";
     if (!location) errors.location = "Location is required";
 
+    console.log(errors);
     setErrors(errors);
     return Object.keys(errors).length === 0;
   }

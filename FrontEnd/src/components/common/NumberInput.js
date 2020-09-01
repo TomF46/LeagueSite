@@ -2,24 +2,26 @@ import React from "react";
 import PropTypes from "prop-types";
 
 const NumberInput = ({ name, label, onChange, placeholder, value, error }) => {
-  let wrapperClass = "form-group";
+  let wrapperClass = "input";
   if (error && error.length > 0) {
-    wrapperClass += " " + "has-error";
+    wrapperClass += " " + "is-danger";
   }
 
   return (
-    <div className={wrapperClass}>
-      <label htmlFor={name}>{label}</label>
-      <div className="field">
+    <div className="field">
+      <label className="label" htmlFor={name}>
+        {label}
+      </label>
+      <div className="control">
         <input
           type="number"
           name={name}
-          className="form-control"
+          className={wrapperClass}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
         />
-        {error && <div className="alert alert-danger">{error}</div>}
+        {error && <div className="help is-danger">{error}</div>}
       </div>
     </div>
   );

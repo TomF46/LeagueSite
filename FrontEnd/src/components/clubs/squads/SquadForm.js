@@ -11,9 +11,9 @@ const SquadForm = ({
 }) => {
   return (
     <form onSubmit={onSave}>
-      <h2>{squad.id ? "Edit" : "Add"} Squad</h2>
+      <h2 className="title is-2">{squad.id ? "Edit" : "Add"} Squad</h2>
       {errors.onSave && (
-        <div className="alert alert-danger" role="alert">
+        <div className="help is-danger" role="alert">
           {errors.onSave}
         </div>
       )}
@@ -22,10 +22,10 @@ const SquadForm = ({
         label="Name"
         value={squad.name}
         onChange={onChange}
-        error={errors.category}
+        error={errors.name}
       />
 
-      <button type="submit" disabled={saving} className="btn btn-primary">
+      <button type="submit" disabled={saving} className="button is-primary">
         {saving ? "Saving..." : "Save"}
       </button>
     </form>

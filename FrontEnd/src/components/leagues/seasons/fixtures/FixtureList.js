@@ -5,8 +5,8 @@ import Moment from "react-moment";
 
 const FixtureList = ({ fixtures }) => (
   <>
-    <h3>Fixtures</h3>
-    <table className="table">
+    <h3 className="title is-3">Fixtures</h3>
+    <table className="table is-striped is-fullwidth">
       <thead>
         <tr>
           <th>Date</th>

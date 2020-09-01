@@ -25,12 +25,12 @@ const SeasonPage = ({ id, history }) => {
     <Spinner />
   ) : (
     <>
-      <h2>
+      <h2 className="title is-2">
         {season.leagueName} - {season.name}
       </h2>
       <button
         style={{ marginBottom: 20 }}
-        className="btn btn-primary edit season"
+        className="button is-primary view-table"
         onClick={() =>
           history.push(`/league/${season.leagueId}/season/${season.id}/table`)
         }
@@ -40,7 +40,7 @@ const SeasonPage = ({ id, history }) => {
       <br></br>
       <button
         style={{ marginBottom: 20 }}
-        className="btn btn-primary edit season"
+        className="button is-primary edit-season"
         onClick={() =>
           history.push(`/league/${season.leagueId}/season/${season.id}/edit`)
         }

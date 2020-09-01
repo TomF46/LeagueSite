@@ -55,7 +55,7 @@ const FixturePage = ({ id, leagueId, seasonId, history }) => {
       {fixture.complete ? (
         <button
           style={{ marginBottom: 20 }}
-          className="btn btn-primary remove-result"
+          className="button is-primary remove-result"
           onClick={() => removeResult(fixture)}
         >
           Remove result
@@ -63,7 +63,7 @@ const FixturePage = ({ id, leagueId, seasonId, history }) => {
       ) : (
         <button
           style={{ marginBottom: 20 }}
-          className="btn btn-primary edit-result"
+          className="button is-primary edit-result"
           onClick={() =>
             history.push(
               `/league/${leagueId}/season/${seasonId}/fixture/${id}/result`

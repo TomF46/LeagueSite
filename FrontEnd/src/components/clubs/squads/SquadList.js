@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const SquadList = ({ squads, onDeleteClick }) => (
   <>
-    <h3>Squads</h3>
-    <table className="table">
+    <h3 className="title is-3">Squads</h3>
+    <table className="table is-striped is-fullwidth">
       <thead>
         <tr>
           <th>Name</th>
@@ -23,7 +23,7 @@ const SquadList = ({ squads, onDeleteClick }) => (
               </td>
               <td>
                 <button
-                  className="btn btn-outline-danger"
+                  className="button is-danger is-outlined"
                   onClick={() => onDeleteClick(squad)}
                 >
                   Delete

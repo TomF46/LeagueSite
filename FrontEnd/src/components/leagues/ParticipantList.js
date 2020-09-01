@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const ParticipantList = ({ participants }) => (
   <>
-    <h3>Participants</h3>
-    <table className="table">
+    <h3 className="title is-3">Participants</h3>
+    <table className="table is-striped is-fullwidth">
       <thead>
         <tr>
           <th>Name</th>

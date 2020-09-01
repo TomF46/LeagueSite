@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
 const LeagueList = ({ leagues, onDeleteClick }) => (
-  <table className="table">
+  <table className="table is-striped is-fullwidth">
     <thead>
       <tr>
         <th>Name</th>
@@ -21,7 +21,7 @@ const LeagueList = ({ leagues, onDeleteClick }) => (
             <td>{league.numberOfParticipants}</td>
             <td>
               <button
-                className="btn btn-outline-danger"
+                className="button is-danger is-outlined"
                 onClick={() => onDeleteClick(league)}
               >
                 Delete

@@ -45,14 +45,14 @@ const LeaguesPage = ({ leagues, actions, loading, history }) => {
 
   return (
     <>
-      <h2>Leagues</h2>
+      <h2 className="title is-2">Leagues</h2>
       {loading ? (
         <Spinner />
       ) : (
         <>
           <button
             style={{ marginBottom: 20 }}
-            className="btn btn-primary add-league"
+            className="button is-primary add-league"
             onClick={() => history.push("/league")}
           >
             Add League

@@ -31,10 +31,10 @@ const PlayerPage = ({
   ) : (
     <>
       <>
-        <h1>{player.displayName}</h1>
+        <h1 className="title is-1">{player.displayName}</h1>
         <button
           style={{ marginBottom: 20 }}
-          className="btn btn-primary add-club"
+          className="button is-primary edit-player"
           onClick={() =>
             history.push(
               `/club/${clubId}/squad/${squadId}/player/${player.id}/edit`

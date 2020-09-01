@@ -81,7 +81,6 @@ const TransferPage = ({
 
   return (
     <>
-      <h2>Transfers</h2>
       {loading ? (
         <Spinner />
       ) : (

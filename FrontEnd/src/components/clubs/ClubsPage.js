@@ -45,14 +45,14 @@ const ClubsPage = ({ clubs, actions, loading, history }) => {
 
   return (
     <>
-      <h2>Clubs</h2>
+      <h2 className="title is-2">Clubs</h2>
       {loading ? (
         <Spinner />
       ) : (
         <>
           <button
             style={{ marginBottom: 20 }}
-            className="btn btn-primary add-club"
+            className="button is-primary add-club"
             onClick={() => history.push("/club")}
           >
             Add Club

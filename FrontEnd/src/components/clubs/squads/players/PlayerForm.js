@@ -11,9 +11,9 @@ const PlayerForm = ({
 }) => {
   return (
     <form onSubmit={onSave}>
-      <h2>{player.id ? "Edit" : "Add"} Player</h2>
+      <h2 className="title is-2">{player.id ? "Edit" : "Add"} Player</h2>
       {errors.onSave && (
-        <div className="alert alert-danger" role="alert">
+        <div className="help is-danger" role="alert">
           {errors.onSave}
         </div>
       )}
@@ -22,7 +22,7 @@ const PlayerForm = ({
         label="First Name"
         value={player.firstName}
         onChange={onChange}
-        error={errors.category}
+        error={errors.firstName}
       />
 
       <TextInput
@@ -30,7 +30,7 @@ const PlayerForm = ({
         label="Last Name"
         value={player.lastName}
         onChange={onChange}
-        error={errors.category}
+        error={errors.lastName}
       />
 
       <TextInput
@@ -38,10 +38,10 @@ const PlayerForm = ({
         label="Position"
         value={player.position}
         onChange={onChange}
-        error={errors.category}
+        error={errors.position}
       />
 
-      <button type="submit" disabled={saving} className="btn btn-primary">
+      <button type="submit" disabled={saving} className="button is-primary">
         {saving ? "Saving..." : "Save"}
       </button>
     </form>

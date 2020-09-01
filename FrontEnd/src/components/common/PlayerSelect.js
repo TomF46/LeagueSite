@@ -13,9 +13,11 @@ const PlayerSelect = ({
   options,
 }) => {
   return (
-    <div className="form-group">
-      <label htmlFor={name}>{label}</label>
-      <div className="field">
+    <div className="field">
+      <label className="label" htmlFor={name}>
+        {label}
+      </label>
+      <div className="control">
         {/* Note, value is set here rather than on the option - docs: https://facebook.github.io/react/docs/forms.html */}
         <select
           name={name}
@@ -23,7 +25,7 @@ const PlayerSelect = ({
           side={side}
           index={index}
           onChange={onChange}
-          className="form-control"
+          className="select"
         >
           <option value="">{defaultOption}</option>
           {options.map((option) => {
@@ -34,7 +36,7 @@ const PlayerSelect = ({
             );
           })}
         </select>
-        {error && <div className="alert alert-danger">{error}</div>}
+        {error && <div className="help is-danger">{error}</div>}
       </div>
     </div>
   );
