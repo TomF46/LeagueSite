@@ -48,6 +48,8 @@ const newResult = {
   fixtureId: null,
   homeScore: 0,
   awayScore: 0,
+  homeGoalScorers: [],
+  awayGoalScorers: [],
 };
 
 module.exports = {
