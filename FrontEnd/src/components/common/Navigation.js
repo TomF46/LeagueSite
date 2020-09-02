@@ -20,7 +20,7 @@ const Navigation = () => (
           <span aria-hidden="true"></span>
         </a>
       </div>
-      <div id="navbarBasicExample" className="navbar-menu">
+      <div className="navbar-menu">
         <div className="navbar-start">
           <NavLink
             to="/"
@@ -51,6 +51,16 @@ const Navigation = () => (
           >
             Leagues
           </NavLink>
+        </div>
+        <div className="navbar-end">
+          <div className="navbar-item">
+            <div className="buttons">
+              {/* <a className="button is-primary">
+                <strong>Sign up</strong>
+              </a> */}
+              <a className="button is-primary">Log in</a>
+            </div>
+          </div>
         </div>
       </div>
     </nav>

@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import SelectInput from "../common/SelectInput";
+import PlayerSelect from "../common/PlayerSelect";
 
 const TransferForm = ({
   transfer,
@@ -12,39 +13,43 @@ const TransferForm = ({
   errors = {},
 }) => {
   return (
-    <form onSubmit={onSave}>
+    <form id="transfer-form" className="box" onSubmit={onSave}>
       <h2 className="title is-2">{transfer.id ? "Edit" : "Add"} Transfer</h2>
       {errors.onSave && (
         <div className="help is-danger" role="alert">
           {errors.onSave}
         </div>
       )}
-
-      <SelectInput
-        name="playerId"
-        label="Player"
-        value={transfer.playerId || ""}
-        defaultOption="Select Player"
-        options={players.map((player) => ({
-          value: player.id,
-          text: player.displayName,
-        }))}
-        onChange={onChange}
-        error={errors.player}
-      />
-
-      <SelectInput
-        name="toSquadId"
-        label="to Team"
-        value={transfer.toSquadId || ""}
-        defaultOption="Select Team"
-        options={squads.map((squad) => ({
-          value: squad.id,
-          text: `${squad.clubName} ${squad.name}`,
-        }))}
-        onChange={onChange}
-        error={errors.to}
-      />
+      <div className="columns">
+        <div className="column is-4">
+          <PlayerSelect
+            name="playerId"
+            label="Player"
+            value={transfer.playerId || ""}
+            defaultOption="Select Player"
+            options={players.map((player) => ({
+              value: player.id,
+              text: player.displayName,
+            }))}
+            onChange={onChange}
+            error={errors.player}
+          />
+        </div>
+        <div className="column is-4">
+          <SelectInput
+            name="toSquadId"
+            label="To team"
+            value={transfer.toSquadId || ""}
+            defaultOption="Select Team"
+            options={squads.map((squad) => ({
+              value: squad.id,
+              text: `${squad.clubName} ${squad.name}`,
+            }))}
+            onChange={onChange}
+            error={errors.to}
+          />
+        </div>
+      </div>
 
       <button type="submit" disabled={saving} className="button is-primary">
         {saving ? "Saving..." : "Save"}

@@ -17,25 +17,30 @@ const PlayerSelect = ({
       <label className="label" htmlFor={name}>
         {label}
       </label>
-      <div className="control">
+      <div className="control has-icons-left is-expanded">
         {/* Note, value is set here rather than on the option - docs: https://facebook.github.io/react/docs/forms.html */}
-        <select
-          name={name}
-          value={value}
-          side={side}
-          index={index}
-          onChange={onChange}
-          className="select"
-        >
-          <option value="">{defaultOption}</option>
-          {options.map((option) => {
-            return (
-              <option key={option.value} value={option.value}>
-                {option.text}
-              </option>
-            );
-          })}
-        </select>
+        <div className="select">
+          <select
+            name={name}
+            value={value}
+            side={side}
+            index={index}
+            onChange={onChange}
+            className="select"
+          >
+            <option value="">{defaultOption}</option>
+            {options.map((option) => {
+              return (
+                <option key={option.value} value={option.value}>
+                  {option.text}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div className="icon is-left">
+          <ion-icon name="person-outline"></ion-icon>
+        </div>
         {error && <div className="help is-danger">{error}</div>}
       </div>
     </div>

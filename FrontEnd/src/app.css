@@ -12,3 +12,7 @@ h4,
 h5 {
   vertical-align: middle;
 }
+
+#transfer-form .select {
+  width: 100%;
+}

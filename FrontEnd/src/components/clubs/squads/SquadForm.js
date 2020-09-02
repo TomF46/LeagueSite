@@ -10,7 +10,7 @@ const SquadForm = ({
   errors = {},
 }) => {
   return (
-    <form onSubmit={onSave}>
+    <form className="box" onSubmit={onSave}>
       <h2 className="title is-2">{squad.id ? "Edit" : "Add"} Squad</h2>
       {errors.onSave && (
         <div className="help is-danger" role="alert">

@@ -10,7 +10,7 @@ const LeagueForm = ({
   errors = {},
 }) => {
   return (
-    <form onSubmit={onSave}>
+    <form className="box" onSubmit={onSave}>
       <h2 className="title is-2">{league.id ? "Edit" : "Add"} League</h2>
       {errors.onSave && (
         <div className="help is-danger" role="alert">

@@ -17,21 +17,23 @@ const SelectInput = ({
       </label>
       <div className="control">
         {/* Note, value is set here rather than on the option - docs: https://facebook.github.io/react/docs/forms.html */}
-        <select
-          name={name}
-          value={value}
-          onChange={onChange}
-          className="select"
-        >
-          <option value="">{defaultOption}</option>
-          {options.map((option) => {
-            return (
-              <option key={option.value} value={option.value}>
-                {option.text}
-              </option>
-            );
-          })}
-        </select>
+        <div className="select">
+          <select
+            name={name}
+            value={value}
+            onChange={onChange}
+            className="select"
+          >
+            <option value="">{defaultOption}</option>
+            {options.map((option) => {
+              return (
+                <option key={option.value} value={option.value}>
+                  {option.text}
+                </option>
+              );
+            })}
+          </select>
+        </div>
         {error && <div className="help is-danger">{error}</div>}
       </div>
     </div>

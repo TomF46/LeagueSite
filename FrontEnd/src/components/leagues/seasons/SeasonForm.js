@@ -11,7 +11,7 @@ const SeasonForm = ({
   errors = {},
 }) => {
   return (
-    <form onSubmit={onSave}>
+    <form className="box" onSubmit={onSave}>
       <h2 className="title is-2">{season.id ? "Edit" : "Add"} Season</h2>
       {errors.onSave && (
         <div className="help is-danger" role="alert">

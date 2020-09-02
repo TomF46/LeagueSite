@@ -10,7 +10,7 @@ const PlayerForm = ({
   errors = {},
 }) => {
   return (
-    <form onSubmit={onSave}>
+    <form className="box" onSubmit={onSave}>
       <h2 className="title is-2">{player.id ? "Edit" : "Add"} Player</h2>
       {errors.onSave && (
         <div className="help is-danger" role="alert">

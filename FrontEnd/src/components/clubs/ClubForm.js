@@ -4,7 +4,7 @@ import TextInput from "../common/TextInput";
 
 const ClubForm = ({ club, onSave, onChange, saving = false, errors = {} }) => {
   return (
-    <form onSubmit={onSave}>
+    <form className="box" onSubmit={onSave}>
       <h2 className="title is-2">{club.id ? "Edit" : "Add"} Club</h2>
       {errors.onSave && (
         <div className="help is-danger" role="alert">

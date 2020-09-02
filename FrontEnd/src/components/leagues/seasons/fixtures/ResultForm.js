@@ -14,7 +14,7 @@ const ResultForm = ({
   onAddAwayGoalClick,
 }) => {
   return (
-    <div className="container">
+    <div className="container box">
       <form onSubmit={onSave} className="columns">
         <div className="column">
           <h2 className="title is-2">Add Result</h2>

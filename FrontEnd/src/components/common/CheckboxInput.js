@@ -11,6 +11,7 @@ const CheckboxInput = ({ name, label, onChange, value, error }) => {
             name={name}
             value={value}
             onChange={onChange}
+            className="mr-2"
           />
           {label}
         </label>
