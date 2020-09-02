@@ -80,13 +80,6 @@ const ClubPage = ({
             <ion-icon name="pencil-outline"></ion-icon>
           </span>
         </h1>
-        {/* <button
-          style={{ marginBottom: 20 }}
-          className="button is-primary edit-club"
-          onClick={() => history.push(`/club/${club.id}/edit`)}
-        >
-          Edit {club.name}
-        </button> */}
         <ClubDetail club={club} />
 
         {squads.length > 0 && (

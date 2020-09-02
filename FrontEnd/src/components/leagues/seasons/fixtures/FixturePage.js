@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import Spinner from "../../../common/Spinner";
 import FixtureDetail from "./FixtureDetail";
 import { toast } from "react-toastify";
+import { confirmAlert } from "react-confirm-alert";
 
 const FixturePage = ({ id, leagueId, seasonId, history }) => {
   const [fixture, setFixture] = useState(null);
@@ -21,6 +22,23 @@ const FixturePage = ({ id, leagueId, seasonId, history }) => {
         });
     }
   }, [id, fixture]);
+
+  const handleRemoveResult = (fixture) => {
+    confirmAlert({
+      title: "Confirm removal",
+      message: `Are you sure you want to remove this result?`,
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => removeResult(fixture),
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
+  };
 
   function removeResult(fixture) {
     //Premptivley chance view
@@ -56,7 +74,7 @@ const FixturePage = ({ id, leagueId, seasonId, history }) => {
         <button
           style={{ marginBottom: 20 }}
           className="button is-primary remove-result"
-          onClick={() => removeResult(fixture)}
+          onClick={() => handleRemoveResult(fixture)}
         >
           Remove result
         </button>
