@@ -50,14 +50,14 @@ const LeaguesPage = ({ leagues, actions, loading, history }) => {
         <Spinner />
       ) : (
         <>
+          <LeagueList leagues={leagues} onDeleteClick={handleDeleteLeague} />
           <button
             style={{ marginBottom: 20 }}
-            className="button is-primary add-league"
+            className="button is-primary add-league is-pulled-right"
             onClick={() => history.push("/league")}
           >
             Add League
           </button>
-          <LeagueList leagues={leagues} onDeleteClick={handleDeleteLeague} />
         </>
       )}
     </>

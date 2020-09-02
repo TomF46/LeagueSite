@@ -93,7 +93,7 @@ const SquadPage = ({
         )}
         <button
           style={{ marginBottom: 20 }}
-          className="button is-primary add-player"
+          className="button is-primary add-player is-pulled-right"
           onClick={() =>
             history.push(`/club/${clubId}/squad/${squad.id}/player`)
           }

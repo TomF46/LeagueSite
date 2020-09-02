@@ -17,13 +17,6 @@ const TransfersPage = ({ transfers, loading, loadTransfers, history }) => {
   return (
     <>
       <h2 className="title is-2">Transfers</h2>
-      <button
-        style={{ marginBottom: 20 }}
-        className="button is-primary add-transfer"
-        onClick={() => history.push("/transfer")}
-      >
-        Add Transfer
-      </button>
       {loading ? (
         <Spinner />
       ) : (
@@ -31,6 +24,13 @@ const TransfersPage = ({ transfers, loading, loadTransfers, history }) => {
           <TransferList transfers={transfers} />
         </>
       )}
+      <button
+        style={{ marginBottom: 20 }}
+        className="button is-primary add-transfer is-pulled-right"
+        onClick={() => history.push("/transfer")}
+      >
+        Add Transfer
+      </button>
     </>
   );
 };

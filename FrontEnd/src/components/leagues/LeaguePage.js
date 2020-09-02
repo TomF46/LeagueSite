@@ -134,7 +134,7 @@ const LeaguePage = ({
 
         <button
           style={{ marginBottom: 20 }}
-          className="button is-primary add-season"
+          className="button is-primary add-season is-pulled-right"
           onClick={() => history.push(`/league/${league.id}/season`)}
         >
           Add season

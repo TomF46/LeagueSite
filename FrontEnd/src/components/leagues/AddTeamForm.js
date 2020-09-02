@@ -12,7 +12,7 @@ const AddTeamForm = ({
 }) => {
   return (
     <form onSubmit={onSave}>
-      <h2 className="title is-2">Add team to league</h2>
+      <h3 className="title is-3">Add team to league</h3>
       {errors.onSave && (
         <div className="help is-danger" role="alert">
           {errors.onSave}
@@ -33,7 +33,7 @@ const AddTeamForm = ({
       />
 
       <button type="submit" disabled={saving} className="button is-primary">
-        {saving ? "Saving..." : "Save"}
+        {saving ? "Adding..." : "Add"}
       </button>
     </form>
   );
