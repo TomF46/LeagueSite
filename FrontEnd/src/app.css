@@ -1,5 +1,9 @@
 /* Global css */
 
+html {
+  background-color: #fbfdfb;
+}
+
 .pointer {
   cursor: pointer;
 }
