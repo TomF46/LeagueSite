@@ -22,7 +22,7 @@ const LeagueList = ({ leagues, onDeleteClick }) => (
               <td>{league.numberOfParticipants}</td>
               <td>
                 <button
-                  className="button is-danger is-outlined"
+                  className="delete is-large is-pulled-right"
                   onClick={() => onDeleteClick(league)}
                 >
                   Delete

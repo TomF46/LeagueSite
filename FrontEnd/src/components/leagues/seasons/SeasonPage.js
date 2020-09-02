@@ -27,6 +27,14 @@ const SeasonPage = ({ id, history }) => {
     <>
       <h2 className="title is-2">
         {season.leagueName} - {season.name}
+        <span
+          className="icon has-text-primary is-medium ml-4 pointer"
+          onClick={() =>
+            history.push(`/league/${season.leagueId}/season/${season.id}/edit`)
+          }
+        >
+          <ion-icon name="pencil-outline"></ion-icon>
+        </span>
       </h2>
       <button
         style={{ marginBottom: 20 }}
@@ -36,16 +44,6 @@ const SeasonPage = ({ id, history }) => {
         }
       >
         View league table
-      </button>{" "}
-      <br></br>
-      <button
-        style={{ marginBottom: 20 }}
-        className="button is-primary edit-season"
-        onClick={() =>
-          history.push(`/league/${season.leagueId}/season/${season.id}/edit`)
-        }
-      >
-        Edit season
       </button>
       {season.fixtures.length > 0 && <FixtureList fixtures={season.fixtures} />}
     </>

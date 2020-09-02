@@ -110,14 +110,15 @@ const LeaguePage = ({
   ) : (
     <>
       <>
-        <h1 className="title is-1">{league.name}</h1>
-        <button
-          style={{ marginBottom: 20 }}
-          className="button is-primary edit-league"
-          onClick={() => history.push(`/league/${league.id}/edit`)}
-        >
-          Edit {league.name}
-        </button>
+        <h1 className="title is-1">
+          {league.name}
+          <span
+            className="icon has-text-primary is-medium ml-4 pointer"
+            onClick={() => history.push(`/league/${league.id}/edit`)}
+          >
+            <ion-icon name="pencil-outline"></ion-icon>
+          </span>
+        </h1>
         <LeagueDetail league={league} />
 
         {squads.length > 0 && <ParticipantList participants={leagueSquads} />}

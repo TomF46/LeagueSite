@@ -31,18 +31,19 @@ const PlayerPage = ({
   ) : (
     <>
       <>
-        <h1 className="title is-1">{player.displayName}</h1>
-        <button
-          style={{ marginBottom: 20 }}
-          className="button is-primary edit-player"
-          onClick={() =>
-            history.push(
-              `/club/${clubId}/squad/${squadId}/player/${player.id}/edit`
-            )
-          }
-        >
-          Edit {player.displayName}
-        </button>
+        <h1 className="title is-1">
+          {player.displayName}
+          <span
+            className="icon has-text-primary is-medium ml-4 pointer"
+            onClick={() =>
+              history.push(
+                `/club/${clubId}/squad/${squadId}/player/${player.id}/edit`
+              )
+            }
+          >
+            <ion-icon name="pencil-outline"></ion-icon>
+          </span>
+        </h1>
         <PlayerDetail player={player} />
       </>
     </>

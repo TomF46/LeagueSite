@@ -71,14 +71,22 @@ const ClubPage = ({
   ) : (
     <>
       <>
-        <h1 className="title is-1">{club.name}</h1>
-        <button
+        <h1 className="title is-1">
+          {club.name}
+          <span
+            className="icon has-text-primary is-medium ml-4 pointer"
+            onClick={() => history.push(`/club/${club.id}/edit`)}
+          >
+            <ion-icon name="pencil-outline"></ion-icon>
+          </span>
+        </h1>
+        {/* <button
           style={{ marginBottom: 20 }}
           className="button is-primary edit-club"
           onClick={() => history.push(`/club/${club.id}/edit`)}
         >
           Edit {club.name}
-        </button>
+        </button> */}
         <ClubDetail club={club} />
 
         {squads.length > 0 && (

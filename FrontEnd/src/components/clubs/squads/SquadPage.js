@@ -75,14 +75,17 @@ const SquadPage = ({
   ) : (
     <>
       <>
-        <h1 className="title is-1">{squad.name}</h1>
-        <button
-          style={{ marginBottom: 20 }}
-          className="button is-primary edit-squad"
-          onClick={() => history.push(`/club/${clubId}/squad/${squad.id}/edit`)}
-        >
-          Edit {squad.name}
-        </button>
+        <h1 className="title is-1">
+          {squad.name}
+          <span
+            className="icon has-text-primary is-medium ml-4 pointer"
+            onClick={() =>
+              history.push(`/club/${clubId}/squad/${squad.id}/edit`)
+            }
+          >
+            <ion-icon name="pencil-outline"></ion-icon>
+          </span>
+        </h1>
         <SquadDetail squad={squad} />
 
         {squads.length > 0 && (
