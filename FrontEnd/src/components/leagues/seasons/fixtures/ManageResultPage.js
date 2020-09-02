@@ -22,8 +22,16 @@ const FixturePage = ({
   const [result, setResult] = useState({ ...props.result });
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
-  const [homeTeamPlayers, setHomeTeamPlayers] = useState([]);
-  const [awayTeamPlayers, setAwayTeamPlayers] = useState([]);
+  const [squads, setFixtureSquads] = useState({
+    home: {
+      name: "Home",
+      squad: [],
+    },
+    away: {
+      name: "Away",
+      squad: [],
+    },
+  });
 
   useEffect(() => {
     if (!fixture) {
@@ -58,18 +66,29 @@ const FixturePage = ({
   }, [players]);
 
   function setPlayers() {
-    console.log(players);
-    let unknownPlayer = { id: null, displayName: "Unknown" };
+    console.log(fixture);
+    let squads = {
+      home: {
+        name: fixture.homeTeamName,
+        squad: [],
+      },
+      away: {
+        name: fixture.awayTeamName,
+        squad: [],
+      },
+    };
+    let unknownPlayer = { id: "Invalid", displayName: "Unknown" };
     let homePlayers = players.filter(
       (player) => player.squadId == fixture.homeTeamId
     );
-    homePlayers.push(unknownPlayer);
-    setHomeTeamPlayers(homePlayers);
+    // homePlayers.push(unknownPlayer);
     let awayPlayers = players.filter(
       (player) => player.squadId == fixture.awayTeamId
     );
-    awayPlayers.push(unknownPlayer);
-    setAwayTeamPlayers(awayPlayers);
+    // awayPlayers.push(unknownPlayer);
+    squads.home.squad = homePlayers;
+    squads.away.squad = awayPlayers;
+    setFixtureSquads(squads);
   }
 
   function handleChange(event) {
@@ -147,8 +166,7 @@ const FixturePage = ({
         onChange={handleChange}
         onSave={handleSave}
         saving={saving}
-        homeTeamPlayers={homeTeamPlayers}
-        awayTeamPlayers={awayTeamPlayers}
+        squads={squads}
         onAddAwayGoalClick={handleAddAwayGoal}
         onAddHomeGoalClick={handleAddHomeGoal}
       />
