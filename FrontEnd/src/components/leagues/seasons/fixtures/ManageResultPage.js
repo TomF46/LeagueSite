@@ -8,6 +8,7 @@ import Spinner from "../../../common/Spinner";
 import { toast } from "react-toastify";
 import ResultForm from "./ResultForm";
 import { newResult } from "../../../../../tools/mockData";
+import { Redirect } from "react-router-dom";
 
 const FixturePage = ({
   id,
@@ -16,6 +17,7 @@ const FixturePage = ({
   players,
   history,
   loadPlayers,
+  userIsAuthenticated,
   ...props
 }) => {
   const [fixture, setFixture] = useState(null);
@@ -77,15 +79,15 @@ const FixturePage = ({
         squad: [],
       },
     };
-    let unknownPlayer = { id: "Invalid", displayName: "Unknown" };
+
     let homePlayers = players.filter(
       (player) => player.squadId == fixture.homeTeamId
     );
-    // homePlayers.push(unknownPlayer);
+
     let awayPlayers = players.filter(
       (player) => player.squadId == fixture.awayTeamId
     );
-    // awayPlayers.push(unknownPlayer);
+
     squads.home.squad = homePlayers;
     squads.away.squad = awayPlayers;
     setFixtureSquads(squads);
@@ -104,8 +106,6 @@ const FixturePage = ({
     } else {
       newResult.awayGoalScorers[index].playerId = value;
     }
-
-    console.log(newResult);
     setResult(newResult);
   }
 
@@ -156,20 +156,25 @@ const FixturePage = ({
     setResult(newResult);
   }
 
-  return !fixture ? (
-    <Spinner />
-  ) : (
+  return (
     <>
-      <ResultForm
-        result={result}
-        errors={errors}
-        onChange={handleChange}
-        onSave={handleSave}
-        saving={saving}
-        squads={squads}
-        onAddAwayGoalClick={handleAddAwayGoal}
-        onAddHomeGoalClick={handleAddHomeGoal}
-      />
+      {!userIsAuthenticated && <Redirect to="/" />}
+      {!fixture ? (
+        <Spinner />
+      ) : (
+        <>
+          <ResultForm
+            result={result}
+            errors={errors}
+            onChange={handleChange}
+            onSave={handleSave}
+            saving={saving}
+            squads={squads}
+            onAddAwayGoalClick={handleAddAwayGoal}
+            onAddHomeGoalClick={handleAddHomeGoal}
+          />
+        </>
+      )}
     </>
   );
 };
@@ -182,6 +187,7 @@ FixturePage.propTypes = {
   history: PropTypes.object.isRequired,
   players: PropTypes.array.isRequired,
   loadPlayers: PropTypes.func.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
 };
 
 const mapStateToProps = (state, ownProps) => {
@@ -196,6 +202,7 @@ const mapStateToProps = (state, ownProps) => {
     seasonId,
     result,
     players,
+    userIsAuthenticated: state.user != null,
   };
 };
 

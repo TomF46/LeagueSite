@@ -53,6 +53,7 @@ namespace LeagueAppApi.Controllers
 
         // PUT: api/Clubs/5
         [HttpPut("{id}")]
+        [Authorize]
         public IActionResult PutClub(ClubUpdateDto club)
         {
             var productToUpdate = _clubRepository.GetClub(club.Id);
@@ -69,6 +70,7 @@ namespace LeagueAppApi.Controllers
 
         // POST: api/Clubs
         [HttpPost]
+        [Authorize]
         public ActionResult<Club> PostClub(ClubCreationDto club)
         {
 
@@ -80,6 +82,7 @@ namespace LeagueAppApi.Controllers
 
         // DELETE: api/Clubs/5
         [HttpDelete("{id}")]
+        [Authorize]
         public ActionResult<Club> DeleteClub(int id)
         {
             var club = _clubRepository.GetClub(id);

@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const SquadList = ({ squads, onDeleteClick }) => (
+const SquadList = ({ squads, onDeleteClick, userIsAuthenticated }) => (
   <div className="my-4">
     <h3 className="title is-3">Squads</h3>
     <div className="box">
@@ -25,12 +25,14 @@ const SquadList = ({ squads, onDeleteClick }) => (
                 </td>
                 <td>{squad.leagueName}</td>
                 <td>
-                  <button
-                    className="delete is-large is-pulled-right"
-                    onClick={() => onDeleteClick(squad)}
-                  >
-                    Delete
-                  </button>
+                  {userIsAuthenticated && (
+                    <button
+                      className="delete is-large is-pulled-right"
+                      onClick={() => onDeleteClick(squad)}
+                    >
+                      Delete
+                    </button>
+                  )}
                 </td>
               </tr>
             );
@@ -44,6 +46,7 @@ const SquadList = ({ squads, onDeleteClick }) => (
 SquadList.propTypes = {
   squads: PropTypes.array.isRequired,
   onDeleteClick: PropTypes.func.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
 };
 
 export default SquadList;

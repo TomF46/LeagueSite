@@ -1,12 +1,19 @@
-import { handleResponse, handleError } from "./apiUtils";
+import {
+  handleResponse,
+  handleError,
+  getDefaultHeaders,
+  getDefaultHeadersWithContentType,
+} from "./apiUtils";
 const baseUrl = process.env.API_URL + "/players/";
 
 export function getPlayers() {
-  return fetch(baseUrl).then(handleResponse).catch(handleError);
+  return fetch(baseUrl, { headers: getDefaultHeaders() })
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 export function getPlayerById(id) {
-  return fetch(baseUrl + id)
+  return fetch(baseUrl + id, { headers: getDefaultHeaders() })
     .then(handleResponse)
     .catch(handleError);
 }
@@ -14,7 +21,7 @@ export function getPlayerById(id) {
 export function savePlayer(player) {
   return fetch(baseUrl + (player.id || ""), {
     method: player.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
-    headers: { "content-type": "application/json" },
+    headers: getDefaultHeadersWithContentType(),
     body: JSON.stringify(player),
   })
     .then(handleResponse)
@@ -22,7 +29,10 @@ export function savePlayer(player) {
 }
 
 export function deletePlayer(playerId) {
-  return fetch(baseUrl + playerId, { method: "DELETE" })
+  return fetch(baseUrl + playerId, {
+    method: "DELETE",
+    headers: getDefaultHeaders(),
+  })
     .then(handleResponse)
     .catch(handleError);
 }

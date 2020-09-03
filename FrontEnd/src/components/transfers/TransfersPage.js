@@ -5,7 +5,13 @@ import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import TransferList from "./TransferList";
 
-const TransfersPage = ({ transfers, loading, loadTransfers, history }) => {
+const TransfersPage = ({
+  transfers,
+  loading,
+  loadTransfers,
+  userIsAuthenticated,
+  history,
+}) => {
   useEffect(() => {
     if (transfers.length === 0) {
       loadTransfers().catch((error) => {
@@ -24,13 +30,15 @@ const TransfersPage = ({ transfers, loading, loadTransfers, history }) => {
           <TransferList transfers={transfers} />
         </>
       )}
-      <button
-        style={{ marginBottom: 20 }}
-        className="button is-primary add-transfer is-pulled-right"
-        onClick={() => history.push("/transfer")}
-      >
-        Add Transfer
-      </button>
+      {userIsAuthenticated && (
+        <button
+          style={{ marginBottom: 20 }}
+          className="button is-primary add-transfer is-pulled-right"
+          onClick={() => history.push("/transfer")}
+        >
+          Add Transfer
+        </button>
+      )}
     </>
   );
 };
@@ -39,6 +47,7 @@ TransfersPage.propTypes = {
   transfers: PropTypes.array.isRequired,
   loadTransfers: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
 };
 
@@ -46,6 +55,7 @@ const mapStateToProps = (state) => {
   return {
     transfers: state.transfers,
     loading: state.apiCallsInProgress > 0,
+    userIsAuthenticated: state.user != null,
   };
 };
 

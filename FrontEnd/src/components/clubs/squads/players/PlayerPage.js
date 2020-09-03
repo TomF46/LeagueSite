@@ -12,6 +12,7 @@ const PlayerPage = ({
   loadPlayers,
   squadId,
   clubId,
+  userIsAuthenticated,
   ...props
 }) => {
   const [player, setPlayer] = useState({ ...props.player });
@@ -33,16 +34,18 @@ const PlayerPage = ({
       <>
         <h1 className="title is-1">
           {player.displayName}
-          <span
-            className="icon has-text-primary is-medium ml-4 pointer"
-            onClick={() =>
-              history.push(
-                `/club/${clubId}/squad/${squadId}/player/${player.id}/edit`
-              )
-            }
-          >
-            <ion-icon name="pencil-outline"></ion-icon>
-          </span>
+          {userIsAuthenticated && (
+            <span
+              className="icon has-text-primary is-medium ml-4 pointer"
+              onClick={() =>
+                history.push(
+                  `/club/${clubId}/squad/${squadId}/player/${player.id}/edit`
+                )
+              }
+            >
+              <ion-icon name="pencil-outline"></ion-icon>
+            </span>
+          )}
         </h1>
         <PlayerDetail player={player} />
       </>
@@ -56,6 +59,8 @@ PlayerPage.propTypes = {
   loadPlayers: PropTypes.func.isRequired,
   squadId: PropTypes.any.isRequired,
   clubId: PropTypes.any.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
+
   history: PropTypes.object.isRequired,
 };
 
@@ -77,6 +82,7 @@ const mapStateToProps = (state, ownProps) => {
     squadId,
     player,
     players: state.players,
+    userIsAuthenticated: state.user != null,
   };
 };
 

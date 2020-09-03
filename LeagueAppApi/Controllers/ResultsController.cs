@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LeagueAppApi.Models;
 using LeagueAppApi.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LeagueAppApi.Controllers
 {
@@ -27,6 +28,7 @@ namespace LeagueAppApi.Controllers
 
         // PUT: api/Results/5
         [HttpPut("{id}")]
+        [Authorize]
         public IActionResult PutResult(Result result)
         {
             _resultRepository.UpdateResult(result);
@@ -39,6 +41,7 @@ namespace LeagueAppApi.Controllers
 
         // POST: api/Results
         [HttpPost]
+        [Authorize]
         public ActionResult<Result> PostResult(Result result)
         {
 
@@ -50,6 +53,7 @@ namespace LeagueAppApi.Controllers
 
         // DELETE: api/Results/5
         [HttpDelete("{id}")]
+        [Authorize]
         public ActionResult<Fixture> DeleteResult(int id)
         {
             var fixture = _fixtureRepository.GetFixture(id);

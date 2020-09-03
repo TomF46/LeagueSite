@@ -8,7 +8,13 @@ import FixtureDetail from "./FixtureDetail";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 
-const FixturePage = ({ id, leagueId, seasonId, history }) => {
+const FixturePage = ({
+  id,
+  leagueId,
+  seasonId,
+  userIsAuthenticated,
+  history,
+}) => {
   const [fixture, setFixture] = useState(null);
 
   useEffect(() => {
@@ -70,26 +76,30 @@ const FixturePage = ({ id, leagueId, seasonId, history }) => {
   ) : (
     <>
       <FixtureDetail fixture={fixture} />
-      {fixture.complete ? (
-        <button
-          style={{ marginBottom: 20 }}
-          className="button is-primary remove-result"
-          onClick={() => handleRemoveResult(fixture)}
-        >
-          Remove result
-        </button>
-      ) : (
-        <button
-          style={{ marginBottom: 20 }}
-          className="button is-primary edit-result"
-          onClick={() =>
-            history.push(
-              `/league/${leagueId}/season/${seasonId}/fixture/${id}/result`
-            )
-          }
-        >
-          Add result
-        </button>
+      {userIsAuthenticated && (
+        <>
+          {fixture.complete ? (
+            <button
+              style={{ marginBottom: 20 }}
+              className="button is-primary remove-result"
+              onClick={() => handleRemoveResult(fixture)}
+            >
+              Remove result
+            </button>
+          ) : (
+            <button
+              style={{ marginBottom: 20 }}
+              className="button is-primary edit-result"
+              onClick={() =>
+                history.push(
+                  `/league/${leagueId}/season/${seasonId}/fixture/${id}/result`
+                )
+              }
+            >
+              Add result
+            </button>
+          )}
+        </>
       )}
     </>
   );
@@ -99,6 +109,7 @@ FixturePage.propTypes = {
   id: PropTypes.any.isRequired,
   leagueId: PropTypes.any.isRequired,
   seasonId: PropTypes.any.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
 };
 
@@ -110,6 +121,7 @@ const mapStateToProps = (state, ownProps) => {
     id,
     leagueId,
     seasonId,
+    userIsAuthenticated: state.user != null,
   };
 };
 

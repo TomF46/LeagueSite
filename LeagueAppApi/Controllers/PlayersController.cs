@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LeagueAppApi.Models;
 using LeagueAppApi.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LeagueAppApi.Controllers
 {
@@ -59,6 +60,7 @@ namespace LeagueAppApi.Controllers
 
         // PUT: api/Players/5
         [HttpPut("{id}")]
+        [Authorize]
         public IActionResult PutPlayer(PlayerUpdateDto player)
         {
             var playerToUpdate = _playerRepository.GetPlayer(player.Id);
@@ -75,6 +77,7 @@ namespace LeagueAppApi.Controllers
 
         // POST: api/Players
         [HttpPost]
+        [Authorize]
         public ActionResult<Player> PostPlayer(PlayerCreationDto player)
         {
             var savedObject = _playerRepository.AddPlayer(player);
@@ -96,6 +99,7 @@ namespace LeagueAppApi.Controllers
 
         // DELETE: api/Players/5
         [HttpDelete("{id}")]
+        [Authorize]
         public ActionResult<Player> DeletePlayer(int id)
         {
             var player = _playerRepository.GetPlayer(id);

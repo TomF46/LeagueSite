@@ -8,7 +8,13 @@ import ClubList from "./ClubList";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 
-const ClubsPage = ({ clubs, actions, loading, history }) => {
+const ClubsPage = ({
+  clubs,
+  actions,
+  loading,
+  userIsAuthenticated,
+  history,
+}) => {
   useEffect(() => {
     if (clubs.length === 0) {
       actions.loadClubs().catch((error) => {
@@ -50,14 +56,20 @@ const ClubsPage = ({ clubs, actions, loading, history }) => {
         <Spinner />
       ) : (
         <>
-          <ClubList clubs={clubs} onDeleteClick={handleDeleteClub} />
-          <button
-            style={{ marginBottom: 20 }}
-            className="button is-primary add-club is-pulled-right"
-            onClick={() => history.push("/club")}
-          >
-            Add Club
-          </button>
+          <ClubList
+            clubs={clubs}
+            onDeleteClick={handleDeleteClub}
+            userIsAuthenticated={userIsAuthenticated}
+          />
+          {userIsAuthenticated && (
+            <button
+              style={{ marginBottom: 20 }}
+              className="button is-primary add-club is-pulled-right"
+              onClick={() => history.push("/club")}
+            >
+              Add Club
+            </button>
+          )}
         </>
       )}
     </>
@@ -68,6 +80,7 @@ ClubsPage.propTypes = {
   actions: PropTypes.object.isRequired,
   clubs: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
 };
 
@@ -75,6 +88,7 @@ const mapStateToProps = (state) => {
   return {
     clubs: state.clubs,
     loading: state.apiCallsInProgress > 0,
+    userIsAuthenticated: state.user != null,
   };
 };
 

@@ -6,4 +6,5 @@ export default {
   leagues: [],
   seasons: [],
   apiCallsInProgress: 0,
+  user: null,
 };

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LeagueAppApi.Models;
 using LeagueAppApi.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LeagueAppApi.Controllers
 {
@@ -76,6 +77,7 @@ namespace LeagueAppApi.Controllers
 
         // PUT: api/Seasons/5
         [HttpPut("{id}")]
+        [Authorize]
         public IActionResult PutSeason(SeasonUpdateDto season)
         {
             var productToUpdate = _seasonRepository.GetSeason(season.Id);
@@ -92,6 +94,7 @@ namespace LeagueAppApi.Controllers
 
         // POST: api/Seasons
         [HttpPost]
+        [Authorize]
         public ActionResult<Season> PostSeason(SeasonCreationDto season)
         {
 
@@ -103,6 +106,7 @@ namespace LeagueAppApi.Controllers
 
         // DELETE: api/Seasons/5
         [HttpDelete("{id}")]
+        [Authorize]
         public ActionResult<Season> DeleteSeason(int id)
         {
             var season = _seasonRepository.GetSeason(id);

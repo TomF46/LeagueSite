@@ -52,6 +52,11 @@ const newResult = {
   awayGoalScorers: [],
 };
 
+const newLoginDetails = {
+  username: "",
+  password: "",
+};
+
 module.exports = {
   newClub,
   newSquad,
@@ -61,4 +66,5 @@ module.exports = {
   newLeageAddition,
   newSeason,
   newResult,
+  newLoginDetails,
 };

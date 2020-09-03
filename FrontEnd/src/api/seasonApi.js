@@ -1,12 +1,19 @@
-import { handleResponse, handleError } from "./apiUtils";
+import {
+  handleResponse,
+  handleError,
+  getDefaultHeaders,
+  getDefaultHeadersWithContentType,
+} from "./apiUtils";
 const baseUrl = process.env.API_URL + "/seasons/";
 
 export function getSeasons() {
-  return fetch(baseUrl).then(handleResponse).catch(handleError);
+  return fetch(baseUrl, { headers: getDefaultHeaders() })
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 export function getSeasonById(id) {
-  return fetch(baseUrl + id)
+  return fetch(baseUrl + id, { headers: getDefaultHeaders() })
     .then(handleResponse)
     .catch(handleError);
 }
@@ -14,7 +21,7 @@ export function getSeasonById(id) {
 export function saveSeason(season) {
   return fetch(baseUrl + (season.id || ""), {
     method: season.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
-    headers: { "content-type": "application/json" },
+    headers: getDefaultHeadersWithContentType(),
     body: JSON.stringify(season),
   })
     .then(handleResponse)
@@ -22,7 +29,10 @@ export function saveSeason(season) {
 }
 
 export function deleteSeason(seasonId) {
-  return fetch(baseUrl + seasonId, { method: "DELETE" })
+  return fetch(baseUrl + seasonId, {
+    method: "DELETE",
+    headers: getDefaultHeaders(),
+  })
     .then(handleResponse)
     .catch(handleError);
 }

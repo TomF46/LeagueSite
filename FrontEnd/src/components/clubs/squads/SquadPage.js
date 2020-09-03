@@ -22,6 +22,7 @@ const SquadPage = ({
   players,
   loadPlayers,
   deletePlayer,
+  userIsAuthenticated,
   ...props
 }) => {
   const [squad, setSquad] = useState({ ...props.squad });
@@ -77,14 +78,16 @@ const SquadPage = ({
       <>
         <h1 className="title is-1">
           {squad.name}
-          <span
-            className="icon has-text-primary is-medium ml-4 pointer"
-            onClick={() =>
-              history.push(`/club/${clubId}/squad/${squad.id}/edit`)
-            }
-          >
-            <ion-icon name="pencil-outline"></ion-icon>
-          </span>
+          {userIsAuthenticated && (
+            <span
+              className="icon has-text-primary is-medium ml-4 pointer"
+              onClick={() =>
+                history.push(`/club/${clubId}/squad/${squad.id}/edit`)
+              }
+            >
+              <ion-icon name="pencil-outline"></ion-icon>
+            </span>
+          )}
         </h1>
         <SquadDetail squad={squad} />
 
@@ -92,17 +95,20 @@ const SquadPage = ({
           <PlayerList
             players={squadPlayers}
             onDeleteClick={handlePlayerDelete}
+            userIsAuthenticated={userIsAuthenticated}
           />
         )}
-        <button
-          style={{ marginBottom: 20 }}
-          className="button is-primary add-player is-pulled-right"
-          onClick={() =>
-            history.push(`/club/${clubId}/squad/${squad.id}/player`)
-          }
-        >
-          Add Player
-        </button>
+        {userIsAuthenticated && (
+          <button
+            style={{ marginBottom: 20 }}
+            className="button is-primary add-player is-pulled-right"
+            onClick={() =>
+              history.push(`/club/${clubId}/squad/${squad.id}/player`)
+            }
+          >
+            Add Player
+          </button>
+        )}
       </>
     </>
   );
@@ -117,6 +123,7 @@ SquadPage.propTypes = {
   loadPlayers: PropTypes.func.isRequired,
   squadPlayers: PropTypes.array.isRequired,
   deletePlayer: PropTypes.func.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
 };
 
@@ -141,6 +148,7 @@ const mapStateToProps = (state, ownProps) => {
     squadPlayers,
     squads: state.squads,
     players: state.players,
+    userIsAuthenticated: state.user != null,
   };
 };
 

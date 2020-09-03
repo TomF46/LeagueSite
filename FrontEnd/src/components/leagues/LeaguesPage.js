@@ -8,7 +8,13 @@ import LeagueList from "./LeagueList";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
 
-const LeaguesPage = ({ leagues, actions, loading, history }) => {
+const LeaguesPage = ({
+  leagues,
+  actions,
+  loading,
+  userIsAuthenticated,
+  history,
+}) => {
   useEffect(() => {
     if (leagues.length === 0) {
       actions.loadLeagues().catch((error) => {
@@ -50,14 +56,20 @@ const LeaguesPage = ({ leagues, actions, loading, history }) => {
         <Spinner />
       ) : (
         <>
-          <LeagueList leagues={leagues} onDeleteClick={handleDeleteLeague} />
-          <button
-            style={{ marginBottom: 20 }}
-            className="button is-primary add-league is-pulled-right"
-            onClick={() => history.push("/league")}
-          >
-            Add League
-          </button>
+          <LeagueList
+            leagues={leagues}
+            onDeleteClick={handleDeleteLeague}
+            userIsAuthenticated={userIsAuthenticated}
+          />
+          {userIsAuthenticated && (
+            <button
+              style={{ marginBottom: 20 }}
+              className="button is-primary add-league is-pulled-right"
+              onClick={() => history.push("/league")}
+            >
+              Add League
+            </button>
+          )}
         </>
       )}
     </>
@@ -68,6 +80,7 @@ LeaguesPage.propTypes = {
   actions: PropTypes.object.isRequired,
   leagues: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
 };
 
@@ -75,6 +88,7 @@ const mapStateToProps = (state) => {
   return {
     leagues: state.leagues,
     loading: state.apiCallsInProgress > 0,
+    userIsAuthenticated: state.user != null,
   };
 };
 

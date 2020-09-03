@@ -1,12 +1,19 @@
-import { handleResponse, handleError } from "./apiUtils";
+import {
+  handleResponse,
+  handleError,
+  getDefaultHeaders,
+  getDefaultHeadersWithContentType,
+} from "./apiUtils";
 const baseUrl = process.env.API_URL + "/leagues/";
 
 export function getLeagues() {
-  return fetch(baseUrl).then(handleResponse).catch(handleError);
+  return fetch(baseUrl, { headers: getDefaultHeaders() })
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 export function getLeagueById(id) {
-  return fetch(baseUrl + id)
+  return fetch(baseUrl + id, { headers: getDefaultHeaders() })
     .then(handleResponse)
     .catch(handleError);
 }
@@ -14,7 +21,7 @@ export function getLeagueById(id) {
 export function saveLeague(league) {
   return fetch(baseUrl + (league.id || ""), {
     method: league.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
-    headers: { "content-type": "application/json" },
+    headers: getDefaultHeadersWithContentType(),
     body: JSON.stringify(league),
   })
     .then(handleResponse)
@@ -22,7 +29,10 @@ export function saveLeague(league) {
 }
 
 export function deleteLeague(leagueId) {
-  return fetch(baseUrl + leagueId, { method: "DELETE" })
+  return fetch(baseUrl + leagueId, {
+    method: "DELETE",
+    headers: getDefaultHeaders(),
+  })
     .then(handleResponse)
     .catch(handleError);
 }

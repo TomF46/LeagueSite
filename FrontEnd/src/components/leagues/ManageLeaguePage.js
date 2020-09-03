@@ -6,11 +6,13 @@ import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import LeagueForm from "./LeagueForm";
 import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
 
 const ManageLeaguePage = ({
   leagues,
   loadLeagues,
   saveLeague,
+  userIsAuthenticated,
   history,
   ...props
 }) => {
@@ -64,16 +66,22 @@ const ManageLeaguePage = ({
       });
   }
 
-  return leagues.length === 0 ? (
-    <Spinner />
-  ) : (
-    <LeagueForm
-      league={league}
-      errors={errors}
-      onChange={handleChange}
-      onSave={handleSave}
-      saving={saving}
-    />
+  return (
+    <>
+      {!userIsAuthenticated && <Redirect to="/" />}
+
+      {leagues.length === 0 ? (
+        <Spinner />
+      ) : (
+        <LeagueForm
+          league={league}
+          errors={errors}
+          onChange={handleChange}
+          onSave={handleSave}
+          saving={saving}
+        />
+      )}
+    </>
   );
 };
 
@@ -82,6 +90,7 @@ ManageLeaguePage.propTypes = {
   leagues: PropTypes.array.isRequired,
   loadLeagues: PropTypes.func.isRequired,
   saveLeague: PropTypes.func.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
 };
 
@@ -98,6 +107,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     league,
     leagues: state.leagues,
+    userIsAuthenticated: state.user != null,
   };
 };
 

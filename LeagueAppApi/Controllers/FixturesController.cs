@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using LeagueAppApi.Models;
 using LeagueAppApi.Services;
 using System.Collections.ObjectModel;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LeagueAppApi.Controllers
 {
@@ -88,6 +89,7 @@ namespace LeagueAppApi.Controllers
 
         // PUT: api/Fixtures/5
         [HttpPut("{id}")]
+        [Authorize]
         public IActionResult PutFixture(FixtureUpdateDto fixture)
         {
             var productToUpdate = _fixtureRepository.GetFixture(fixture.Id);
@@ -104,6 +106,7 @@ namespace LeagueAppApi.Controllers
 
         // POST: api/Fixtures
         [HttpPost]
+        [Authorize]
         public ActionResult<Fixture> PostFixture(FixtureCreationDto fixture)
         {
 
@@ -127,6 +130,7 @@ namespace LeagueAppApi.Controllers
 
         // DELETE: api/Fixtures/5
         [HttpDelete("{id}")]
+        [Authorize]
         public ActionResult<Fixture> DeleteFixture(int id)
         {
             var fixture = _fixtureRepository.GetFixture(id);

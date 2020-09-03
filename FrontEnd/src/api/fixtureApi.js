@@ -1,12 +1,19 @@
-import { handleResponse, handleError } from "./apiUtils";
+import {
+  handleResponse,
+  handleError,
+  getDefaultHeaders,
+  getDefaultHeadersWithContentType,
+} from "./apiUtils";
 const baseUrl = process.env.API_URL + "/fixtures/";
 
 export function getFixtures() {
-  return fetch(baseUrl).then(handleResponse).catch(handleError);
+  return fetch(baseUrl, { headers: getDefaultHeaders() })
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 export function getFixtureById(id) {
-  return fetch(baseUrl + id)
+  return fetch(baseUrl + id, { headers: getDefaultHeaders() })
     .then(handleResponse)
     .catch(handleError);
 }
@@ -14,7 +21,7 @@ export function getFixtureById(id) {
 export function saveFixture(fixture) {
   return fetch(baseUrl + (fixture.id || ""), {
     method: fixture.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
-    headers: { "content-type": "application/json" },
+    headers: getDefaultHeadersWithContentType(),
     body: JSON.stringify(fixture),
   })
     .then(handleResponse)
@@ -22,7 +29,10 @@ export function saveFixture(fixture) {
 }
 
 export function deleteFixture(fixtureId) {
-  return fetch(baseUrl + fixtureId, { method: "DELETE" })
+  return fetch(baseUrl + fixtureId, {
+    method: "DELETE",
+    headers: getDefaultHeaders(),
+  })
     .then(handleResponse)
     .catch(handleError);
 }

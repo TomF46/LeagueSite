@@ -1,10 +1,15 @@
-import { handleResponse, handleError } from "./apiUtils";
+import {
+  handleResponse,
+  handleError,
+  getDefaultHeadersWithContentType,
+  getDefaultHeaders,
+} from "./apiUtils";
 const baseUrl = process.env.API_URL + "/results/";
 
 export function saveResult(result) {
   return fetch(baseUrl, {
     method: "POST",
-    headers: { "content-type": "application/json" },
+    headers: getDefaultHeadersWithContentType(),
     body: JSON.stringify(result),
   })
     .then(handleResponse)
@@ -12,7 +17,10 @@ export function saveResult(result) {
 }
 
 export function deleteResult(fixture) {
-  return fetch(baseUrl + fixture.id, { method: "DELETE" })
+  return fetch(baseUrl + fixture.id, {
+    method: "DELETE",
+    headers: getDefaultHeaders(),
+  })
     .then(handleResponse)
     .catch(handleError);
 }

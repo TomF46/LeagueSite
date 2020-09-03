@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using LeagueAppApi.Models;
 using LeagueAppApi.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LeagueAppApi.Controllers
 {
@@ -58,6 +59,7 @@ namespace LeagueAppApi.Controllers
 
         // POST: api/Transfers
         [HttpPost]
+        [Authorize]
         public ActionResult<Transfer> PostTransfer(TransferCreationDto transfer)
         {
             var savedObject = _transferRepository.AddTransfer(transfer);

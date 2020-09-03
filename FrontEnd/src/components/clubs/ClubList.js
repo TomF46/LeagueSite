@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const ClubList = ({ clubs, onDeleteClick }) => (
+const ClubList = ({ clubs, onDeleteClick, userIsAuthenticated }) => (
   <div className="box">
     <table className="table is-striped is-fullwidth">
       <thead>
@@ -21,12 +21,14 @@ const ClubList = ({ clubs, onDeleteClick }) => (
               </td>
               <td>{club.location}</td>
               <td>
-                <button
-                  className="delete is-large is-pulled-right"
-                  onClick={() => onDeleteClick(club)}
-                >
-                  Delete
-                </button>
+                {userIsAuthenticated && (
+                  <button
+                    className="delete is-large is-pulled-right"
+                    onClick={() => onDeleteClick(club)}
+                  >
+                    Delete
+                  </button>
+                )}
               </td>
             </tr>
           );
@@ -39,6 +41,7 @@ const ClubList = ({ clubs, onDeleteClick }) => (
 ClubList.propTypes = {
   clubs: PropTypes.array.isRequired,
   onDeleteClick: PropTypes.func.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
 };
 
 export default ClubList;

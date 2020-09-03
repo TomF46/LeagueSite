@@ -21,6 +21,7 @@ import ManageSeasonPage from "./leagues/seasons/ManageSeasonPage";
 import FixturePage from "./leagues/seasons/fixtures/FixturePage";
 import ManageResultPage from "./leagues/seasons/fixtures/ManageResultPage";
 import LeagueTablePage from "./leagues/seasons/LeagueTablePage";
+import LoginPage from "./authentication/LoginPage";
 
 const App = () => (
   <>
@@ -77,6 +78,7 @@ const App = () => (
           <Route path="/league/:id/edit" component={ManageLeaguePage} />
           <Route path="/league/:id" component={LeaguePage} />
           <Route path="/league" component={ManageLeaguePage} />
+          <Route path="/login" component={LoginPage} />
         </Switch>
       </div>
     </section>

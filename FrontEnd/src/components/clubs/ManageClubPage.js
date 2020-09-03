@@ -6,8 +6,16 @@ import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import ClubForm from "./ClubForm";
 import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
 
-const ManageClubPage = ({ clubs, loadClubs, saveClub, history, ...props }) => {
+const ManageClubPage = ({
+  clubs,
+  loadClubs,
+  saveClub,
+  userIsAuthenticated,
+  history,
+  ...props
+}) => {
   const [club, setClub] = useState({ ...props.club });
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
@@ -60,16 +68,21 @@ const ManageClubPage = ({ clubs, loadClubs, saveClub, history, ...props }) => {
       });
   }
 
-  return clubs.length === 0 ? (
-    <Spinner />
-  ) : (
-    <ClubForm
-      club={club}
-      errors={errors}
-      onChange={handleChange}
-      onSave={handleSave}
-      saving={saving}
-    />
+  return (
+    <>
+      {!userIsAuthenticated && <Redirect to="/" />}
+      {clubs.length === 0 ? (
+        <Spinner />
+      ) : (
+        <ClubForm
+          club={club}
+          errors={errors}
+          onChange={handleChange}
+          onSave={handleSave}
+          saving={saving}
+        />
+      )}
+    </>
   );
 };
 
@@ -78,6 +91,8 @@ ManageClubPage.propTypes = {
   clubs: PropTypes.array.isRequired,
   loadClubs: PropTypes.func.isRequired,
   saveClub: PropTypes.func.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
+
   history: PropTypes.object.isRequired,
 };
 
@@ -92,6 +107,7 @@ const mapStateToProps = (state, ownProps) => {
   return {
     club,
     clubs: state.clubs,
+    userIsAuthenticated: state.user != null,
   };
 };
 

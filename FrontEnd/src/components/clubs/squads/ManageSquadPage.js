@@ -6,12 +6,14 @@ import PropTypes from "prop-types";
 import Spinner from "../../common/Spinner";
 import SquadForm from "./SquadForm";
 import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
 
 const ManageSquadPage = ({
   squads,
   clubId,
   loadSquads,
   saveSquad,
+  userIsAuthenticated,
   history,
   ...props
 }) => {
@@ -66,16 +68,21 @@ const ManageSquadPage = ({
       });
   }
 
-  return squads.length === 0 ? (
-    <Spinner />
-  ) : (
-    <SquadForm
-      squad={squad}
-      errors={errors}
-      onChange={handleChange}
-      onSave={handleSave}
-      saving={saving}
-    />
+  return (
+    <>
+      {!userIsAuthenticated && <Redirect to="/" />}
+      {squads.length === 0 ? (
+        <Spinner />
+      ) : (
+        <SquadForm
+          squad={squad}
+          errors={errors}
+          onChange={handleChange}
+          onSave={handleSave}
+          saving={saving}
+        />
+      )}
+    </>
   );
 };
 
@@ -85,6 +92,7 @@ ManageSquadPage.propTypes = {
   squads: PropTypes.array.isRequired,
   loadSquads: PropTypes.func.isRequired,
   saveSquad: PropTypes.func.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
 };
 
@@ -101,6 +109,7 @@ const mapStateToProps = (state, ownProps) => {
     clubId,
     squad,
     squads: state.squads,
+    userIsAuthenticated: state.user != null,
   };
 };
 

@@ -17,6 +17,7 @@ const ClubPage = ({
   loadClubs,
   loadSquads,
   deleteSquad,
+  userIsAuthenticated,
   history,
   ...props
 }) => {
@@ -73,25 +74,33 @@ const ClubPage = ({
       <>
         <h1 className="title is-1">
           {club.name}
-          <span
-            className="icon has-text-primary is-medium ml-4 pointer"
-            onClick={() => history.push(`/club/${club.id}/edit`)}
-          >
-            <ion-icon name="pencil-outline"></ion-icon>
-          </span>
+          {userIsAuthenticated && (
+            <span
+              className="icon has-text-primary is-medium ml-4 pointer"
+              onClick={() => history.push(`/club/${club.id}/edit`)}
+            >
+              <ion-icon name="pencil-outline"></ion-icon>
+            </span>
+          )}
         </h1>
         <ClubDetail club={club} />
 
         {squads.length > 0 && (
-          <SquadList squads={clubSquads} onDeleteClick={handleSquadDelete} />
+          <SquadList
+            squads={clubSquads}
+            onDeleteClick={handleSquadDelete}
+            userIsAuthenticated={userIsAuthenticated}
+          />
         )}
-        <button
-          style={{ marginBottom: 20 }}
-          className="button is-primary add-squad is-pulled-right"
-          onClick={() => history.push(`/club/${club.id}/squad`)}
-        >
-          Add Squad
-        </button>
+        {userIsAuthenticated && (
+          <button
+            style={{ marginBottom: 20 }}
+            className="button is-primary add-squad is-pulled-right"
+            onClick={() => history.push(`/club/${club.id}/squad`)}
+          >
+            Add Squad
+          </button>
+        )}
       </>
     </>
   );
@@ -105,6 +114,7 @@ ClubPage.propTypes = {
   loadClubs: PropTypes.func.isRequired,
   loadSquads: PropTypes.func.isRequired,
   deleteSquad: PropTypes.func.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
 };
 
@@ -126,6 +136,7 @@ const mapStateToProps = (state, ownProps) => {
     clubSquads,
     clubs: state.clubs,
     squads: state.squads,
+    userIsAuthenticated: state.user != null,
   };
 };
 

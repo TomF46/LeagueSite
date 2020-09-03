@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import Spinner from "../../common/Spinner";
 import SeasonForm from "./SeasonForm";
 import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
 
 const ManageSeasonPage = ({
   seasons,
@@ -13,6 +14,7 @@ const ManageSeasonPage = ({
   saveSeason,
   history,
   leagueId,
+  userIsAuthenticated,
   ...props
 }) => {
   const [season, setSeason] = useState({ ...props.season });
@@ -68,16 +70,21 @@ const ManageSeasonPage = ({
       });
   }
 
-  return seasons.length === 0 ? (
-    <Spinner />
-  ) : (
-    <SeasonForm
-      season={season}
-      errors={errors}
-      onChange={handleChange}
-      onSave={handleSave}
-      saving={saving}
-    />
+  return (
+    <>
+      {!userIsAuthenticated && <Redirect to="/" />}
+      {seasons.length === 0 ? (
+        <Spinner />
+      ) : (
+        <SeasonForm
+          season={season}
+          errors={errors}
+          onChange={handleChange}
+          onSave={handleSave}
+          saving={saving}
+        />
+      )}
+    </>
   );
 };
 
@@ -87,6 +94,7 @@ ManageSeasonPage.propTypes = {
   leagueId: PropTypes.any.isRequired,
   loadSeasons: PropTypes.func.isRequired,
   saveSeason: PropTypes.func.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
 };
 
@@ -105,6 +113,7 @@ const mapStateToProps = (state, ownProps) => {
     leagueId,
     season,
     seasons: state.seasons,
+    userIsAuthenticated: state.user != null,
   };
 };
 

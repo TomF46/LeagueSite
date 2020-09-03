@@ -1,12 +1,19 @@
-import { handleResponse, handleError } from "./apiUtils";
+import {
+  handleResponse,
+  handleError,
+  getDefaultHeaders,
+  getDefaultHeadersWithContentType,
+} from "./apiUtils";
 const baseUrl = process.env.API_URL + "/clubs/";
 
 export function getClubs() {
-  return fetch(baseUrl).then(handleResponse).catch(handleError);
+  return fetch(baseUrl, { headers: getDefaultHeaders() })
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 export function getClubById(id) {
-  return fetch(baseUrl + id)
+  return fetch(baseUrl + id, { headers: getDefaultHeaders() })
     .then(handleResponse)
     .catch(handleError);
 }
@@ -14,7 +21,7 @@ export function getClubById(id) {
 export function saveClub(club) {
   return fetch(baseUrl + (club.id || ""), {
     method: club.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
-    headers: { "content-type": "application/json" },
+    headers: getDefaultHeadersWithContentType(),
     body: JSON.stringify(club),
   })
     .then(handleResponse)
@@ -22,7 +29,10 @@ export function saveClub(club) {
 }
 
 export function deleteClub(clubId) {
-  return fetch(baseUrl + clubId, { method: "DELETE" })
+  return fetch(baseUrl + clubId, {
+    method: "DELETE",
+    headers: getDefaultHeaders(),
+  })
     .then(handleResponse)
     .catch(handleError);
 }

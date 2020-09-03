@@ -9,6 +9,7 @@ import Spinner from "../common/Spinner";
 import TransferForm from "./TransferForm";
 import { newTransfer } from "../../../tools/mockData";
 import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
 
 const TransferPage = ({
   players,
@@ -17,6 +18,7 @@ const TransferPage = ({
   loadSquads,
   saveTransfer,
   loading,
+  userIsAuthenticated,
   history,
 }) => {
   const [transfer, setTransfer] = useState({ ...newTransfer });
@@ -81,6 +83,7 @@ const TransferPage = ({
 
   return (
     <>
+      {!userIsAuthenticated && <Redirect to="/" />}
       {loading ? (
         <Spinner />
       ) : (
@@ -105,6 +108,7 @@ TransferPage.propTypes = {
   loadPlayers: PropTypes.func.isRequired,
   saveTransfer: PropTypes.func.isRequired,
   loading: PropTypes.bool.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
 };
 
@@ -113,6 +117,7 @@ const mapStateToProps = (state) => {
     squads: state.squads,
     players: state.players,
     loading: state.apiCallsInProgress > 0,
+    userIsAuthenticated: state.user != null,
   };
 };
 

@@ -9,6 +9,7 @@ import PropTypes from "prop-types";
 import Spinner from "../../../common/Spinner";
 import PlayerForm from "./PlayerForm";
 import { toast } from "react-toastify";
+import { Redirect } from "react-router-dom";
 
 const ManagePlayerPage = ({
   players,
@@ -16,6 +17,7 @@ const ManagePlayerPage = ({
   squadId,
   loadPlayers,
   savePlayer,
+  userIsAuthenticated,
   history,
   ...props
 }) => {
@@ -73,16 +75,21 @@ const ManagePlayerPage = ({
       });
   }
 
-  return players.length === 0 ? (
-    <Spinner />
-  ) : (
-    <PlayerForm
-      player={player}
-      errors={errors}
-      onChange={handleChange}
-      onSave={handleSave}
-      saving={saving}
-    />
+  return (
+    <>
+      {!userIsAuthenticated && <Redirect to="/" />}
+      {players.length === 0 ? (
+        <Spinner />
+      ) : (
+        <PlayerForm
+          player={player}
+          errors={errors}
+          onChange={handleChange}
+          onSave={handleSave}
+          saving={saving}
+        />
+      )}
+    </>
   );
 };
 
@@ -93,6 +100,7 @@ ManagePlayerPage.propTypes = {
   players: PropTypes.array.isRequired,
   loadPlayers: PropTypes.func.isRequired,
   savePlayer: PropTypes.func.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
 };
 
@@ -114,6 +122,7 @@ const mapStateToProps = (state, ownProps) => {
     squadId,
     player,
     players: state.players,
+    userIsAuthenticated: state.user != null,
   };
 };
 

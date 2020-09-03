@@ -1,19 +1,28 @@
-import { handleResponse, handleError } from "./apiUtils";
+import {
+  handleResponse,
+  handleError,
+  getDefaultHeaders,
+  getDefaultHeadersWithContentType,
+} from "./apiUtils";
 const baseUrl = process.env.API_URL + "/squads/";
 const baseUrlForQueryString = process.env.API_URL + "/squads";
 
 export function getSquads() {
-  return fetch(baseUrl).then(handleResponse).catch(handleError);
+  return fetch(baseUrl, { headers: getDefaultHeaders() })
+    .then(handleResponse)
+    .catch(handleError);
 }
 
 export function getSquadById(id) {
-  return fetch(baseUrl + id)
+  return fetch(baseUrl + id, { headers: getDefaultHeaders() })
     .then(handleResponse)
     .catch(handleError);
 }
 
 export function getSquadByClubId(id) {
-  return fetch(baseUrlForQueryString + "?clubId=" + id)
+  return fetch(baseUrlForQueryString + "?clubId=" + id, {
+    headers: getDefaultHeaders(),
+  })
     .then(handleResponse)
     .catch(handleError);
 }
@@ -21,7 +30,7 @@ export function getSquadByClubId(id) {
 export function saveSquad(squad) {
   return fetch(baseUrl + (squad.id || ""), {
     method: squad.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.
-    headers: { "content-type": "application/json" },
+    headers: getDefaultHeadersWithContentType(),
     body: JSON.stringify(squad),
   })
     .then(handleResponse)
@@ -31,7 +40,7 @@ export function saveSquad(squad) {
 export function AddSquadToLeague(req) {
   return fetch(baseUrl + "AddToLeague", {
     method: "POST", // POST for create, PUT to update when id already exists.
-    headers: { "content-type": "application/json" },
+    headers: getDefaultHeadersWithContentType(),
     body: JSON.stringify(req),
   })
     .then(handleResponse)
@@ -39,7 +48,10 @@ export function AddSquadToLeague(req) {
 }
 
 export function deleteSquad(squadId) {
-  return fetch(baseUrl + squadId, { method: "DELETE" })
+  return fetch(baseUrl + squadId, {
+    method: "DELETE",
+    headers: getDefaultHeaders(),
+  })
     .then(handleResponse)
     .catch(handleError);
 }

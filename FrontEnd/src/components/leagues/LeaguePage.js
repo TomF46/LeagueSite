@@ -26,6 +26,7 @@ const LeaguePage = ({
   seasons,
   leagueSeasons,
   loadSeasons,
+  userIsAuthenticated,
   history,
   ...props
 }) => {
@@ -112,34 +113,40 @@ const LeaguePage = ({
       <>
         <h1 className="title is-1">
           {league.name}
-          <span
-            className="icon has-text-primary is-medium ml-4 pointer"
-            onClick={() => history.push(`/league/${league.id}/edit`)}
-          >
-            <ion-icon name="pencil-outline"></ion-icon>
-          </span>
+          {userIsAuthenticated && (
+            <span
+              className="icon has-text-primary is-medium ml-4 pointer"
+              onClick={() => history.push(`/league/${league.id}/edit`)}
+            >
+              <ion-icon name="pencil-outline"></ion-icon>
+            </span>
+          )}
         </h1>
         <LeagueDetail league={league} />
 
         {squads.length > 0 && <ParticipantList participants={leagueSquads} />}
 
-        <AddTeamForm
-          squads={squads}
-          leagueAddition={leagueAddition}
-          errors={errors}
-          onChange={handleChange}
-          onSave={handleSave}
-          saving={saving}
-        />
+        {userIsAuthenticated && (
+          <AddTeamForm
+            squads={squads}
+            leagueAddition={leagueAddition}
+            errors={errors}
+            onChange={handleChange}
+            onSave={handleSave}
+            saving={saving}
+          />
+        )}
         {seasons.length > 0 && <SeasonList seasons={leagueSeasons} />}
 
-        <button
-          style={{ marginBottom: 20 }}
-          className="button is-primary add-season is-pulled-right"
-          onClick={() => history.push(`/league/${league.id}/season`)}
-        >
-          Add season
-        </button>
+        {userIsAuthenticated && (
+          <button
+            style={{ marginBottom: 20 }}
+            className="button is-primary add-season is-pulled-right"
+            onClick={() => history.push(`/league/${league.id}/season`)}
+          >
+            Add season
+          </button>
+        )}
       </>
     </>
   );
@@ -157,6 +164,7 @@ LeaguePage.propTypes = {
   loadSeasons: PropTypes.func.isRequired,
   deleteSquad: PropTypes.func.isRequired,
   addSquadToLeague: PropTypes.func.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
 };
 
@@ -189,6 +197,7 @@ const mapStateToProps = (state, ownProps) => {
     leagues: state.leagues,
     squads: state.squads,
     seasons: state.seasons,
+    userIsAuthenticated: state.user != null,
   };
 };
 
