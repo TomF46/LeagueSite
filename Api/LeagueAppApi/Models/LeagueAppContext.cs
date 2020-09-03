@@ -32,5 +32,6 @@ namespace LeagueAppApi.Models
         public DbSet<Season> Seasons { get; set; }
         public DbSet<Fixture> Fixtures { get; set; }
         public DbSet<GoalRecord> GoalRecords { get; set; }
+        public DbSet<User> Users { get; set; }
     }
 }
