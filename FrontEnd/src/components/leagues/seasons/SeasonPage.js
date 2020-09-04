@@ -13,7 +13,6 @@ const SeasonPage = ({ id, userIsAuthenticated, history }) => {
       SeasonApi.getSeasonById(id)
         .then((seasonData) => {
           setSeason(seasonData);
-          console.log(season);
         })
         .catch((error) => {
           console.log("Error getting the season data " + error);

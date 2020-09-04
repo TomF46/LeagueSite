@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
-const SeasonList = ({ seasons }) => (
+const SeasonList = ({ seasons, onDeleteClick, userIsAuthenticated }) => (
   <div className="my-4">
     <h3 className="title is-3">Seasons</h3>
     <div className="box">
@@ -11,6 +11,7 @@ const SeasonList = ({ seasons }) => (
           <tr>
             <th>Name</th>
             <th>Current season</th>
+            <th></th>
           </tr>
         </thead>
         <tbody>
@@ -23,6 +24,16 @@ const SeasonList = ({ seasons }) => (
                   </Link>
                 </td>
                 <td>{season.active ? "Yes" : "No"}</td>
+                <td>
+                  {userIsAuthenticated && (
+                    <button
+                      className="delete is-large is-pulled-right"
+                      onClick={() => onDeleteClick(season)}
+                    >
+                      Delete
+                    </button>
+                  )}
+                </td>
               </tr>
             );
           })}
@@ -34,6 +45,8 @@ const SeasonList = ({ seasons }) => (
 
 SeasonList.propTypes = {
   seasons: PropTypes.array.isRequired,
+  onDeleteClick: PropTypes.func.isRequired,
+  userIsAuthenticated: PropTypes.bool.isRequired,
 };
 
 export default SeasonList;

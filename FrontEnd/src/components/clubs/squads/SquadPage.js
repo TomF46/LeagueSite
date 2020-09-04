@@ -139,7 +139,6 @@ const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.squadId;
   const squad =
     id && state.squads.length > 0 ? getSquadById(state.squads, id) : newSquad;
-  console.log(squad);
   const clubId = ownProps.match.params.clubId;
   const squadPlayers = squad.id ? getSquadPlayers(state.players, squad) : [];
   return {

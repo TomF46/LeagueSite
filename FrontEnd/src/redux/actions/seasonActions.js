@@ -14,8 +14,8 @@ export function updateSeasonSuccess(season) {
   return { type: types.UPDATE_SEASON_SUCCESS, season };
 }
 
-export function deleteSeasonOptimistic() {
-  return { type: types.DELETE_SEASON_OPTIMISTIC };
+export function deleteSeasonOptimistic(season) {
+  return { type: types.DELETE_SEASON_OPTIMISTIC, season };
 }
 
 export function loadSeasons() {
@@ -35,7 +35,7 @@ export function loadSeasons() {
 
 export function saveSeason(season) {
   //eslint-disable-next-line no-unused-vars
-  return function (dispatch, getState) {
+  return function (dispatch) {
     dispatch(beginApiCall());
     return seasonApi
       .saveSeason(season)

@@ -68,7 +68,6 @@ const FixturePage = ({
   }, [players]);
 
   function setPlayers() {
-    console.log(fixture);
     let squads = {
       home: {
         name: fixture.homeTeamName,

@@ -19,19 +19,19 @@ namespace LeagueAppApi.Services
 
         public IEnumerable<Season> GetAllSeasons()
         {
-            return _context.Seasons.Include(x => x.League);
+            return _context.Seasons.Include(x => x.League).Where(x => !x.isDeleted);
         }
 
         public Season GetSeason(int id)
         {
-            return _context.Seasons.Include(x => x.League).Include(x => x.Fixtures).ThenInclude(x => x.HomeTeam).ThenInclude(x => x.Club).Include(x => x.Fixtures).ThenInclude(x => x.AwayTeam).ThenInclude(x => x.Club).FirstOrDefault(x => x.Id == id);
+            return _context.Seasons.Include(x => x.League).Include(x => x.Fixtures).ThenInclude(x => x.HomeTeam).ThenInclude(x => x.Club).Include(x => x.Fixtures).ThenInclude(x => x.AwayTeam).ThenInclude(x => x.Club).FirstOrDefault(x => x.Id == id && !x.isDeleted);
         }
 
         public Season AddSeason(SeasonCreationDto seasonDto)
         {
 
             //TODO create fixtures
-            var league = _context.Leagues.Include(x => x.ParticipantSquads).FirstOrDefault(league => league.Id == seasonDto.LeagueId);
+            var league = _context.Leagues.Include(x => x.ParticipantSquads).FirstOrDefault(league => league.Id == seasonDto.LeagueId && !league.isDeleted);
             if (league == null) throw new Exception("League does not exist"); //TODO return error nicely
 
             var season = new Season
@@ -58,8 +58,12 @@ namespace LeagueAppApi.Services
         public void DeleteSeason(Season season)
         {
             var fixturesToRemove = _context.Fixtures.Where(x => x.Season.Id == season.Id);
-            _context.Fixtures.RemoveRange(fixturesToRemove);
-            _context.Seasons.Remove(season);
+            fixturesToRemove.ToList().ForEach(fixture =>
+            {
+                fixture.isDeleted = true;
+            });
+            season.isDeleted = true;
+            _context.SaveChanges();
         }
 
         public void UpdateSeason(SeasonUpdateDto season)

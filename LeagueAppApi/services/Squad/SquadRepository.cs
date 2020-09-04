@@ -16,18 +16,18 @@ namespace LeagueAppApi.Services
 
         public IEnumerable<Squad> GetAllSquads()
         {
-            return _context.Squads.Include(x => x.Club).Include(x => x.League);
+            return _context.Squads.Include(x => x.Club).Include(x => x.League).Where(x => !x.isDeleted);
         }
 
         public Squad GetSquad(int id)
         {
-            return _context.Squads.Include(x => x.Club).Include(x => x.League).FirstOrDefault(x => x.Id == id);
+            return _context.Squads.Include(x => x.Club).Include(x => x.League).FirstOrDefault(x => x.Id == id && !x.isDeleted);
         }
 
         public Squad AddSquad(SquadCreationDto squadDto)
         {
 
-            var parentClub = _context.Clubs.FirstOrDefault(club => club.Id == squadDto.ClubId);
+            var parentClub = _context.Clubs.FirstOrDefault(club => club.Id == squadDto.ClubId && !club.isDeleted);
             if (parentClub == null) throw new Exception("Parent club does not exist"); //TODO return error nicely
 
             var squad = new Squad
@@ -48,7 +48,13 @@ namespace LeagueAppApi.Services
 
         public void DeleteSquad(Squad squad)
         {
-            _context.Squads.Remove(squad);
+            var playersToCascade = _context.Players.Where(player => player.Squad.Id == squad.Id);
+            playersToCascade.ToList().ForEach(player =>
+            {
+                player.isDeleted = true;
+            });
+            squad.isDeleted = true;
+            _context.SaveChanges();
         }
 
         public void UpdateSquad(SquadUpdateDto squad)

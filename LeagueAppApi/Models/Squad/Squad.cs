@@ -8,6 +8,7 @@ public class Squad
     public Club Club { get; set; }
     public ICollection<Player> Players { get; set; }
     public League League { get; set; }
+    public bool isDeleted { get; set; }
     [NotMapped]
     public string DisplayName
     {

@@ -1,23 +1,23 @@
 import React, { useEffect } from "react";
-import { bindActionCreators } from "redux";
-import * as leagueActions from "../../redux/actions/leagueActions";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import LeagueList from "./LeagueList";
 import { toast } from "react-toastify";
 import { confirmAlert } from "react-confirm-alert";
+import { deleteLeague, loadLeagues } from "../../redux/actions/leagueActions";
 
 const LeaguesPage = ({
   leagues,
-  actions,
   loading,
   userIsAuthenticated,
+  loadLeagues,
+  deleteLeague,
   history,
 }) => {
   useEffect(() => {
     if (leagues.length === 0) {
-      actions.loadLeagues().catch((error) => {
+      loadLeagues().catch((error) => {
         alert("Loading leagues failed " + error);
       });
     }
@@ -30,7 +30,7 @@ const LeaguesPage = ({
       buttons: [
         {
           label: "Yes",
-          onClick: () => deleteLeague(league),
+          onClick: () => removeLeague(league),
         },
         {
           label: "No",
@@ -40,10 +40,10 @@ const LeaguesPage = ({
     });
   };
 
-  const deleteLeague = async (league) => {
+  const removeLeague = async (league) => {
     toast.success("League deleted");
     try {
-      await actions.deleteLeague(league);
+      await deleteLeague(league);
     } catch (error) {
       toast.error("Delete failed. " + error.message, { autoClose: false });
     }
@@ -77,10 +77,11 @@ const LeaguesPage = ({
 };
 
 LeaguesPage.propTypes = {
-  actions: PropTypes.object.isRequired,
   leagues: PropTypes.array.isRequired,
   loading: PropTypes.bool.isRequired,
   userIsAuthenticated: PropTypes.bool.isRequired,
+  loadLeagues: PropTypes.func.isRequired,
+  deleteLeague: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
 };
 
@@ -92,13 +93,9 @@ const mapStateToProps = (state) => {
   };
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    actions: {
-      loadLeagues: bindActionCreators(leagueActions.loadLeagues, dispatch),
-      deleteLeague: bindActionCreators(leagueActions.deleteLeague, dispatch),
-    },
-  };
+const mapDispatchToProps = {
+  loadLeagues,
+  deleteLeague,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeaguesPage);

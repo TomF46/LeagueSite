@@ -18,24 +18,24 @@ namespace LeagueAppApi.Services
 
         public IEnumerable<Fixture> GetAllFixtures()
         {
-            return _context.Fixtures.Include(x => x.HomeTeam).Include(x => x.AwayTeam).Include(x => x.Season);
+            return _context.Fixtures.Include(x => x.HomeTeam).Include(x => x.AwayTeam).Include(x => x.Season).Where(x => !x.isDeleted);
         }
 
         public Fixture GetFixture(int id)
         {
-            return _context.Fixtures.Include(x => x.HomeTeam).ThenInclude(x => x.Club).Include(x => x.AwayTeam).ThenInclude(x => x.Club).Include(x => x.Season).Include(x => x.Goals).ThenInclude(x => x.Player).FirstOrDefault(x => x.Id == id);
+            return _context.Fixtures.Include(x => x.HomeTeam).ThenInclude(x => x.Club).Include(x => x.AwayTeam).ThenInclude(x => x.Club).Include(x => x.Season).Include(x => x.Goals).ThenInclude(x => x.Player).FirstOrDefault(x => x.Id == id && !x.isDeleted);
         }
 
         public Fixture AddFixture(FixtureCreationDto fixtureDto)
         {
 
-            var season = _context.Seasons.FirstOrDefault(season => season.Id == fixtureDto.SeasonId);
+            var season = _context.Seasons.FirstOrDefault(season => season.Id == fixtureDto.SeasonId && !season.isDeleted);
             if (season == null) throw new Exception("Season does not exist"); //TODO return error nicely
 
-            var homeSquad = _context.Squads.FirstOrDefault(squad => squad.Id == fixtureDto.HomeTeamId);
+            var homeSquad = _context.Squads.FirstOrDefault(squad => squad.Id == fixtureDto.HomeTeamId && !squad.isDeleted);
             if (homeSquad == null) throw new Exception("Home squad does not exist"); //TODO return error nicely
 
-            var awaySquad = _context.Squads.FirstOrDefault(squad => squad.Id == fixtureDto.AwayTeamId);
+            var awaySquad = _context.Squads.FirstOrDefault(squad => squad.Id == fixtureDto.AwayTeamId && !squad.isDeleted);
             if (awaySquad == null) throw new Exception("Away squad does not exist"); //TODO return error nicely
 
 
@@ -59,7 +59,8 @@ namespace LeagueAppApi.Services
 
         public void DeleteFixture(Fixture fixture)
         {
-            _context.Fixtures.Remove(fixture);
+            fixture.isDeleted = true;
+            _context.SaveChanges();
         }
 
         public void UpdateFixture(FixtureUpdateDto fixture)

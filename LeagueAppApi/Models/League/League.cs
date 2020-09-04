@@ -6,6 +6,7 @@ public class League
     public string Name { get; set; }
     public ICollection<Squad> ParticipantSquads { get; set; }
     public ICollection<Season> Seasons { get; set; }
+    public bool isDeleted { get; set; }
 
 
 }

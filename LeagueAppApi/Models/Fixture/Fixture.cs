@@ -14,4 +14,5 @@ public class Fixture
     public ICollection<GoalRecord> Goals { get; set; }
 
     public bool Complete { get; set; }
+    public bool isDeleted { get; set; }
 }

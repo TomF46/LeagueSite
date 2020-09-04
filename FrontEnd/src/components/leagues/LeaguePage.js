@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { loadLeagues } from "../../redux/actions/leagueActions";
-import { loadSeasons } from "../../redux/actions/seasonActions";
+import { loadSeasons, deleteSeason } from "../../redux/actions/seasonActions";
 
 import {
   loadSquads,
@@ -16,6 +16,7 @@ import ParticipantList from "./ParticipantList";
 import AddTeamForm from "./AddTeamForm";
 import { toast } from "react-toastify";
 import SeasonList from "./seasons/SeasonList";
+import { confirmAlert } from "react-confirm-alert";
 const LeaguePage = ({
   leagues,
   squads,
@@ -27,6 +28,7 @@ const LeaguePage = ({
   leagueSeasons,
   loadSeasons,
   userIsAuthenticated,
+  deleteSeason,
   history,
   ...props
 }) => {
@@ -106,6 +108,32 @@ const LeaguePage = ({
       });
   }
 
+  const handleDeleteSeason = (season) => {
+    confirmAlert({
+      title: "Confirm deletion",
+      message: `Are you sure you want to delete ${season.name}?`,
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => removeSeason(season),
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
+  };
+
+  const removeSeason = async (season) => {
+    toast.success("Season deleted");
+    try {
+      await deleteSeason(season);
+    } catch (error) {
+      toast.error("Delete failed. " + error.message, { autoClose: false });
+    }
+  };
+
   return leagues.length === 0 ? (
     <Spinner />
   ) : (
@@ -136,7 +164,13 @@ const LeaguePage = ({
             saving={saving}
           />
         )}
-        {seasons.length > 0 && <SeasonList seasons={leagueSeasons} />}
+        {seasons.length > 0 && (
+          <SeasonList
+            seasons={leagueSeasons}
+            onDeleteClick={handleDeleteSeason}
+            userIsAuthenticated={userIsAuthenticated}
+          />
+        )}
 
         {userIsAuthenticated && (
           <button
@@ -163,6 +197,7 @@ LeaguePage.propTypes = {
   loadSquads: PropTypes.func.isRequired,
   loadSeasons: PropTypes.func.isRequired,
   deleteSquad: PropTypes.func.isRequired,
+  deleteSeason: PropTypes.func.isRequired,
   addSquadToLeague: PropTypes.func.isRequired,
   userIsAuthenticated: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
@@ -207,6 +242,7 @@ const mapDispatchToProps = {
   deleteSquad,
   addSquadToLeague,
   loadSeasons,
+  deleteSeason,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeaguePage);

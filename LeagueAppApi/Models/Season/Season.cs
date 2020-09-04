@@ -7,4 +7,5 @@ public class Season
     public League League { get; set; }
     public bool Active { get; set; }
     public ICollection<Fixture> Fixtures { get; set; }
+    public bool isDeleted { get; set; }
 }

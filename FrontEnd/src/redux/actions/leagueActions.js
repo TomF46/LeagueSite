@@ -14,8 +14,8 @@ export function updateLeagueSuccess(league) {
   return { type: types.UPDATE_LEAGUE_SUCCESS, league };
 }
 
-export function deleteLeagueOptimistic() {
-  return { type: types.DELETE_LEAGUE_OPTIMISTIC };
+export function deleteLeagueOptimistic(league) {
+  return { type: types.DELETE_LEAGUE_OPTIMISTIC, league };
 }
 
 export function loadLeagues() {

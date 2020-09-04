@@ -16,7 +16,6 @@ export function loadTransfers() {
     return transferApi
       .getTransfers()
       .then((transfers) => {
-        console.log(transfers);
         dispatch(loadTransfersSuccess(transfers));
       })
       .catch((err) => {

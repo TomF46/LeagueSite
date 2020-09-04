@@ -8,19 +8,21 @@ namespace LeagueAppApi.Services
     public class ClubRepository : IClubRepository
     {
         private LeagueAppContext _context;
-        public ClubRepository(LeagueAppContext context)
+        private readonly ISquadRepository _squadRepository;
+        public ClubRepository(LeagueAppContext context, ISquadRepository squadRepository)
         {
             _context = context;
+            _squadRepository = squadRepository;
         }
 
         public IEnumerable<Club> GetAllClubs()
         {
-            return _context.Clubs;
+            return _context.Clubs.Where(x => !x.isDeleted);
         }
 
         public Club GetClub(int id)
         {
-            return _context.Clubs.Include(x => x.Squads).FirstOrDefault(x => x.Id == id);
+            return _context.Clubs.Include(x => x.Squads).FirstOrDefault(x => x.Id == id && !x.isDeleted);
         }
 
         public Club AddClub(ClubCreationDto clubDto)
@@ -42,7 +44,13 @@ namespace LeagueAppApi.Services
 
         public void DeleteClub(Club club)
         {
-            _context.Clubs.Remove(club);
+            var squadsToDelete = _context.Squads.Where(x => x.Club.Id == club.Id);
+            squadsToDelete.ToList().ForEach(squad =>
+            {
+                _squadRepository.DeleteSquad(squad);
+            });
+            club.isDeleted = true;
+            _context.SaveChanges();
         }
 
         public void UpdateClub(ClubUpdateDto club)

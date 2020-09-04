@@ -36,7 +36,6 @@ const LoginPage = ({ login, history, ...props }) => {
     event.preventDefault();
     if (!formIsValid()) return;
     setSubmitting(true);
-    console.log(userLoginDetails);
     login(userLoginDetails)
       .then(() => {
         toast.success("Logged in");
