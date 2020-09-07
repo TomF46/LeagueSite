@@ -42,6 +42,8 @@ const ManageLeaguePage = ({
     const { name } = league;
     const errors = {};
     if (!name) errors.name = "Name is required";
+    if (name.length > 40)
+      errors.name = "Name can't be longer than 40 characters.";
 
     setErrors(errors);
     return Object.keys(errors).length === 0;

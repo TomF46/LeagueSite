@@ -46,9 +46,13 @@ const ManagePlayerPage = ({
   function formIsValid() {
     const { firstName, lastName, position } = player;
     const errors = {};
-    if (!firstName) errors.firstName = "First Name is required";
-    if (!lastName) errors.firstName = "Last Name is required";
-    if (!position) errors.firstName = "Position is required";
+    if (!firstName) errors.firstName = "First Name is required.";
+    if (firstName.length > 40)
+      errors.firstName = "First name can't be longer than 40 characters.";
+    if (!lastName) errors.lastName = "Last Name is required.";
+    if (lastName.length > 40)
+      errors.firstName = "Last name can't be longer than 40 characters.";
+    if (!position) errors.position = "Position is required.";
 
     setErrors(errors);
     return Object.keys(errors).length === 0;

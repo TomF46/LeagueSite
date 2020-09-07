@@ -77,7 +77,7 @@ namespace LeagueAppApi.Controllers
             }
             catch (AppException ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(ex.Message);
             }
 
         }
@@ -107,7 +107,7 @@ namespace LeagueAppApi.Controllers
             }
             catch (AppException ex)
             {
-                return BadRequest(new { message = ex.Message });
+                return BadRequest(ex.Message);
             }
         }
 
