@@ -22,6 +22,10 @@ export function AddSquadToLeagueSuccess(squad) {
   return { type: types.ADD_SQUAD_TO_LEAGUE_SUCCESS, squad };
 }
 
+export function RemoveSquadFromLeagueSuccess(squad) {
+  return { type: types.REMOVE_SQUAD_FROM_LEAGUE_SUCCESS, squad };
+}
+
 export function loadSquads() {
   return function (dispatch) {
     dispatch(beginApiCall());
@@ -67,6 +71,15 @@ export function addSquadToLeague(relation) {
     dispatch(beginApiCall());
     return squadApi.AddSquadToLeague(relation).then((squad) => {
       dispatch(AddSquadToLeagueSuccess(squad));
+    });
+  };
+}
+
+export function removeSquadFromLeague(relation) {
+  return function (dispatch) {
+    dispatch(beginApiCall());
+    return squadApi.RemoveSquadFromLeague(relation).then((squad) => {
+      dispatch(RemoveSquadFromLeagueSuccess(squad));
     });
   };
 }

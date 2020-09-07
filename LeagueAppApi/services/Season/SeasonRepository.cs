@@ -33,6 +33,7 @@ namespace LeagueAppApi.Services
 
             //TODO create fixtures
             var league = _context.Leagues.Include(x => x.ParticipantSquads).FirstOrDefault(league => league.Id == seasonDto.LeagueId && !league.isDeleted);
+            if (league.ParticipantSquads.Count < 2) throw new AppException("League requires at least 2 participating teams");
             if (league == null) throw new AppException("League does not exist"); //TODO return error nicely
 
             var season = new Season

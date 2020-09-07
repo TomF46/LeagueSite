@@ -17,6 +17,10 @@ export default function SquadReducer(state = initialState.squads, action) {
       return state.map((squad) =>
         squad.id === action.squad.id ? action.squad : squad
       );
+    case types.REMOVE_SQUAD_FROM_LEAGUE_SUCCESS:
+      return state.map((squad) =>
+        squad.id === action.squad.id ? action.squad : squad
+      );
     default:
       return state;
   }

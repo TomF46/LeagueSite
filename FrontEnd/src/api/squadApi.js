@@ -55,3 +55,13 @@ export function deleteSquad(squadId) {
     .then(handleResponse)
     .catch(handleError);
 }
+
+export function RemoveSquadFromLeague(req) {
+  return fetch(baseUrl + "RemoveFromLeague", {
+    method: "DELETE", // POST for create, PUT to update when id already exists.
+    headers: getDefaultHeadersWithContentType(),
+    body: JSON.stringify(req),
+  })
+    .then(handleResponse)
+    .catch(handleError);
+}

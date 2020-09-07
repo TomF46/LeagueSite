@@ -130,11 +130,36 @@ namespace LeagueAppApi.Controllers
         [Authorize]
         public ActionResult<Squad> AddToLeague(AddToLeagueDto relation)
         {
+            try
+            {
+                var addedSquad = _squadRepository.AddToLeague(relation);
+                if (!_squadRepository.Save()) throw new Exception("Failed to add to league");
 
-            var addedSquad = _squadRepository.AddToLeague(relation);
-            if (!_squadRepository.Save()) throw new Exception("Failed to add to league");
+                return addedSquad;
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
 
-            return addedSquad;
+        // POST: api/Leagues
+        [HttpDelete]
+        [Route("removeFromLeague")]
+        [Authorize]
+        public ActionResult<Squad> RemoveFromLeague(RemoveFromLeagueDto relation)
+        {
+            try
+            {
+                var removedSquad = _squadRepository.RemoveFromLeague(relation);
+                if (!_squadRepository.Save()) throw new Exception("Failed to remove from league");
+
+                return removedSquad;
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

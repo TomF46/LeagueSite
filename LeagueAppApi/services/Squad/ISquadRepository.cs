@@ -11,6 +11,8 @@ namespace LeagueAppApi.Services
         void DeleteSquad(Squad squad);
         void UpdateSquad(SquadUpdateDto squad);
         Squad AddToLeague(AddToLeagueDto relation);
+        Squad RemoveFromLeague(RemoveFromLeagueDto relation);
+
 
     }
 }

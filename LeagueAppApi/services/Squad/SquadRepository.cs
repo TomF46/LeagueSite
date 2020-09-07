@@ -74,11 +74,24 @@ namespace LeagueAppApi.Services
             var squadToAdd = GetSquad(relation.SquadId);
 
             var league = _context.Leagues.FirstOrDefault(league => league.Id == relation.LeagueId);
-            if (league == null) throw new Exception("League  does not exist"); //TODO return error nicely
+            if (league == null) throw new AppException("League  does not exist");
 
             squadToAdd.League = league;
             _context.SaveChanges();
             return squadToAdd;
+        }
+
+        public Squad RemoveFromLeague(RemoveFromLeagueDto relation)
+        {
+
+            var squad = GetSquad(relation.SquadId);
+
+            var league = _context.Leagues.FirstOrDefault(league => league.Id == relation.LeagueId);
+            if (league == null) throw new AppException("League  does not exist");
+
+            league.ParticipantSquads.Remove(squad);
+            _context.SaveChanges();
+            return squad;
         }
 
         private void validate(Squad squad)

@@ -7,6 +7,7 @@ import {
   loadSquads,
   deleteSquad,
   addSquadToLeague,
+  removeSquadFromLeague,
 } from "../../redux/actions/squadActions";
 import { newLeague, newLeageAddition } from "../../../tools/mockData";
 import PropTypes from "prop-types";
@@ -29,6 +30,7 @@ const LeaguePage = ({
   loadSeasons,
   userIsAuthenticated,
   deleteSeason,
+  removeSquadFromLeague,
   history,
   ...props
 }) => {
@@ -134,6 +136,44 @@ const LeaguePage = ({
     }
   };
 
+  const handleDeleteParticipant = (participant) => {
+    confirmAlert({
+      title: "Confirm removal",
+      message: `Are you sure you want to remove ${participant.name} from the league?`,
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => removeParticipant(participant),
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
+  };
+
+  const removeParticipant = (participant) => {
+    console.log(participant);
+    var request = {
+      leagueId: league.id,
+      squadId: participant.id,
+    };
+    removeSquadFromLeague(request)
+      .then(() => {
+        loadLeagues().catch((error) => {
+          alert("Loading leagues failed " + error);
+        });
+        loadSquads().catch((error) => {
+          alert("Loading leagues failed " + error);
+        });
+        toast.success("Team removed.");
+      })
+      .catch((error) => {
+        toast.error("Delete failed. " + error.message, { autoClose: false });
+      });
+  };
+
   return leagues.length === 0 ? (
     <Spinner />
   ) : (
@@ -153,7 +193,11 @@ const LeaguePage = ({
         <LeagueDetail league={league} />
 
         {leagueSquads.length > 0 ? (
-          <ParticipantList participants={leagueSquads} />
+          <ParticipantList
+            participants={leagueSquads}
+            onDeleteClick={handleDeleteParticipant}
+            userIsAuthenticated={userIsAuthenticated}
+          />
         ) : (
           <div className="my-4">
             <h3 className="title is-3">Participants</h3>
@@ -259,6 +303,7 @@ const mapDispatchToProps = {
   addSquadToLeague,
   loadSeasons,
   deleteSeason,
+  removeSquadFromLeague,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeaguePage);
