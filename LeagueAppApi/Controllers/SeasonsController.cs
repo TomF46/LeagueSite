@@ -84,11 +84,18 @@ namespace LeagueAppApi.Controllers
 
             if (productToUpdate == null) return NotFound();
 
-            _seasonRepository.UpdateSeason(season);
+            try
+            {
+                _seasonRepository.UpdateSeason(season);
 
-            if (!_seasonRepository.Save()) throw new Exception("Failed to update season");
+                if (!_seasonRepository.Save()) throw new Exception("Failed to update season");
 
-            return Ok(season);
+                return Ok(season);
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
 
         }
 
@@ -97,11 +104,17 @@ namespace LeagueAppApi.Controllers
         [Authorize]
         public ActionResult<Season> PostSeason(SeasonCreationDto season)
         {
+            try
+            {
+                var createdSeason = _seasonRepository.AddSeason(season);
+                if (!_seasonRepository.Save()) throw new Exception("Failed to create season");
 
-            var createdSeason = _seasonRepository.AddSeason(season);
-            if (!_seasonRepository.Save()) throw new Exception("Failed to create season");
-
-            return CreatedAtAction("GetSeason", new { id = createdSeason.Id }, new SeasonSimpleDto { Id = createdSeason.Id, Name = createdSeason.Name, Active = createdSeason.Active, LeagueId = createdSeason.League.Id, LeagueName = createdSeason.League.Name });
+                return CreatedAtAction("GetSeason", new { id = createdSeason.Id }, new SeasonSimpleDto { Id = createdSeason.Id, Name = createdSeason.Name, Active = createdSeason.Active, LeagueId = createdSeason.League.Id, LeagueName = createdSeason.League.Name });
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         // DELETE: api/Seasons/5

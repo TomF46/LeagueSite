@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using LeagueAppApi.Models;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +43,7 @@ namespace LeagueAppApi.Services
             };
 
             season.Fixtures = CreateSeasonFixtures(season);
+            validate(season);
 
             _context.Seasons.Add(season);
 
@@ -71,6 +73,7 @@ namespace LeagueAppApi.Services
             var seasonToUpdate = GetSeason(season.Id);
             seasonToUpdate.Name = season.Name;
             seasonToUpdate.Active = season.Active;
+            validate(seasonToUpdate);
             _context.SaveChanges();
             return;
         }
@@ -106,5 +109,22 @@ namespace LeagueAppApi.Services
 
             return fixtures;
         }
+
+        private void validate(Season season)
+        {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(season, null, null);
+            if (!Validator.TryValidateObject(season, context, results, true))
+            {
+                var message = "";
+                results.ForEach(exception =>
+                {
+                    message = $"{message} {exception.ErrorMessage}";
+                });
+                throw new AppException(message);
+            }
+        }
+
+
     }
 }

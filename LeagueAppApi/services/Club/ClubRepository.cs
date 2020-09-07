@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using LeagueAppApi.Models;
 using Microsoft.EntityFrameworkCore;
@@ -32,6 +33,10 @@ namespace LeagueAppApi.Services
                 Name = clubDto.Name,
                 Location = clubDto.Location
             };
+
+            validate(club);
+
+
             _context.Clubs.Add(club);
             _context.SaveChanges();
             return club;
@@ -58,8 +63,25 @@ namespace LeagueAppApi.Services
             var clubToUpdate = GetClub(club.Id);
             clubToUpdate.Name = club.Name;
             clubToUpdate.Location = club.Location;
+            validate(clubToUpdate);
             _context.SaveChanges();
             return;
         }
+
+        private void validate(Club club)
+        {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(club, null, null);
+            if (!Validator.TryValidateObject(club, context, results, true))
+            {
+                var message = "";
+                results.ForEach(exception =>
+                {
+                    message = $"{message} {exception.ErrorMessage}";
+                });
+                throw new AppException(message);
+            }
+        }
+
     }
 }

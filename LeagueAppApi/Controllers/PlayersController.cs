@@ -67,11 +67,18 @@ namespace LeagueAppApi.Controllers
 
             if (playerToUpdate == null) return NotFound();
 
-            _playerRepository.UpdatePlayer(player);
+            try
+            {
+                _playerRepository.UpdatePlayer(player);
 
-            if (!_playerRepository.Save()) throw new Exception("Failed to update player");
+                if (!_playerRepository.Save()) throw new Exception("Failed to update player");
 
-            return Ok(player);
+                return Ok(player);
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
 
         }
 
@@ -80,21 +87,28 @@ namespace LeagueAppApi.Controllers
         [Authorize]
         public ActionResult<Player> PostPlayer(PlayerCreationDto player)
         {
-            var savedObject = _playerRepository.AddPlayer(player);
-            if (!_playerRepository.Save()) throw new Exception("Failed to create player");
-
-            return CreatedAtAction("GetPlayer", new { id = savedObject.Id }, new PlayerSimpleDto
+            try
             {
-                Id = savedObject.Id,
-                FirstName = savedObject.FirstName,
-                LastName = savedObject.LastName,
-                DisplayName = savedObject.DisplayName,
-                Position = savedObject.Position,
-                ClubId = savedObject.Club.Id,
-                ClubName = savedObject.Club.Name,
-                SquadId = savedObject.Squad.Id,
-                SquadName = savedObject.Squad.Name
-            });
+                var savedObject = _playerRepository.AddPlayer(player);
+                if (!_playerRepository.Save()) throw new Exception("Failed to create player");
+
+                return CreatedAtAction("GetPlayer", new { id = savedObject.Id }, new PlayerSimpleDto
+                {
+                    Id = savedObject.Id,
+                    FirstName = savedObject.FirstName,
+                    LastName = savedObject.LastName,
+                    DisplayName = savedObject.DisplayName,
+                    Position = savedObject.Position,
+                    ClubId = savedObject.Club.Id,
+                    ClubName = savedObject.Club.Name,
+                    SquadId = savedObject.Squad.Id,
+                    SquadName = savedObject.Squad.Name
+                });
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         // DELETE: api/Players/5

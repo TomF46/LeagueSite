@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using LeagueAppApi.Models;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +36,7 @@ namespace LeagueAppApi.Services
                 Name = squadDto.Name,
                 Club = parentClub
             };
+            validate(squad);
             _context.Squads.Add(squad);
             _context.SaveChanges();
             return squad;
@@ -61,6 +63,7 @@ namespace LeagueAppApi.Services
         {
             var squadToUpdate = GetSquad(squad.Id);
             squadToUpdate.Name = squad.Name;
+            validate(squadToUpdate);
             _context.SaveChanges();
             return;
         }
@@ -76,7 +79,21 @@ namespace LeagueAppApi.Services
             squadToAdd.League = league;
             _context.SaveChanges();
             return squadToAdd;
+        }
 
+        private void validate(Squad squad)
+        {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(squad, null, null);
+            if (!Validator.TryValidateObject(squad, context, results, true))
+            {
+                var message = "";
+                results.ForEach(exception =>
+                {
+                    message = $"{message} {exception.ErrorMessage}";
+                });
+                throw new AppException(message);
+            }
         }
     }
 }

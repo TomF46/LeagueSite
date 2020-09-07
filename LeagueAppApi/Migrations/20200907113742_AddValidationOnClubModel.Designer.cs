@@ -4,14 +4,16 @@ using LeagueAppApi.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LeagueAppApi.Migrations
 {
     [DbContext(typeof(LeagueAppContext))]
-    partial class LeagueAppContextModelSnapshot : ModelSnapshot
+    [Migration("20200907113742_AddValidationOnClubModel")]
+    partial class AddValidationOnClubModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -27,13 +29,13 @@ namespace LeagueAppApi.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Location")
-                        .HasColumnType("nvarchar(60)")
-                        .HasMaxLength(60);
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(40)")
-                        .HasMaxLength(40);
+                        .HasColumnType("nvarchar(50)")
+                        .HasMaxLength(50);
 
                     b.Property<bool>("isDeleted")
                         .HasColumnType("bit");
@@ -111,9 +113,7 @@ namespace LeagueAppApi.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(40)")
-                        .HasMaxLength(40);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("isDeleted")
                         .HasColumnType("bit");
@@ -155,14 +155,10 @@ namespace LeagueAppApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("FirstName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(40)")
-                        .HasMaxLength(40);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LastName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(40)")
-                        .HasMaxLength(40);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Position")
                         .HasColumnType("nvarchar(max)");
@@ -196,9 +192,7 @@ namespace LeagueAppApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(40)")
-                        .HasMaxLength(40);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("isDeleted")
                         .HasColumnType("bit");
@@ -224,9 +218,7 @@ namespace LeagueAppApi.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(50)")
-                        .HasMaxLength(50);
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("isDeleted")
                         .HasColumnType("bit");

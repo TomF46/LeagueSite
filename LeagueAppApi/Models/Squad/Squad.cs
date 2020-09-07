@@ -1,9 +1,12 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 public class Squad
 {
     public int Id { get; set; }
+    [Required]
+    [StringLength(50, ErrorMessage = "Name cannot be longer than 40 characters.")]
     public string Name { get; set; }
     public Club Club { get; set; }
     public ICollection<Player> Players { get; set; }

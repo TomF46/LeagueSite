@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using LeagueAppApi.Models;
 using Microsoft.EntityFrameworkCore;
@@ -33,6 +34,7 @@ namespace LeagueAppApi.Services
                 Name = leagueDto.Name,
                 ParticipantSquads = new Collection<Squad>(),
             };
+            validate(league);
             _context.Leagues.Add(league);
             _context.SaveChanges();
             return league;
@@ -58,8 +60,24 @@ namespace LeagueAppApi.Services
         {
             var leagueToUpdate = GetLeague(league.Id);
             leagueToUpdate.Name = league.Name;
+            validate(leagueToUpdate);
             _context.SaveChanges();
             return;
+        }
+
+        private void validate(League league)
+        {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(league, null, null);
+            if (!Validator.TryValidateObject(league, context, results, true))
+            {
+                var message = "";
+                results.ForEach(exception =>
+                {
+                    message = $"{message} {exception.ErrorMessage}";
+                });
+                throw new AppException(message);
+            }
         }
     }
 }

@@ -65,11 +65,18 @@ namespace LeagueAppApi.Controllers
 
             if (squadToUpdate == null) return NotFound();
 
-            _squadRepository.UpdateSquad(squad);
+            try
+            {
+                _squadRepository.UpdateSquad(squad);
 
-            if (!_squadRepository.Save()) throw new Exception("Failed to update squad");
+                if (!_squadRepository.Save()) throw new Exception("Failed to update squad");
 
-            return Ok(squad);
+                return Ok(squad);
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
 
         }
 
@@ -78,19 +85,26 @@ namespace LeagueAppApi.Controllers
         [Authorize]
         public ActionResult<Squad> PostSquad(SquadCreationDto squad)
         {
-            var savedObject = _squadRepository.AddSquad(squad);
-            if (!_squadRepository.Save()) throw new Exception("Failed to create squad");
+            try
+            {
+                var savedObject = _squadRepository.AddSquad(squad);
+                if (!_squadRepository.Save()) throw new Exception("Failed to create squad");
 
-            return CreatedAtAction("GetSquad", new { id = savedObject.Id },
-             new SquadSimpleDto
-             {
-                 Id = savedObject.Id,
-                 Name = savedObject.Name,
-                 ClubId = savedObject.Club.Id,
-                 ClubName = savedObject.Club.Name,
-                 LeagueId = savedObject.League == null ? (int?)null : savedObject.League.Id,
-                 LeagueName = savedObject.League == null ? null : savedObject.League.Name
-             });
+                return CreatedAtAction("GetSquad", new { id = savedObject.Id },
+                new SquadSimpleDto
+                {
+                    Id = savedObject.Id,
+                    Name = savedObject.Name,
+                    ClubId = savedObject.Club.Id,
+                    ClubName = savedObject.Club.Name,
+                    LeagueId = savedObject.League == null ? (int?)null : savedObject.League.Id,
+                    LeagueName = savedObject.League == null ? null : savedObject.League.Name
+                });
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         // DELETE: api/Squads/5

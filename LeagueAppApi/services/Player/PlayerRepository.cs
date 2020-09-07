@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using LeagueAppApi.Models;
 using Microsoft.EntityFrameworkCore;
@@ -28,10 +29,10 @@ namespace LeagueAppApi.Services
         {
 
             var parentClub = _context.Clubs.FirstOrDefault(club => club.Id == playerDto.ClubId && !club.isDeleted);
-            if (parentClub == null) throw new Exception("Parent club does not exist"); //TODO return error nicely
+            if (parentClub == null) throw new AppException("Parent club does not exist"); //TODO return error nicely
 
             var parentSquad = _context.Squads.FirstOrDefault(squad => squad.Id == playerDto.SquadId && !squad.isDeleted);
-            if (parentSquad == null) throw new Exception("Parent squad does not exist"); //TODO return error nicely
+            if (parentSquad == null) throw new AppException("Parent squad does not exist"); //TODO return error nicely
 
 
             var player = new Player
@@ -42,6 +43,8 @@ namespace LeagueAppApi.Services
                 Squad = parentSquad,
                 Club = parentClub
             };
+
+            validate(player);
             _context.Players.Add(player);
             _context.SaveChanges();
             return player;
@@ -65,8 +68,24 @@ namespace LeagueAppApi.Services
             playerToUpdate.FirstName = player.FirstName;
             playerToUpdate.LastName = player.LastName;
             playerToUpdate.Position = player.Position;
+            validate(playerToUpdate);
             _context.SaveChanges();
             return;
+        }
+
+        private void validate(Player player)
+        {
+            var results = new List<ValidationResult>();
+            var context = new ValidationContext(player, null, null);
+            if (!Validator.TryValidateObject(player, context, results, true))
+            {
+                var message = "";
+                results.ForEach(exception =>
+                {
+                    message = $"{message} {exception.ErrorMessage}";
+                });
+                throw new AppException(message);
+            }
         }
     }
 }

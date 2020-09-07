@@ -60,11 +60,19 @@ namespace LeagueAppApi.Controllers
 
             if (productToUpdate == null) return NotFound();
 
-            _leagueRepository.UpdateLeague(league);
+            try
+            {
 
-            if (!_leagueRepository.Save()) throw new Exception("Failed to update league");
+                _leagueRepository.UpdateLeague(league);
 
-            return Ok(league);
+                if (!_leagueRepository.Save()) throw new Exception("Failed to update league");
+
+                return Ok(league);
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
 
         }
 
@@ -73,11 +81,17 @@ namespace LeagueAppApi.Controllers
         [Authorize]
         public ActionResult<League> PostLeague(LeagueCreationDto league)
         {
+            try
+            {
+                var createdLeague = _leagueRepository.AddLeague(league);
+                if (!_leagueRepository.Save()) throw new Exception("Failed to create league");
 
-            var createdLeague = _leagueRepository.AddLeague(league);
-            if (!_leagueRepository.Save()) throw new Exception("Failed to create league");
-
-            return CreatedAtAction("GetLeague", new { id = createdLeague.Id }, new LeagueSimpleDto { Id = createdLeague.Id, Name = createdLeague.Name, NumberOfParticipants = createdLeague.ParticipantSquads.Count });
+                return CreatedAtAction("GetLeague", new { id = createdLeague.Id }, new LeagueSimpleDto { Id = createdLeague.Id, Name = createdLeague.Name, NumberOfParticipants = createdLeague.ParticipantSquads.Count });
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
         }
 
         // DELETE: api/Leagues/5

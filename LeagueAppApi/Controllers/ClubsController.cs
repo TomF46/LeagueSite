@@ -60,11 +60,18 @@ namespace LeagueAppApi.Controllers
 
             if (productToUpdate == null) return NotFound();
 
-            _clubRepository.UpdateClub(club);
+            try
+            {
+                _clubRepository.UpdateClub(club);
 
-            if (!_clubRepository.Save()) throw new Exception("Failed to update club");
+                if (!_clubRepository.Save()) throw new Exception("Failed to update club");
 
-            return Ok(club);
+                return Ok(club);
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
 
         }
 
@@ -73,11 +80,18 @@ namespace LeagueAppApi.Controllers
         [Authorize]
         public ActionResult<Club> PostClub(ClubCreationDto club)
         {
+            try
+            {
+                var createdClub = _clubRepository.AddClub(club);
+                if (!_clubRepository.Save()) throw new Exception("Failed to create club");
 
-            var createdClub = _clubRepository.AddClub(club);
-            if (!_clubRepository.Save()) throw new Exception("Failed to create club");
+                return CreatedAtAction("GetClub", new { id = createdClub.Id }, new ClubSimpleDto { Id = createdClub.Id, Name = createdClub.Name, Location = createdClub.Location });
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(new { message = ex.Message });
+            }
 
-            return CreatedAtAction("GetClub", new { id = createdClub.Id }, new ClubSimpleDto { Id = createdClub.Id, Name = createdClub.Name, Location = createdClub.Location });
         }
 
         // DELETE: api/Clubs/5
