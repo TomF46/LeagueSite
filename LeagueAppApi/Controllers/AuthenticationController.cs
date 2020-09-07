@@ -40,6 +40,7 @@ namespace WebApi.Controllers
             if (user == null)
                 return BadRequest(new { message = "Username or password is incorrect" });
 
+            var tokenExpiryTime = DateTime.UtcNow.AddDays(365);
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_appSettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
@@ -48,7 +49,7 @@ namespace WebApi.Controllers
                 {
                     new Claim(ClaimTypes.Name, user.Id.ToString())
                 }),
-                Expires = DateTime.UtcNow.AddDays(1),
+                Expires = tokenExpiryTime,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
@@ -58,7 +59,8 @@ namespace WebApi.Controllers
             {
                 Id = user.Id,
                 Username = user.Username,
-                Token = tokenString
+                Token = tokenString,
+                TokenExpiry = tokenExpiryTime
             });
         }
 
