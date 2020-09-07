@@ -152,7 +152,15 @@ const LeaguePage = ({
         </h1>
         <LeagueDetail league={league} />
 
-        {squads.length > 0 && <ParticipantList participants={leagueSquads} />}
+        {leagueSquads.length > 0 ? (
+          <ParticipantList participants={leagueSquads} />
+        ) : (
+          <div className="my-4">
+            <h3 className="title is-3">Participants</h3>
+            <p>There are currently no participants in this league league.</p>
+            {userIsAuthenticated && <p>Please add one using the form below.</p>}
+          </div>
+        )}
 
         {userIsAuthenticated && (
           <AddTeamForm
@@ -164,12 +172,20 @@ const LeaguePage = ({
             saving={saving}
           />
         )}
-        {seasons.length > 0 && (
+        {leagueSeasons.length > 0 ? (
           <SeasonList
             seasons={leagueSeasons}
             onDeleteClick={handleDeleteSeason}
             userIsAuthenticated={userIsAuthenticated}
           />
+        ) : (
+          <div className="my-4">
+            <h3 className="title is-3">Seasons</h3>
+            <p>There are currently no seasons available for this league.</p>
+            {userIsAuthenticated && (
+              <p>Please add one using the add season button.</p>
+            )}
+          </div>
         )}
 
         {userIsAuthenticated && (

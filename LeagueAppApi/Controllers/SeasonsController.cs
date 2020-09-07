@@ -69,7 +69,7 @@ namespace LeagueAppApi.Controllers
                     AwayTeamId = fixture.AwayTeam.Id,
                     AwayTeamName = fixture.AwayTeam.DisplayName,
                     AwayScore = fixture.AwayScore
-                }).ToList()
+                }).OrderBy(x => x.Date).ToList()
             };
 
             return Ok(dto);

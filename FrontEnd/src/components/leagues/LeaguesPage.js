@@ -56,11 +56,21 @@ const LeaguesPage = ({
         <Spinner />
       ) : (
         <>
-          <LeagueList
-            leagues={leagues}
-            onDeleteClick={handleDeleteLeague}
-            userIsAuthenticated={userIsAuthenticated}
-          />
+          {leagues.length > 0 ? (
+            <LeagueList
+              leagues={leagues}
+              onDeleteClick={handleDeleteLeague}
+              userIsAuthenticated={userIsAuthenticated}
+            />
+          ) : (
+            <div className="my-4">
+              <p>There are no leagues available to view.</p>
+              {userIsAuthenticated && (
+                <p>Please add one using the add season button.</p>
+              )}
+            </div>
+          )}
+
           {userIsAuthenticated && (
             <button
               style={{ marginBottom: 20 }}

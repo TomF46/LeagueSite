@@ -56,11 +56,20 @@ const ClubsPage = ({
         <Spinner />
       ) : (
         <>
-          <ClubList
-            clubs={clubs}
-            onDeleteClick={handleDeleteClub}
-            userIsAuthenticated={userIsAuthenticated}
-          />
+          {clubs.length > 0 ? (
+            <ClubList
+              clubs={clubs}
+              onDeleteClick={handleDeleteClub}
+              userIsAuthenticated={userIsAuthenticated}
+            />
+          ) : (
+            <div className="my-4">
+              <p>There are no clubs available to view.</p>
+              {userIsAuthenticated && (
+                <p>Please add one using the add club button.</p>
+              )}
+            </div>
+          )}
           {userIsAuthenticated && (
             <button
               style={{ marginBottom: 20 }}

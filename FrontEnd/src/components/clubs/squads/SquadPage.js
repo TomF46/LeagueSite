@@ -91,13 +91,22 @@ const SquadPage = ({
         </h1>
         <SquadDetail squad={squad} />
 
-        {squads.length > 0 && (
+        {squadPlayers.length > 0 ? (
           <PlayerList
             players={squadPlayers}
             onDeleteClick={handlePlayerDelete}
             userIsAuthenticated={userIsAuthenticated}
           />
+        ) : (
+          <div className="my-4">
+            <h3 className="title is-3">Players</h3>
+            <p>There are no players available to view.</p>
+            {userIsAuthenticated && (
+              <p>Please add one using the add player button.</p>
+            )}
+          </div>
         )}
+
         {userIsAuthenticated && (
           <button
             style={{ marginBottom: 20 }}

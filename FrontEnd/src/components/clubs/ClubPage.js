@@ -85,12 +85,20 @@ const ClubPage = ({
         </h1>
         <ClubDetail club={club} />
 
-        {squads.length > 0 && (
+        {clubSquads.length > 0 ? (
           <SquadList
             squads={clubSquads}
             onDeleteClick={handleSquadDelete}
             userIsAuthenticated={userIsAuthenticated}
           />
+        ) : (
+          <div className="my-4">
+            <h3 className="title is-3">Squads</h3>
+            <p>There are no squads available to view.</p>
+            {userIsAuthenticated && (
+              <p>Please add one using the add squad button.</p>
+            )}
+          </div>
         )}
         {userIsAuthenticated && (
           <button

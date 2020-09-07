@@ -27,7 +27,16 @@ const TransfersPage = ({
         <Spinner />
       ) : (
         <>
-          <TransferList transfers={transfers} />
+          {transfers.length > 0 ? (
+            <TransferList transfers={transfers} />
+          ) : (
+            <div className="my-4">
+              <p>There are no transfers available to view.</p>
+              {userIsAuthenticated && (
+                <p>Please add one using the add transfer button.</p>
+              )}
+            </div>
+          )}
         </>
       )}
       {userIsAuthenticated && (
