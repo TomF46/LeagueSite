@@ -57,7 +57,20 @@ namespace LeagueAppApi.Controllers
                 LeagueName = season.League.Name,
                 LeagueId = season.League.Id,
                 Active = season.Active,
-                Fixtures = season.Fixtures.Select(fixture => new FixtureSimpleDto
+                Fixtures = GroupFixtures(season)
+            };
+
+
+            return Ok(dto);
+        }
+
+        private ICollection<FixtureDate> GroupFixtures(Season season)
+        {
+            return season.Fixtures.GroupBy(fixture => fixture.Date.Value.Date)
+            .Select(group => new FixtureDate
+            {
+                Date = group.Key,
+                Fixtures = group.Select(fixture => new FixtureSimpleDto
                 {
                     Id = fixture.Id,
                     Date = fixture.Date,
@@ -69,10 +82,8 @@ namespace LeagueAppApi.Controllers
                     AwayTeamId = fixture.AwayTeam.Id,
                     AwayTeamName = fixture.AwayTeam.DisplayName,
                     AwayScore = fixture.AwayScore
-                }).OrderBy(x => x.Date).ToList()
-            };
-
-            return Ok(dto);
+                }).ToList()
+            }).OrderBy(x => x.Date).ToList();
         }
 
         // PUT: api/Seasons/5
