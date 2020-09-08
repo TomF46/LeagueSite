@@ -92,7 +92,7 @@ const ClubPage = ({
             userIsAuthenticated={userIsAuthenticated}
           />
         ) : (
-          <div className="my-4">
+          <div className="my-4 box">
             <h3 className="title is-3">Squads</h3>
             <p>There are no squads available to view.</p>
             {userIsAuthenticated && (

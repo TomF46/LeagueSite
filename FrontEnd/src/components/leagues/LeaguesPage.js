@@ -63,7 +63,7 @@ const LeaguesPage = ({
               userIsAuthenticated={userIsAuthenticated}
             />
           ) : (
-            <div className="my-4">
+            <div className="my-4 box">
               <p>There are no leagues available to view.</p>
               {userIsAuthenticated && (
                 <p>Please add one using the add season button.</p>

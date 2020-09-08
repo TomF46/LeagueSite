@@ -8,8 +8,8 @@ const ParticipantList = ({
   userIsAuthenticated,
 }) => (
   <div className="my-4">
-    <h3 className="title is-3">Participants</h3>
     <div className="box">
+      <h3 className="title is-3">Participants</h3>
       <table className="table is-striped is-fullwidth">
         <thead>
           <tr>

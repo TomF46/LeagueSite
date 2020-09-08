@@ -12,7 +12,7 @@ import {
 import { newLeague, newLeageAddition } from "../../../tools/mockData";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
-import LeagueDetail from "./LeagueDetail";
+// import LeagueDetail from "./LeagueDetail";
 import ParticipantList from "./ParticipantList";
 import AddTeamForm from "./AddTeamForm";
 import { toast } from "react-toastify";
@@ -31,6 +31,7 @@ const LeaguePage = ({
   userIsAuthenticated,
   deleteSeason,
   removeSquadFromLeague,
+  currentSeason,
   history,
   ...props
 }) => {
@@ -190,7 +191,7 @@ const LeaguePage = ({
             </span>
           )}
         </h1>
-        <LeagueDetail league={league} />
+        {/* <LeagueDetail league={league} /> */}
 
         {leagueSquads.length > 0 ? (
           <ParticipantList
@@ -199,7 +200,7 @@ const LeaguePage = ({
             userIsAuthenticated={userIsAuthenticated}
           />
         ) : (
-          <div className="my-4">
+          <div className="my-4 box">
             <h3 className="title is-3">Participants</h3>
             <p>There are currently no participants in this league league.</p>
             {userIsAuthenticated && <p>Please add one using the form below.</p>}
@@ -217,13 +218,48 @@ const LeaguePage = ({
           />
         )}
         {leagueSeasons.length > 0 ? (
-          <SeasonList
-            seasons={leagueSeasons}
-            onDeleteClick={handleDeleteSeason}
-            userIsAuthenticated={userIsAuthenticated}
-          />
+          <>
+            {currentSeason && (
+              <div className="my-4">
+                <div>
+                  <div className="box">
+                    <h3 className="title is-3">Current Season</h3>
+                    <h4 className="title is-4">{`${currentSeason.leagueName} ${currentSeason.name}`}</h4>
+                    <button
+                      style={{ marginBottom: 20 }}
+                      className="button is-primary view-season"
+                      onClick={() =>
+                        history.push(
+                          `/league/${currentSeason.leagueId}/season/${currentSeason.id}`
+                        )
+                      }
+                    >
+                      View season
+                    </button>
+                    <br></br>
+                    <button
+                      style={{ marginBottom: 20 }}
+                      className="button is-primary view-league-table"
+                      onClick={() =>
+                        history.push(
+                          `/league/${currentSeason.leagueId}/season/${currentSeason.id}/table`
+                        )
+                      }
+                    >
+                      View league table
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
+            <SeasonList
+              seasons={leagueSeasons}
+              onDeleteClick={handleDeleteSeason}
+              userIsAuthenticated={userIsAuthenticated}
+            />
+          </>
         ) : (
-          <div className="my-4">
+          <div className="my-4 box">
             <h3 className="title is-3">Seasons</h3>
             <p>There are currently no seasons available for this league.</p>
             {userIsAuthenticated && (
@@ -253,11 +289,13 @@ LeaguePage.propTypes = {
   leagueSquads: PropTypes.array.isRequired,
   seasons: PropTypes.array.isRequired,
   leagueSeasons: PropTypes.array.isRequired,
+  currentSeason: PropTypes.object,
   loadLeagues: PropTypes.func.isRequired,
   loadSquads: PropTypes.func.isRequired,
   loadSeasons: PropTypes.func.isRequired,
   deleteSquad: PropTypes.func.isRequired,
   deleteSeason: PropTypes.func.isRequired,
+  removeSquadFromLeague: PropTypes.func.isRequired,
   addSquadToLeague: PropTypes.func.isRequired,
   userIsAuthenticated: PropTypes.bool.isRequired,
   history: PropTypes.object.isRequired,
@@ -275,6 +313,10 @@ const getLeagueSeasons = (seasons, league) => {
   return seasons.filter((storedSeason) => storedSeason.leagueId == league.id);
 };
 
+const getCurrentSeason = (seasons) => {
+  return seasons.find((season) => season.active);
+};
+
 const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.id;
   const league =
@@ -285,6 +327,7 @@ const mapStateToProps = (state, ownProps) => {
     state.squads.length > 0 ? getLeagueSquads(state.squads, league) : [];
   const leagueSeasons =
     state.seasons.length > 0 ? getLeagueSeasons(state.seasons, league) : [];
+  const currentSeason = getCurrentSeason(leagueSeasons);
   return {
     league,
     leagueSquads,
@@ -292,6 +335,7 @@ const mapStateToProps = (state, ownProps) => {
     leagues: state.leagues,
     squads: state.squads,
     seasons: state.seasons,
+    currentSeason,
     userIsAuthenticated: state.user != null,
   };
 };

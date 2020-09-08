@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 const SeasonList = ({ seasons, onDeleteClick, userIsAuthenticated }) => (
   <div className="my-4">
-    <h3 className="title is-3">Seasons</h3>
     <div className="box">
+      <h3 className="title is-3">Seasons</h3>
       <table className="table is-striped is-fullwidth">
         <thead>
           <tr>

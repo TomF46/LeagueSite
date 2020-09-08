@@ -47,7 +47,9 @@ const PlayerPage = ({
             </span>
           )}
         </h1>
-        <PlayerDetail player={player} />
+        <div className="box">
+          <PlayerDetail player={player} />
+        </div>
       </>
     </>
   );

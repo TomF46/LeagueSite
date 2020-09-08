@@ -11,7 +11,7 @@ const AddTeamForm = ({
   errors = {},
 }) => {
   return (
-    <form onSubmit={onSave}>
+    <form onSubmit={onSave} className="box">
       <h3 className="title is-3">Add team to league</h3>
       {errors.onSave && (
         <div className="help is-danger" role="alert">

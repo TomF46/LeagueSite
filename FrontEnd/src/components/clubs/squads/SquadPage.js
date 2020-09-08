@@ -77,7 +77,7 @@ const SquadPage = ({
     <>
       <>
         <h1 className="title is-1">
-          {squad.name}
+          {`${squad.clubName} ${squad.name}`}
           {userIsAuthenticated && (
             <span
               className="icon has-text-primary is-medium ml-4 pointer"
@@ -89,7 +89,9 @@ const SquadPage = ({
             </span>
           )}
         </h1>
-        <SquadDetail squad={squad} />
+        <div className="box">
+          <SquadDetail squad={squad} />
+        </div>
 
         {squadPlayers.length > 0 ? (
           <PlayerList
@@ -98,7 +100,7 @@ const SquadPage = ({
             userIsAuthenticated={userIsAuthenticated}
           />
         ) : (
-          <div className="my-4">
+          <div className="my-4 box">
             <h3 className="title is-3">Players</h3>
             <p>There are no players available to view.</p>
             {userIsAuthenticated && (
