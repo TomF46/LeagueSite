@@ -180,17 +180,23 @@ const LeaguePage = ({
   ) : (
     <>
       <>
-        <h1 className="title is-1">
-          {league.name}
-          {userIsAuthenticated && (
-            <span
-              className="icon has-text-primary is-medium ml-4 pointer"
-              onClick={() => history.push(`/league/${league.id}/edit`)}
-            >
-              <ion-icon name="pencil-outline"></ion-icon>
-            </span>
-          )}
-        </h1>
+        <section className="hero is-primary">
+          <div className="hero-body">
+            <div className="container">
+              <h1 className="title">
+                {league.name}
+                {userIsAuthenticated && (
+                  <span
+                    className="icon is-medium ml-4 pointer"
+                    onClick={() => history.push(`/league/${league.id}/edit`)}
+                  >
+                    <ion-icon name="pencil-outline"></ion-icon>
+                  </span>
+                )}
+              </h1>
+            </div>
+          </div>
+        </section>
         {/* <LeagueDetail league={league} /> */}
 
         {leagueSquads.length > 0 ? (

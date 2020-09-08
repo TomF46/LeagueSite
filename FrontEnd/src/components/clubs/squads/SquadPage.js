@@ -76,19 +76,25 @@ const SquadPage = ({
   ) : (
     <>
       <>
-        <h1 className="title is-1">
-          {`${squad.clubName} ${squad.name}`}
-          {userIsAuthenticated && (
-            <span
-              className="icon has-text-primary is-medium ml-4 pointer"
-              onClick={() =>
-                history.push(`/club/${clubId}/squad/${squad.id}/edit`)
-              }
-            >
-              <ion-icon name="pencil-outline"></ion-icon>
-            </span>
-          )}
-        </h1>
+        <section className="hero is-primary">
+          <div className="hero-body">
+            <div className="container">
+              <h1 className="title">
+                {`${squad.clubName} ${squad.name}`}
+                {userIsAuthenticated && (
+                  <span
+                    className="icon is-medium ml-4 pointer"
+                    onClick={() =>
+                      history.push(`/club/${clubId}/squad/${squad.id}/edit`)
+                    }
+                  >
+                    <ion-icon name="pencil-outline"></ion-icon>
+                  </span>
+                )}
+              </h1>
+            </div>
+          </div>
+        </section>
         <div className="box">
           <SquadDetail squad={squad} />
         </div>

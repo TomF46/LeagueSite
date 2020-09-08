@@ -1,6 +1,7 @@
 const webpack = require("webpack");
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 process.env.NODE_ENV = "development";
 
@@ -30,6 +31,7 @@ module.exports = {
       template: "src/index.html",
       favicon: "src/favicon.ico",
     }),
+    new ExtractTextPlugin("css/app.css"),
   ],
   module: {
     rules: [
@@ -41,6 +43,13 @@ module.exports = {
       {
         test: /(\.css)$/,
         use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.scss$/,
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: ["css-loader", "sass-loader"],
+        }),
       },
     ],
   },

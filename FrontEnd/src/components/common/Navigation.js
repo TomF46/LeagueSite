@@ -2,7 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { NavLink, withRouter } from "react-router-dom";
-import "./Navigation.css";
+import "./Navigation.scss";
 import { logout } from "../../redux/actions/authenticationActions";
 import { confirmAlert } from "react-confirm-alert";
 

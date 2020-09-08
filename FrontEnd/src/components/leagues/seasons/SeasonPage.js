@@ -24,24 +24,30 @@ const SeasonPage = ({ id, userIsAuthenticated, history }) => {
     <Spinner />
   ) : (
     <>
-      <h2 className="title is-2">
-        {season.leagueName} - {season.name}
-        {userIsAuthenticated && (
-          <span
-            className="icon has-text-primary is-medium ml-4 pointer"
-            onClick={() =>
-              history.push(
-                `/league/${season.leagueId}/season/${season.id}/edit`
-              )
-            }
-          >
-            <ion-icon name="pencil-outline"></ion-icon>
-          </span>
-        )}
-      </h2>
+      <section className="hero is-primary">
+        <div className="hero-body">
+          <div className="container">
+            <h1 className="title">
+              {season.leagueName} - {season.name}
+              {userIsAuthenticated && (
+                <span
+                  className="icon has-text-primary is-medium ml-4 pointer"
+                  onClick={() =>
+                    history.push(
+                      `/league/${season.leagueId}/season/${season.id}/edit`
+                    )
+                  }
+                >
+                  <ion-icon name="pencil-outline"></ion-icon>
+                </span>
+              )}
+            </h1>
+          </div>
+        </div>
+      </section>
       <button
         style={{ marginBottom: 20 }}
-        className="button is-primary view-table"
+        className="button is-primary my-4 view-table"
         onClick={() =>
           history.push(`/league/${season.leagueId}/season/${season.id}/table`)
         }

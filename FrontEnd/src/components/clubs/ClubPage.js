@@ -72,18 +72,26 @@ const ClubPage = ({
   ) : (
     <>
       <>
-        <h1 className="title is-1">
-          {club.name}
-          {userIsAuthenticated && (
-            <span
-              className="icon has-text-primary is-medium ml-4 pointer"
-              onClick={() => history.push(`/club/${club.id}/edit`)}
-            >
-              <ion-icon name="pencil-outline"></ion-icon>
-            </span>
-          )}
-        </h1>
-        <ClubDetail club={club} />
+        <section className="hero is-primary">
+          <div className="hero-body">
+            <div className="container">
+              <h1 className="title">
+                {club.name}
+                {userIsAuthenticated && (
+                  <span
+                    className="icon is-medium ml-4 pointer"
+                    onClick={() => history.push(`/club/${club.id}/edit`)}
+                  >
+                    <ion-icon name="pencil-outline"></ion-icon>
+                  </span>
+                )}
+              </h1>
+            </div>
+          </div>
+        </section>
+        <div className="box">
+          <ClubDetail club={club} />
+        </div>
 
         {clubSquads.length > 0 ? (
           <SquadList

@@ -1,4 +1,7 @@
 /* Global css */
+@charset "utf-8";
+
+$primary: #5cdb95;
 
 html {
   background-color: #fbfdfb;
@@ -20,3 +23,5 @@ h5 {
 #transfer-form .select {
   width: 100%;
 }
+
+@import "~bulma/bulma";

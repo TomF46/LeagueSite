@@ -32,21 +32,27 @@ const PlayerPage = ({
   ) : (
     <>
       <>
-        <h1 className="title is-1">
-          {player.displayName}
-          {userIsAuthenticated && (
-            <span
-              className="icon has-text-primary is-medium ml-4 pointer"
-              onClick={() =>
-                history.push(
-                  `/club/${clubId}/squad/${squadId}/player/${player.id}/edit`
-                )
-              }
-            >
-              <ion-icon name="pencil-outline"></ion-icon>
-            </span>
-          )}
-        </h1>
+        <section className="hero is-primary">
+          <div className="hero-body">
+            <div className="container">
+              <h1 className="title">
+                {player.displayName}
+                {userIsAuthenticated && (
+                  <span
+                    className="icon is-medium ml-4 pointer"
+                    onClick={() =>
+                      history.push(
+                        `/club/${clubId}/squad/${squadId}/player/${player.id}/edit`
+                      )
+                    }
+                  >
+                    <ion-icon name="pencil-outline"></ion-icon>
+                  </span>
+                )}
+              </h1>
+            </div>
+          </div>
+        </section>
         <div className="box">
           <PlayerDetail player={player} />
         </div>

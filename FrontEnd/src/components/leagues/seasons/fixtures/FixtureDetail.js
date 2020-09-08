@@ -3,10 +3,16 @@ import PropTypes from "prop-types";
 
 const FixtureDetail = ({ fixture }) => (
   <>
-    <h2 className="title is-2">
-      {fixture.homeTeamName} - {fixture.awayTeamName}
-    </h2>
-    <div className="box my-4">
+    <section className="hero is-primary">
+      <div className="hero-body">
+        <div className="container">
+          <h1 className="title">
+            {fixture.homeTeamName} - {fixture.awayTeamName}
+          </h1>
+        </div>
+      </div>
+    </section>
+    <div className="box">
       {fixture.complete ? (
         <>
           <p>

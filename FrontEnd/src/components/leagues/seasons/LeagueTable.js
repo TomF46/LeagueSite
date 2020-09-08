@@ -3,7 +3,13 @@ import PropTypes from "prop-types";
 
 const LeagueTable = ({ leagueTable }) => (
   <>
-    <h3 className="title is-3">{leagueTable.seasonDisplayName}</h3>
+    <section className="hero is-primary">
+      <div className="hero-body">
+        <div className="container">
+          <h1 className="title">{leagueTable.seasonDisplayName}</h1>
+        </div>
+      </div>
+    </section>
     <div className="box">
       <table className="table is-striped is-fullwidth">
         <thead>

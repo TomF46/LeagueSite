@@ -22,7 +22,13 @@ const TransfersPage = ({
 
   return (
     <>
-      <h2 className="title is-2">Transfers</h2>
+      <section className="hero is-primary">
+        <div className="hero-body">
+          <div className="container">
+            <h1 className="title">Transfers</h1>
+          </div>
+        </div>
+      </section>
       {loading ? (
         <Spinner />
       ) : (

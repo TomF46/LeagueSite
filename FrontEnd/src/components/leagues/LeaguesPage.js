@@ -51,7 +51,13 @@ const LeaguesPage = ({
 
   return (
     <>
-      <h2 className="title is-2">Leagues</h2>
+      <section className="hero is-primary">
+        <div className="hero-body">
+          <div className="container">
+            <h1 className="title">Leagues</h1>
+          </div>
+        </div>
+      </section>
       {loading ? (
         <Spinner />
       ) : (
