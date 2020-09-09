@@ -254,6 +254,18 @@ const LeaguePage = ({
                     >
                       View league table
                     </button>
+                    <br></br>
+                    <button
+                      style={{ marginBottom: 20 }}
+                      className="button is-primary view-stats"
+                      onClick={() =>
+                        history.push(
+                          `/league/${currentSeason.leagueId}/season/${currentSeason.id}/stats`
+                        )
+                      }
+                    >
+                      View stats
+                    </button>
                   </div>
                 </div>
               </div>

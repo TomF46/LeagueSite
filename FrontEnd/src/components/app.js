@@ -22,6 +22,7 @@ import FixturePage from "./leagues/seasons/fixtures/FixturePage";
 import ManageResultPage from "./leagues/seasons/fixtures/ManageResultPage";
 import LeagueTablePage from "./leagues/seasons/LeagueTablePage";
 import LoginPage from "./authentication/LoginPage";
+import StatsPage from "./leagues/seasons/StatsPage";
 
 const App = () => (
   <>
@@ -72,7 +73,11 @@ const App = () => (
             exact
             component={LeagueTablePage}
           />
-
+          <Route
+            path="/league/:leagueId/season/:seasonId/stats"
+            exact
+            component={StatsPage}
+          />
           <Route path="/league/:leagueId/season/:id" component={SeasonPage} />
           <Route path="/league/:leagueId/season" component={ManageSeasonPage} />
           <Route path="/league/:id/edit" component={ManageLeaguePage} />

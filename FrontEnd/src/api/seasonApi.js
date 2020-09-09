@@ -18,6 +18,12 @@ export function getSeasonById(id) {
     .catch(handleError);
 }
 
+export function getStatsForSeasonById(id) {
+  return fetch(baseUrl + id + "/stats", { headers: getDefaultHeaders() })
+    .then(handleResponse)
+    .catch(handleError);
+}
+
 export function saveSeason(season) {
   return fetch(baseUrl + (season.id || ""), {
     method: season.id ? "PUT" : "POST", // POST for create, PUT to update when id already exists.

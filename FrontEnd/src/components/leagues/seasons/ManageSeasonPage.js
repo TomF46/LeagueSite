@@ -27,6 +27,7 @@ const ManageSeasonPage = ({
         alert("Loading seasons failed, " + err);
       });
     } else {
+      console.log(props.season);
       setSeason({ ...props.season });
     }
   }, [props.season]);
@@ -35,7 +36,7 @@ const ManageSeasonPage = ({
     const { name, value } = event.target;
     setSeason((prevSeason) => ({
       ...prevSeason,
-      [name]: value,
+      [name]: name == "active" ? Boolean(value) : value,
     }));
   }
 

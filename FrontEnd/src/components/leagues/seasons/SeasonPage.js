@@ -31,7 +31,7 @@ const SeasonPage = ({ id, userIsAuthenticated, history }) => {
               {season.leagueName} - {season.name}
               {userIsAuthenticated && (
                 <span
-                  className="icon has-text-primary is-medium ml-4 pointer"
+                  className="icon is-medium ml-4 pointer"
                   onClick={() =>
                     history.push(
                       `/league/${season.leagueId}/season/${season.id}/edit`
@@ -53,6 +53,16 @@ const SeasonPage = ({ id, userIsAuthenticated, history }) => {
         }
       >
         View league table
+      </button>
+      <br></br>
+      <button
+        style={{ marginBottom: 20 }}
+        className="button is-primary my-4 view-stats"
+        onClick={() =>
+          history.push(`/league/${season.leagueId}/season/${season.id}/stats`)
+        }
+      >
+        View stats
       </button>
       {season.fixtures.length > 0 && <FixtureList fixtures={season.fixtures} />}
     </>
