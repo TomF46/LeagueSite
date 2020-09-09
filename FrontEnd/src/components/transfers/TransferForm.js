@@ -7,8 +7,10 @@ const TransferForm = ({
   transfer,
   players,
   squads,
+  selectedSquad,
   onSave,
   onChange,
+  onChangeSelectedSquad,
   saving = false,
   errors = {},
 }) => {
@@ -22,6 +24,19 @@ const TransferForm = ({
       )}
       <div className="columns">
         <div className="column is-4">
+          <SelectInput
+            name="id"
+            label="From team"
+            value={selectedSquad.id || ""}
+            defaultOption="Select Team"
+            options={squads.map((squad) => ({
+              value: squad.id,
+              text: `${squad.clubName} ${squad.name}`,
+            }))}
+            onChange={onChangeSelectedSquad}
+            error={errors.fromTeam}
+          />
+          <br></br>
           <PlayerSelect
             name="playerId"
             label="Player"
@@ -62,9 +77,11 @@ TransferForm.propTypes = {
   transfer: PropTypes.object.isRequired,
   players: PropTypes.array.isRequired,
   squads: PropTypes.array.isRequired,
+  selectedSquad: PropTypes.object,
   errors: PropTypes.object,
   onSave: PropTypes.func.isRequired,
   onChange: PropTypes.func.isRequired,
+  onChangeSelectedSquad: PropTypes.func.isRequired,
   saving: PropTypes.bool,
 };
 

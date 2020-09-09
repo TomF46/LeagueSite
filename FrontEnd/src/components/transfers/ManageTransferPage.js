@@ -24,6 +24,8 @@ const TransferPage = ({
   const [transfer, setTransfer] = useState({ ...newTransfer });
   const [errors, setErrors] = useState({});
   const [saving, setSaving] = useState(false);
+  const [currentSquadPlayers, setCurrentSquadPlayers] = useState([]);
+  const [selectedSquad, setSelectedSquad] = useState({});
 
   useEffect(() => {
     if (players.length === 0) {
@@ -41,6 +43,19 @@ const TransferPage = ({
     }
   }, [squads]);
 
+  function handleSelectedSquad(event) {
+    const { name, value } = event.target;
+    setSelectedSquad((prevSelectedSquad) => ({
+      ...prevSelectedSquad,
+      [name]: parseInt(value, 10),
+    }));
+    setCurrentSquadPlayers(getPlayersForSquad(value));
+  }
+
+  function getPlayersForSquad(squadId) {
+    return players.filter((storedPlayer) => storedPlayer.squadId == squadId);
+  }
+
   function handleChange(event) {
     const { name, value } = event.target;
     setTransfer((prevTransfer) => ({
@@ -52,9 +67,9 @@ const TransferPage = ({
   function formIsValid() {
     const { playerId, toSquadId } = transfer;
     const errors = {};
+    if (!selectedSquad.id) errors.fromTeam = "From team is required";
     if (!playerId) errors.player = "Player name is required";
     if (!toSquadId) errors.to = "Destination team is required";
-
     setErrors(errors);
     return Object.keys(errors).length === 0;
   }
@@ -89,10 +104,12 @@ const TransferPage = ({
       ) : (
         <TransferForm
           transfer={transfer}
-          players={players}
+          players={currentSquadPlayers}
           squads={squads}
+          selectedSquad={selectedSquad}
           errors={errors}
           onChange={handleChange}
+          onChangeSelectedSquad={handleSelectedSquad}
           onSave={handleSave}
           saving={saving}
         />
