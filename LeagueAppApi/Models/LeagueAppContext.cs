@@ -11,7 +11,6 @@ namespace LeagueAppApi.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<GoalRecord>().HasKey(gr => new { gr.PlayerId, gr.FixtureId });
             modelBuilder.Entity<GoalRecord>()
             .HasOne<Player>(gr => gr.Player)
             .WithMany(g => g.Goals)

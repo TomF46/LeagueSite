@@ -16,10 +16,12 @@ namespace LeagueAppApi.Controllers
     public class SeasonsController : ControllerBase
     {
         private readonly ISeasonRepository _seasonRepository;
+        private readonly IStatsService _statsService;
 
-        public SeasonsController(ISeasonRepository seasonRepository)
+        public SeasonsController(ISeasonRepository seasonRepository, IStatsService statsService)
         {
             _seasonRepository = seasonRepository;
+            _statsService = statsService;
         }
 
         // GET: api/Seasons
@@ -84,6 +86,20 @@ namespace LeagueAppApi.Controllers
                     AwayScore = fixture.AwayScore
                 }).ToList()
             }).OrderBy(x => x.Date).ToList();
+        }
+
+        [HttpGet("{id}/stats")]
+        public ActionResult<SeasonDetailDto> GetSeasonStats(int id)
+        {
+            try
+            {
+                var stats = _statsService.GetStats(id);
+                return Ok(stats);
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // PUT: api/Seasons/5

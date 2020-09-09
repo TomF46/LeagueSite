@@ -132,6 +132,7 @@ namespace LeagueAppApi
             services.AddScoped<IResultRepository, ResultRepository>();
             services.AddScoped<ILeagueTableService, LeagueTableService>();
             services.AddScoped<IAuthenticationService, AuthenticationService>();
+            services.AddScoped<IStatsService, StatsService>();
 
         }
 
