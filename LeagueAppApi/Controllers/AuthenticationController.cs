@@ -38,7 +38,7 @@ namespace WebApi.Controllers
             var user = _authenticationService.Authenticate(userLoginDto.Username, userLoginDto.Password);
 
             if (user == null)
-                return BadRequest(new { message = "Username or password is incorrect" });
+                return BadRequest("Username or password is incorrect");
 
             var tokenExpiryTime = DateTime.UtcNow.AddDays(365);
             var tokenHandler = new JwtSecurityTokenHandler();
