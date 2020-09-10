@@ -80,9 +80,8 @@ const SeasonPage = ({ id, userIsAuthenticated, history }) => {
           >
             View league table
           </button>
-          <br></br>
           <button
-            style={{ marginBottom: 20 }}
+            style={{ marginBottom: 20, marginLeft: 20 }}
             className="button is-primary my-4 view-stats"
             onClick={() =>
               history.push(

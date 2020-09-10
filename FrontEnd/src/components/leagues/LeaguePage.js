@@ -261,11 +261,10 @@ const LeaguePage = ({
                             )
                           }
                         >
-                          View season
+                          Fixtures
                         </button>
-                        <br></br>
                         <button
-                          style={{ marginBottom: 20 }}
+                          style={{ marginBottom: 20, marginLeft: 20 }}
                           className="button is-primary view-league-table"
                           onClick={() =>
                             history.push(
@@ -273,11 +272,10 @@ const LeaguePage = ({
                             )
                           }
                         >
-                          View league table
+                          League table
                         </button>
-                        <br></br>
                         <button
-                          style={{ marginBottom: 20 }}
+                          style={{ marginBottom: 20, marginLeft: 20 }}
                           className="button is-primary view-stats"
                           onClick={() =>
                             history.push(
@@ -285,7 +283,7 @@ const LeaguePage = ({
                             )
                           }
                         >
-                          View stats
+                          Stats
                         </button>
                       </div>
                     </div>
