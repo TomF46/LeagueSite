@@ -5,6 +5,7 @@ import { loadPlayers } from "../../../../redux/actions/playerActions";
 import PropTypes from "prop-types";
 import Spinner from "../../../common/Spinner";
 import PlayerDetail from "./PlayerDetail";
+import { Link } from "react-router-dom";
 
 const PlayerPage = ({
   history,
@@ -27,36 +28,58 @@ const PlayerPage = ({
     }
   }, [props.player]);
 
-  return players.length === 0 ? (
-    <Spinner />
-  ) : (
+  return (
     <>
-      <>
-        <section className="hero is-primary">
-          <div className="hero-body">
-            <div className="container">
-              <h1 className="title">
-                {player.displayName}
-                {userIsAuthenticated && (
-                  <span
-                    className="icon is-medium ml-4 pointer"
-                    onClick={() =>
-                      history.push(
-                        `/club/${clubId}/squad/${squadId}/player/${player.id}/edit`
-                      )
-                    }
-                  >
-                    <ion-icon name="pencil-outline"></ion-icon>
-                  </span>
-                )}
-              </h1>
+      <nav className="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+          <li>
+            <Link to={`/clubs`}>Clubs</Link>
+          </li>
+          <li>
+            <Link to={`/club/${clubId}`}>{player.clubName}</Link>
+          </li>
+          <li>
+            <Link to={`/club/${squadId}`}>{player.squadName}</Link>
+          </li>
+          <li className="is-active">
+            <a href="#" aria-current="page">
+              {player.displayName}
+            </a>
+          </li>
+        </ul>
+      </nav>
+      {players.length === 0 ? (
+        <Spinner />
+      ) : (
+        <>
+          <>
+            <section className="hero is-primary">
+              <div className="hero-body">
+                <div className="container">
+                  <h1 className="title">
+                    {player.displayName}
+                    {userIsAuthenticated && (
+                      <span
+                        className="icon is-medium ml-4 pointer"
+                        onClick={() =>
+                          history.push(
+                            `/club/${clubId}/squad/${squadId}/player/${player.id}/edit`
+                          )
+                        }
+                      >
+                        <ion-icon name="pencil-outline"></ion-icon>
+                      </span>
+                    )}
+                  </h1>
+                </div>
+              </div>
+            </section>
+            <div className="box">
+              <PlayerDetail player={player} />
             </div>
-          </div>
-        </section>
-        <div className="box">
-          <PlayerDetail player={player} />
-        </div>
-      </>
+          </>
+        </>
+      )}
     </>
   );
 };

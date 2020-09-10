@@ -9,6 +9,7 @@ import ClubDetail from "./ClubDetail";
 import SquadList from "./squads/SquadList";
 import { confirmAlert } from "react-confirm-alert";
 import { toast } from "react-toastify";
+import { Link } from "react-router-dom";
 
 const ClubPage = ({
   clubs,
@@ -67,57 +68,73 @@ const ClubPage = ({
     }
   };
 
-  return clubs.length === 0 ? (
-    <Spinner />
-  ) : (
+  return (
     <>
-      <>
-        <section className="hero is-primary">
-          <div className="hero-body">
-            <div className="container">
-              <h1 className="title">
-                {club.name}
-                {userIsAuthenticated && (
-                  <span
-                    className="icon is-medium ml-4 pointer"
-                    onClick={() => history.push(`/club/${club.id}/edit`)}
-                  >
-                    <ion-icon name="pencil-outline"></ion-icon>
-                  </span>
-                )}
-              </h1>
+      <nav className="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+          <li>
+            <Link to={`/clubs`}>Clubs</Link>
+          </li>
+          <li className="is-active">
+            <a href="#" aria-current="page">
+              {club.name}
+            </a>
+          </li>
+        </ul>
+      </nav>
+      {clubs.length === 0 ? (
+        <Spinner />
+      ) : (
+        <>
+          <>
+            <section className="hero is-primary">
+              <div className="hero-body">
+                <div className="container">
+                  <h1 className="title">
+                    {club.name}
+                    {userIsAuthenticated && (
+                      <span
+                        className="icon is-medium ml-4 pointer"
+                        onClick={() => history.push(`/club/${club.id}/edit`)}
+                      >
+                        <ion-icon name="pencil-outline"></ion-icon>
+                      </span>
+                    )}
+                  </h1>
+                </div>
+              </div>
+            </section>
+            <div className="box">
+              <ClubDetail club={club} />
             </div>
-          </div>
-        </section>
-        <div className="box">
-          <ClubDetail club={club} />
-        </div>
 
-        {clubSquads.length > 0 ? (
-          <SquadList
-            squads={clubSquads}
-            onDeleteClick={handleSquadDelete}
-            userIsAuthenticated={userIsAuthenticated}
-          />
-        ) : (
-          <div className="my-4 box">
-            <h3 className="title is-3">Squads</h3>
-            <p>There are no squads available to view.</p>
-            {userIsAuthenticated && (
-              <p>Please add one using the add squad button.</p>
+            {clubSquads.length > 0 ? (
+              <SquadList
+                squads={clubSquads}
+                onDeleteClick={handleSquadDelete}
+                userIsAuthenticated={userIsAuthenticated}
+              />
+            ) : (
+              <div className="my-4 box">
+                <h3 className="title is-3">Squads</h3>
+                <p>There are no squads available to view.</p>
+                {userIsAuthenticated && (
+                  <p>Please add one using the add squad button.</p>
+                )}
+              </div>
             )}
-          </div>
-        )}
-        {userIsAuthenticated && (
-          <button
-            style={{ marginBottom: 20 }}
-            className="button is-primary add-squad is-pulled-right"
-            onClick={() => history.push(`/club/${club.id}/squad`)}
-          >
-            Add Squad
-          </button>
-        )}
-      </>
+            {userIsAuthenticated && (
+              <button
+                style={{ marginBottom: 20 }}
+                className="button is-primary add-squad is-pulled-right"
+                onClick={() => history.push(`/club/${club.id}/squad`)}
+              >
+                Add Squad
+              </button>
+            )}
+          </>
+        </>
+      )}
     </>
   );
 };

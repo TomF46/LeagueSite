@@ -18,6 +18,7 @@ import AddTeamForm from "./AddTeamForm";
 import { toast } from "react-toastify";
 import SeasonList from "./seasons/SeasonList";
 import { confirmAlert } from "react-confirm-alert";
+import { Link } from "react-router-dom";
 const LeaguePage = ({
   leagues,
   squads,
@@ -175,127 +176,149 @@ const LeaguePage = ({
       });
   };
 
-  return leagues.length === 0 ? (
-    <Spinner />
-  ) : (
+  return (
     <>
-      <>
-        <section className="hero is-primary">
-          <div className="hero-body">
-            <div className="container">
-              <h1 className="title">
-                {league.name}
-                {userIsAuthenticated && (
-                  <span
-                    className="icon is-medium ml-4 pointer"
-                    onClick={() => history.push(`/league/${league.id}/edit`)}
-                  >
-                    <ion-icon name="pencil-outline"></ion-icon>
-                  </span>
-                )}
-              </h1>
-            </div>
-          </div>
-        </section>
-        {/* <LeagueDetail league={league} /> */}
-
-        {leagueSquads.length > 0 ? (
-          <ParticipantList
-            participants={leagueSquads}
-            onDeleteClick={handleDeleteParticipant}
-            userIsAuthenticated={userIsAuthenticated}
-          />
-        ) : (
-          <div className="my-4 box">
-            <h3 className="title is-3">Participants</h3>
-            <p>There are currently no participants in this league league.</p>
-            {userIsAuthenticated && <p>Please add one using the form below.</p>}
-          </div>
-        )}
-
-        {userIsAuthenticated && (
-          <AddTeamForm
-            squads={squads}
-            leagueAddition={leagueAddition}
-            errors={errors}
-            onChange={handleChange}
-            onSave={handleSave}
-            saving={saving}
-          />
-        )}
-        {leagueSeasons.length > 0 ? (
+      <nav className="breadcrumb" aria-label="breadcrumbs">
+        <ul>
+          <li>
+            <Link to={`/leagues`}>Leagues</Link>
+          </li>
+          <li className="is-active">
+            <a href="#" aria-current="page">
+              {league.name}
+            </a>
+          </li>
+        </ul>
+      </nav>
+      {leagues.length === 0 ? (
+        <Spinner />
+      ) : (
+        <>
           <>
-            {currentSeason && (
-              <div className="my-4">
-                <div>
-                  <div className="box">
-                    <h3 className="title is-3">Current Season</h3>
-                    <h4 className="title is-4">{`${currentSeason.leagueName} ${currentSeason.name}`}</h4>
-                    <button
-                      style={{ marginBottom: 20 }}
-                      className="button is-primary view-season"
-                      onClick={() =>
-                        history.push(
-                          `/league/${currentSeason.leagueId}/season/${currentSeason.id}`
-                        )
-                      }
-                    >
-                      View season
-                    </button>
-                    <br></br>
-                    <button
-                      style={{ marginBottom: 20 }}
-                      className="button is-primary view-league-table"
-                      onClick={() =>
-                        history.push(
-                          `/league/${currentSeason.leagueId}/season/${currentSeason.id}/table`
-                        )
-                      }
-                    >
-                      View league table
-                    </button>
-                    <br></br>
-                    <button
-                      style={{ marginBottom: 20 }}
-                      className="button is-primary view-stats"
-                      onClick={() =>
-                        history.push(
-                          `/league/${currentSeason.leagueId}/season/${currentSeason.id}/stats`
-                        )
-                      }
-                    >
-                      View stats
-                    </button>
-                  </div>
+            <section className="hero is-primary">
+              <div className="hero-body">
+                <div className="container">
+                  <h1 className="title">
+                    {league.name}
+                    {userIsAuthenticated && (
+                      <span
+                        className="icon is-medium ml-4 pointer"
+                        onClick={() =>
+                          history.push(`/league/${league.id}/edit`)
+                        }
+                      >
+                        <ion-icon name="pencil-outline"></ion-icon>
+                      </span>
+                    )}
+                  </h1>
                 </div>
               </div>
-            )}
-            <SeasonList
-              seasons={leagueSeasons}
-              onDeleteClick={handleDeleteSeason}
-              userIsAuthenticated={userIsAuthenticated}
-            />
-          </>
-        ) : (
-          <div className="my-4 box">
-            <h3 className="title is-3">Seasons</h3>
-            <p>There are currently no seasons available for this league.</p>
-            {userIsAuthenticated && (
-              <p>Please add one using the add season button.</p>
-            )}
-          </div>
-        )}
+            </section>
+            {/* <LeagueDetail league={league} /> */}
 
-        {userIsAuthenticated && (
-          <button
-            style={{ marginBottom: 20 }}
-            className="button is-primary add-season is-pulled-right"
-            onClick={() => history.push(`/league/${league.id}/season`)}
-          >
-            Add season
-          </button>
-        )}
-      </>
+            {leagueSquads.length > 0 ? (
+              <ParticipantList
+                participants={leagueSquads}
+                onDeleteClick={handleDeleteParticipant}
+                userIsAuthenticated={userIsAuthenticated}
+              />
+            ) : (
+              <div className="my-4 box">
+                <h3 className="title is-3">Participants</h3>
+                <p>
+                  There are currently no participants in this league league.
+                </p>
+                {userIsAuthenticated && (
+                  <p>Please add one using the form below.</p>
+                )}
+              </div>
+            )}
+
+            {userIsAuthenticated && (
+              <AddTeamForm
+                squads={squads}
+                leagueAddition={leagueAddition}
+                errors={errors}
+                onChange={handleChange}
+                onSave={handleSave}
+                saving={saving}
+              />
+            )}
+            {leagueSeasons.length > 0 ? (
+              <>
+                {currentSeason && (
+                  <div className="my-4">
+                    <div>
+                      <div className="box">
+                        <h3 className="title is-3">Current Season</h3>
+                        <h4 className="title is-4">{`${currentSeason.leagueName} ${currentSeason.name}`}</h4>
+                        <button
+                          style={{ marginBottom: 20 }}
+                          className="button is-primary view-season"
+                          onClick={() =>
+                            history.push(
+                              `/league/${currentSeason.leagueId}/season/${currentSeason.id}`
+                            )
+                          }
+                        >
+                          View season
+                        </button>
+                        <br></br>
+                        <button
+                          style={{ marginBottom: 20 }}
+                          className="button is-primary view-league-table"
+                          onClick={() =>
+                            history.push(
+                              `/league/${currentSeason.leagueId}/season/${currentSeason.id}/table`
+                            )
+                          }
+                        >
+                          View league table
+                        </button>
+                        <br></br>
+                        <button
+                          style={{ marginBottom: 20 }}
+                          className="button is-primary view-stats"
+                          onClick={() =>
+                            history.push(
+                              `/league/${currentSeason.leagueId}/season/${currentSeason.id}/stats`
+                            )
+                          }
+                        >
+                          View stats
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                <SeasonList
+                  seasons={leagueSeasons}
+                  onDeleteClick={handleDeleteSeason}
+                  userIsAuthenticated={userIsAuthenticated}
+                />
+              </>
+            ) : (
+              <div className="my-4 box">
+                <h3 className="title is-3">Seasons</h3>
+                <p>There are currently no seasons available for this league.</p>
+                {userIsAuthenticated && (
+                  <p>Please add one using the add season button.</p>
+                )}
+              </div>
+            )}
+
+            {userIsAuthenticated && (
+              <button
+                style={{ marginBottom: 20 }}
+                className="button is-primary add-season is-pulled-right"
+                onClick={() => history.push(`/league/${league.id}/season`)}
+              >
+                Add season
+              </button>
+            )}
+          </>
+        </>
+      )}
     </>
   );
 };
