@@ -81,7 +81,7 @@ const FixturePage = ({
           {fixture.complete ? (
             <button
               style={{ marginBottom: 20 }}
-              className="button is-primary remove-result"
+              className="button is-primary remove-result is-pulled-right"
               onClick={() => handleRemoveResult(fixture)}
             >
               Remove result
@@ -89,7 +89,7 @@ const FixturePage = ({
           ) : (
             <button
               style={{ marginBottom: 20 }}
-              className="button is-primary edit-result"
+              className="button is-primary edit-result is-pulled-right"
               onClick={() =>
                 history.push(
                   `/league/${leagueId}/season/${seasonId}/fixture/${id}/result`
