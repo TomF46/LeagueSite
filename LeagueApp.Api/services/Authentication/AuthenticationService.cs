@@ -40,6 +40,8 @@ namespace LeagueApp.Api.Services
         public User Create(User user, string password)
         {
             if (string.IsNullOrWhiteSpace(password)) throw new AppException("Password is required");
+            if (string.IsNullOrWhiteSpace(user.Username)) throw new AppException("Username is required");
+
 
             if (_context.Users.Any(x => x.Username == user.Username)) throw new AppException($"Username {user.Username} is already taken");
 
