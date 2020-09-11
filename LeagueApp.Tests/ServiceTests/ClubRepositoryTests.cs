@@ -101,8 +101,8 @@ namespace Tests
 
             var clubsFromDb = _clubRepository.GetAllClubs();
 
-            Assert.AreEqual(clubsFromDb.Count(), 3);
-            Assert.AreEqual(clubsFromDb.Last().Name, club3.Name);
+            Assert.AreEqual(3, clubsFromDb.Count());
+            Assert.AreEqual(club3.Name, clubsFromDb.Last().Name);
         }
 
         [Test]
@@ -154,7 +154,7 @@ namespace Tests
 
             var clubFromDb = _clubRepository.GetClub(club.Id);
 
-            Assert.AreEqual(clubFromDb.Name, newName);
+            Assert.AreEqual(newName, clubFromDb.Name);
         }
 
         [Test]

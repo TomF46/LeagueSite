@@ -129,59 +129,59 @@ namespace Tests
             var addedPlayer2 = _PlayerRepository.AddPlayer(player2);
             var playersFromDb = _PlayerRepository.GetAllPlayers();
 
-            Assert.AreEqual(playersFromDb.Count(), 2);
+            Assert.AreEqual(2, playersFromDb.Count());
         }
 
-        // [Test]
-        // public void CanDeletePlayer()
-        // {
-        //     var player = new PlayerCreationDto()
-        //     {
-        //         FirstName = "Test",
-        //         LastName = "Player",
-        //         Position = "Forward",
-        //         ClubId = _TestClub.Id,
-        //         SquadId = _TestSquad.Id
-        //     };
+        [Test]
+        public void CanDeletePlayer()
+        {
+            var player = new PlayerCreationDto()
+            {
+                FirstName = "Test",
+                LastName = "Player",
+                Position = "Forward",
+                ClubId = _TestClub.Id,
+                SquadId = _TestSquad.Id
+            };
 
-        //     var deletedPlayer = _PlayerRepository.AddPlayer(player);
+            var deletedPlayer = _PlayerRepository.AddPlayer(player);
 
-        //     _PlayerRepository.DeletePlayer(deletedPlayer);
-        //     var playerFromDb = _PlayerRepository.GetPlayer(deletedPlayer.Id);
+            _PlayerRepository.DeletePlayer(deletedPlayer);
+            var playerFromDb = _PlayerRepository.GetPlayer(deletedPlayer.Id);
 
-        //     Assert.IsNull(playerFromDb);
-        // }
+            Assert.IsNull(playerFromDb);
+        }
 
-        // [Test]
-        // public void CanUpdatePlayer()
-        // {
-        //     var player = new PlayerCreationDto()
-        //     {
-        //         FirstName = "Test",
-        //         LastName = "Player",
-        //         Position = "Forward",
-        //         ClubId = _TestClub.Id,
-        //         SquadId = _TestSquad.Id
-        //     };
+        [Test]
+        public void CanUpdatePlayer()
+        {
+            var player = new PlayerCreationDto()
+            {
+                FirstName = "Test",
+                LastName = "Player",
+                Position = "Forward",
+                ClubId = _TestClub.Id,
+                SquadId = _TestSquad.Id
+            };
 
-        //     var savedPlayer = _PlayerRepository.AddPlayer(player);
+            var savedPlayer = _PlayerRepository.AddPlayer(player);
 
-        //     var newFirstname = "Updated Test";
+            var newFirstname = "Updated Test";
 
-        //     var updatedPlayer = new PlayerUpdateDto
-        //     {
-        //         Id = savedPlayer.Id,
-        //         FirstName = newFirstname,
-        //         LastName = "Player",
-        //         Position = "Midfield"
-        //     };
+            var updatedPlayer = new PlayerUpdateDto
+            {
+                Id = savedPlayer.Id,
+                FirstName = newFirstname,
+                LastName = "Player",
+                Position = "Midfield"
+            };
 
-        //     _PlayerRepository.UpdatePlayer(updatedPlayer);
+            _PlayerRepository.UpdatePlayer(updatedPlayer);
 
-        //     var playerFromDb = _PlayerRepository.GetPlayer(savedPlayer.Id);
+            var playerFromDb = _PlayerRepository.GetPlayer(savedPlayer.Id);
 
-        //     Assert.AreEqual(playerFromDb.FirstName, newFirstname);
-        // }
+            Assert.AreEqual(newFirstname, playerFromDb.FirstName);
+        }
 
         [Test]
         public void PlayerIsValdatedOnCreationAndExceptionIsReturnedWhenErroneous()

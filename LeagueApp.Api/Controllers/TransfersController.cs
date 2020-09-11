@@ -62,20 +62,27 @@ namespace LeagueApp.Api.Controllers
         [Authorize]
         public ActionResult<Transfer> PostTransfer(TransferCreationDto transfer)
         {
-            var savedObject = _transferRepository.AddTransfer(transfer);
-            if (!_transferRepository.Save()) throw new Exception("Failed to create transfer");
-
-            return CreatedAtAction("GetTransfer", new { id = savedObject.Id }, new TransferSimpleDto
+            try
             {
-                Id = savedObject.Id,
-                PlayerId = savedObject.Player.Id,
-                PlayerDisplayName = savedObject.Player.DisplayName,
-                FromSquadId = savedObject.FromSquad.Id,
-                FromSquadDisplayName = savedObject.FromSquad.DisplayName,
-                ToSquadId = savedObject.ToSquad.Id,
-                ToSquadDisplayName = savedObject.ToSquad.DisplayName,
-                DateCreated = savedObject.DateCreated
-            });
+                var savedObject = _transferRepository.AddTransfer(transfer);
+                if (!_transferRepository.Save()) throw new Exception("Failed to create transfer");
+
+                return CreatedAtAction("GetTransfer", new { id = savedObject.Id }, new TransferSimpleDto
+                {
+                    Id = savedObject.Id,
+                    PlayerId = savedObject.Player.Id,
+                    PlayerDisplayName = savedObject.Player.DisplayName,
+                    FromSquadId = savedObject.FromSquad.Id,
+                    FromSquadDisplayName = savedObject.FromSquad.DisplayName,
+                    ToSquadId = savedObject.ToSquad.Id,
+                    ToSquadDisplayName = savedObject.ToSquad.DisplayName,
+                    DateCreated = savedObject.DateCreated
+                });
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
     }

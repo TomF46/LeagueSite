@@ -144,7 +144,7 @@ namespace Tests
 
             var squadFromDb = _SquadRepository.GetSquad(addedSquad.Id);
 
-            Assert.AreEqual(squadFromDb.Name, newName);
+            Assert.AreEqual(newName, squadFromDb.Name);
         }
 
         [Test]

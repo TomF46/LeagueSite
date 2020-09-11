@@ -28,13 +28,13 @@ namespace LeagueApp.Api.Services
         {
 
             var player = _context.Players.FirstOrDefault(player => player.Id == transferDto.PlayerId);
-            if (player == null) throw new Exception("Player  does not exist"); //TODO return error nicely
+            if (player == null) throw new AppException("Player  does not exist"); //TODO return error nicely
 
             var fromSquad = _context.Squads.Include(x => x.Club).FirstOrDefault(squad => squad.Id == transferDto.FromSquadId);
-            if (fromSquad == null) throw new Exception("from Squad does not exist");
+            if (fromSquad == null) throw new AppException("From Squad does not exist");
 
             var toSquad = _context.Squads.Include(x => x.Club).FirstOrDefault(squad => squad.Id == transferDto.ToSquadId);
-            if (toSquad == null) throw new Exception("to Squad does not exist");
+            if (toSquad == null) throw new AppException("To Squad does not exist");
 
             player.Club = toSquad.Club;
             player.Squad = toSquad;
