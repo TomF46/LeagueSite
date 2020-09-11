@@ -111,7 +111,7 @@ namespace Tests
             var club = new Club
             {
                 Id = 1,
-                Name = "Test Squad",
+                Name = "Test Club",
                 Location = "Countyshire",
                 Squads = new Collection<Squad>(),
                 isDeleted = false
@@ -132,7 +132,7 @@ namespace Tests
             var club = new Club
             {
                 Id = 1,
-                Name = "Test Squad",
+                Name = "Test Club",
                 Location = "Countyshire",
                 Squads = new Collection<Squad>(),
                 isDeleted = false
@@ -141,7 +141,7 @@ namespace Tests
             _context.Clubs.Add(club);
             _context.SaveChanges();
 
-            var newName = "Updated Test Squad";
+            var newName = "Updated Test Club";
 
             var updatedClub = new ClubUpdateDto
             {

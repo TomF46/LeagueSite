@@ -25,9 +25,8 @@ namespace Tests
             _TestClub = new Club
             {
                 Id = 1,
-                Name = "Test Squad",
+                Name = "Test Club",
                 Location = "Countyshire",
-                Squads = new Collection<Squad>(),
                 isDeleted = false
             };
         }
@@ -36,9 +35,9 @@ namespace Tests
         public void SetUp()
         {
             _context.Squads.RemoveRange(_context.Squads);
-            // AddTestClub();
-            var testClub = _context.Clubs.FirstOrDefault(x => x.Id == _TestClub.Id);
-            if (testClub == null) _context.Clubs.Add(_TestClub);
+            _context.Clubs.RemoveRange(_context.Clubs);
+            _context.SaveChanges();
+            _context.Clubs.Add(_TestClub);
             _context.SaveChanges();
         }
 
@@ -46,6 +45,7 @@ namespace Tests
         public void dispose()
         {
             _context.Squads.RemoveRange(_context.Squads);
+            _context.Clubs.RemoveRange(_context.Clubs);
             _context.SaveChanges();
         }
 
@@ -62,6 +62,7 @@ namespace Tests
                 _SquadRepository.AddSquad(squad);
             });
         }
+
 
         [Test]
         public void CanGetSquadThatHasBeenAdded()
@@ -81,6 +82,9 @@ namespace Tests
         [Test]
         public void CanGetMultipleSquadsThatHasBeenAdded()
         {
+            _context.Squads.RemoveRange(_context.Squads);
+            _context.SaveChanges();
+
             var squad = new SquadCreationDto()
             {
                 Name = "Test squad 1",
@@ -97,27 +101,22 @@ namespace Tests
 
             var squadsFromDb = _SquadRepository.GetAllSquads();
 
-            Assert.AreEqual(squadsFromDb.Count(), 2);
+            Assert.AreEqual(squad.Name, squadsFromDb.First().Name);
+            Assert.AreEqual(2, squadsFromDb.Count());
         }
 
         [Test]
         public void CanDeleteSquad()
         {
-            var squad = new Squad
+            var squad = new SquadCreationDto()
             {
-                Id = 1,
                 Name = "Test squad 1",
-                Club = _TestClub,
-                isDeleted = false,
-                Players = new Collection<Player>(),
-                League = null,
+                ClubId = _TestClub.Id
             };
+            var addedSquad = _SquadRepository.AddSquad(squad);
 
-            _context.Squads.Add(squad);
-            _context.SaveChanges();
-
-            _SquadRepository.DeleteSquad(squad);
-            var squadFromDb = _SquadRepository.GetSquad(squad.Id);
+            _SquadRepository.DeleteSquad(addedSquad);
+            var squadFromDb = _SquadRepository.GetSquad(addedSquad.Id);
 
             Assert.IsNull(squadFromDb);
         }
@@ -125,30 +124,25 @@ namespace Tests
         [Test]
         public void CanUpdateSquad()
         {
-            var squad = new Squad
+            var squad = new SquadCreationDto()
             {
-                Id = 1,
                 Name = "Test squad 1",
-                Club = _TestClub,
-                isDeleted = false,
-                Players = new Collection<Player>(),
-                League = null,
+                ClubId = _TestClub.Id
             };
+            var addedSquad = _SquadRepository.AddSquad(squad);
 
-            _context.Squads.Add(squad);
-            _context.SaveChanges();
 
             var newName = "Updated Test Squad";
 
             var updatedSquad = new SquadUpdateDto
             {
-                Id = 1,
+                Id = addedSquad.Id,
                 Name = newName
             };
 
             _SquadRepository.UpdateSquad(updatedSquad);
 
-            var squadFromDb = _SquadRepository.GetSquad(squad.Id);
+            var squadFromDb = _SquadRepository.GetSquad(addedSquad.Id);
 
             Assert.AreEqual(squadFromDb.Name, newName);
         }
