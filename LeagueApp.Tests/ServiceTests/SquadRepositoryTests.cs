@@ -15,16 +15,16 @@ namespace Tests
 
         private readonly LeagueAppContext _context;
         private readonly ISquadRepository _SquadRepository;
-        private readonly Club _Testclub;
+        private readonly Club _TestClub;
 
         public SquadRepositoryTests()
         {
             _context = new InMemoryDbContextFactory().GetDbContext();
             _SquadRepository = new SquadRepository(_context);
 
-            _Testclub = new Club
+            _TestClub = new Club
             {
-                Id = 2,
+                Id = 1,
                 Name = "Test Squad",
                 Location = "Countyshire",
                 Squads = new Collection<Squad>(),
@@ -37,8 +37,8 @@ namespace Tests
         {
             _context.Squads.RemoveRange(_context.Squads);
             // AddTestClub();
-            var testClub = _context.Clubs.FirstOrDefault(x => x.Id == _Testclub.Id);
-            if (testClub == null) _context.Clubs.Add(_Testclub);
+            var testClub = _context.Clubs.FirstOrDefault(x => x.Id == _TestClub.Id);
+            if (testClub == null) _context.Clubs.Add(_TestClub);
             _context.SaveChanges();
         }
 
@@ -57,7 +57,7 @@ namespace Tests
                 var squad = new SquadCreationDto()
                 {
                     Name = "Test squad 1",
-                    ClubId = _Testclub.Id
+                    ClubId = _TestClub.Id
                 };
                 _SquadRepository.AddSquad(squad);
             });
@@ -69,7 +69,7 @@ namespace Tests
             var squad = new SquadCreationDto()
             {
                 Name = "Test squad 1",
-                ClubId = _Testclub.Id
+                ClubId = _TestClub.Id
             };
             var addedSquad = _SquadRepository.AddSquad(squad);
 
@@ -84,14 +84,14 @@ namespace Tests
             var squad = new SquadCreationDto()
             {
                 Name = "Test squad 1",
-                ClubId = _Testclub.Id
+                ClubId = _TestClub.Id
             };
             var addedSquad = _SquadRepository.AddSquad(squad);
 
             var squad2 = new SquadCreationDto()
             {
                 Name = "Test squad 2",
-                ClubId = _Testclub.Id
+                ClubId = _TestClub.Id
             };
             var addedSquad2 = _SquadRepository.AddSquad(squad2);
 
@@ -107,7 +107,7 @@ namespace Tests
             {
                 Id = 1,
                 Name = "Test squad 1",
-                Club = _Testclub,
+                Club = _TestClub,
                 isDeleted = false,
                 Players = new Collection<Player>(),
                 League = null,
@@ -125,12 +125,11 @@ namespace Tests
         [Test]
         public void CanUpdateSquad()
         {
-
             var squad = new Squad
             {
                 Id = 1,
                 Name = "Test squad 1",
-                Club = _Testclub,
+                Club = _TestClub,
                 isDeleted = false,
                 Players = new Collection<Player>(),
                 League = null,
@@ -154,10 +153,17 @@ namespace Tests
             Assert.AreEqual(squadFromDb.Name, newName);
         }
 
-        private void AddTestClub()
+        [Test]
+        public void SquadIsValidationOnCreationAndExceptionIsReturnedWhenErroneous()
         {
-            _context.Clubs.Add(_Testclub);
-            _context.SaveChanges();
+            var squad = new SquadCreationDto()
+            {
+                Name = "Test squad 1 has a long name that should cause a validation error",
+                ClubId = _TestClub.Id
+            };
+
+            var exception = Assert.Throws<AppException>(() => _SquadRepository.AddSquad(squad));
+            Assert.That(exception.Message, Is.EqualTo(" Name cannot be longer than 40 characters."));
         }
     }
 }
