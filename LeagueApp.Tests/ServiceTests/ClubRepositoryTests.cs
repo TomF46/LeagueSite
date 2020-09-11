@@ -129,7 +129,6 @@ namespace Tests
         [Test]
         public void CanUpdateClub()
         {
-
             var club = new Club
             {
                 Id = 1,
