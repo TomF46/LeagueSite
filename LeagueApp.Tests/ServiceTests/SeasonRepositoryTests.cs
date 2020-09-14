@@ -100,14 +100,14 @@ namespace Tests
 
             Assert.DoesNotThrow(() =>
             {
-                var league = new SeasonCreationDto()
+                var season = new SeasonCreationDto()
                 {
-                    Name = "Test league 1",
+                    Name = "Test season 1",
                     LeagueId = _TestLeague.Id,
                     Active = true
                 };
 
-                _seasonRepository.AddSeason(league);
+                _seasonRepository.AddSeason(season);
             });
 
         }
@@ -116,18 +116,18 @@ namespace Tests
         public void CanGetSeasonThatHasBeenAdded()
         {
 
-            var league = new SeasonCreationDto()
+            var season = new SeasonCreationDto()
             {
-                Name = "Test league 1",
+                Name = "Test season 1",
                 LeagueId = _TestLeague.Id,
                 Active = true
             };
 
-            var addedSeason = _seasonRepository.AddSeason(league);
+            var addedSeason = _seasonRepository.AddSeason(season);
 
-            var leagueFromDb = _seasonRepository.GetSeason(addedSeason.Id);
+            var seasonFromDb = _seasonRepository.GetSeason(addedSeason.Id);
 
-            Assert.AreEqual(league.Name, leagueFromDb.Name);
+            Assert.AreEqual(season.Name, seasonFromDb.Name);
 
         }
 
@@ -137,85 +137,85 @@ namespace Tests
             _context.Seasons.RemoveRange(_context.Seasons);
             _context.SaveChanges();
 
-            var league = new SeasonCreationDto()
+            var season = new SeasonCreationDto()
             {
-                Name = "Test league 1",
+                Name = "Test season 1",
                 LeagueId = _TestLeague.Id,
                 Active = false
             };
 
-            var addedSeason = _seasonRepository.AddSeason(league);
+            var addedSeason = _seasonRepository.AddSeason(season);
 
-            var league2 = new SeasonCreationDto()
+            var season2 = new SeasonCreationDto()
             {
-                Name = "Test league 2",
+                Name = "Test season 2",
                 LeagueId = _TestLeague.Id,
                 Active = true
             };
 
-            var addedSeason2 = _seasonRepository.AddSeason(league2);
+            var addedSeason2 = _seasonRepository.AddSeason(season2);
 
-            var leaguesFromDb = _seasonRepository.GetAllSeasons();
+            var seasonsFromDb = _seasonRepository.GetAllSeasons();
 
-            Assert.AreEqual(2, leaguesFromDb.Count());
+            Assert.AreEqual(2, seasonsFromDb.Count());
         }
 
         [Test]
         public void CanDeleteSeason()
         {
-            var league = new SeasonCreationDto()
+            var season = new SeasonCreationDto()
             {
-                Name = "Test league 1",
+                Name = "Test season 1",
                 LeagueId = _TestLeague.Id,
                 Active = true
             };
-            var deletedLeague = _seasonRepository.AddSeason(league);
+            var deletedSeason = _seasonRepository.AddSeason(season);
 
-            _seasonRepository.DeleteSeason(deletedLeague);
-            var leagueFromDb = _seasonRepository.GetSeason(deletedLeague.Id);
+            _seasonRepository.DeleteSeason(deletedSeason);
+            var seasonFromDb = _seasonRepository.GetSeason(deletedSeason.Id);
 
-            Assert.IsNull(leagueFromDb);
+            Assert.IsNull(seasonFromDb);
         }
 
         [Test]
         public void CanUpdateSeason()
         {
-            var league = new SeasonCreationDto()
+            var season = new SeasonCreationDto()
             {
-                Name = "Test league 1",
+                Name = "Test season 1",
                 LeagueId = _TestLeague.Id,
                 Active = true
             };
-            var savedLeague = _seasonRepository.AddSeason(league);
+            var savedSeason = _seasonRepository.AddSeason(season);
 
             var newName = "Updated Test Season";
 
             var updatedSeason = new SeasonUpdateDto
             {
-                Id = savedLeague.Id,
+                Id = savedSeason.Id,
                 Name = newName,
                 Active = true
             };
 
             _seasonRepository.UpdateSeason(updatedSeason);
 
-            var leagueFromDb = _seasonRepository.GetSeason(savedLeague.Id);
+            var seasonFromDb = _seasonRepository.GetSeason(savedSeason.Id);
 
-            Assert.AreEqual(newName, leagueFromDb.Name);
+            Assert.AreEqual(newName, seasonFromDb.Name);
         }
 
         [Test]
         public void SeasonIsValiatedWhenAddedAndExceptionsRetunedWhenErroneous()
         {
 
-            var league = new SeasonCreationDto()
+            var season = new SeasonCreationDto()
             {
-                Name = "Test league 1 has a really long name that should cause a validation error as it exceedes the length limit",
+                Name = "Test season 1 has a really long name that should cause a validation error as it exceedes the length limit",
                 Active = true,
                 LeagueId = _TestLeague.Id
             };
 
-            var exception = Assert.Throws<AppException>(() => _seasonRepository.AddSeason(league));
+            var exception = Assert.Throws<AppException>(() => _seasonRepository.AddSeason(season));
             Assert.That(exception.Message, Is.EqualTo(" Name can't be longer than 40 characters."));
 
         }
