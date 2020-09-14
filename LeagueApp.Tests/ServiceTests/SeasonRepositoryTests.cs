@@ -76,6 +76,7 @@ namespace Tests
             _context.Clubs.RemoveRange(_context.Clubs);
             _context.Seasons.RemoveRange(_context.Seasons);
             _context.Leagues.RemoveRange(_context.Leagues);
+            _context.Fixtures.RemoveRange(_context.Fixtures);
             _context.SaveChanges();
             _context.Clubs.Add(_TestClub);
             _context.Squads.Add(_Participant1);
@@ -91,6 +92,7 @@ namespace Tests
             _context.Clubs.RemoveRange(_context.Clubs);
             _context.Seasons.RemoveRange(_context.Seasons);
             _context.Leagues.RemoveRange(_context.Leagues);
+            _context.Fixtures.RemoveRange(_context.Fixtures);
             _context.SaveChanges();
         }
 
@@ -217,6 +219,72 @@ namespace Tests
 
             var exception = Assert.Throws<AppException>(() => _seasonRepository.AddSeason(season));
             Assert.That(exception.Message, Is.EqualTo(" Name can't be longer than 40 characters."));
+
+        }
+
+        [Test]
+        public void CreatingASeasonCreatesFixturesAssociatedWithThatSeason()
+        {
+            var season = new SeasonCreationDto()
+            {
+                Name = "Test season 1",
+                LeagueId = _TestLeague.Id,
+                Active = true
+            };
+
+            var addedSeason = _seasonRepository.AddSeason(season);
+
+            // Number of teams times 2 (Home and away) - 2 as you cant play yourself
+            var expectedNumberOfFixturesPerTeam = ((_TestLeague.ParticipantSquads.Count * 2) - 2);
+            // Times by total teams, then half as the home and away point of view of seperate teams are only 1 real fixture
+            var totalExpectedFixtures = (_TestLeague.ParticipantSquads.Count * expectedNumberOfFixturesPerTeam) / 2;
+
+            Assert.AreEqual(totalExpectedFixtures, addedSeason.Fixtures.Count);
+
+            var fixturesInDb = _context.Fixtures.Where(x => x.Season == addedSeason);
+
+            Assert.AreEqual(totalExpectedFixtures, fixturesInDb.Count());
+        }
+
+        [Test]
+        public void ThrowsErrorWhenSeasonCreatedWithoutEnoughParticipantsToCreateFixtures()
+        {
+            var erroneousLeague = new League
+            {
+                Id = 2,
+                Name = "Test League",
+                ParticipantSquads = new Collection<Squad>(),
+                Seasons = new Collection<Season>(),
+                isDeleted = false
+            };
+
+            _context.Leagues.Add(erroneousLeague);
+            _context.SaveChanges();
+
+            var season = new SeasonCreationDto()
+            {
+                Name = "Error Test season 1",
+                LeagueId = erroneousLeague.Id,
+                Active = true
+            };
+
+            var exception = Assert.Throws<AppException>(() => _seasonRepository.AddSeason(season));
+            Assert.That(exception.Message, Is.EqualTo("League requires at least 2 participating teams"));
+
+        }
+
+        [Test]
+        public void ThrowsErrorWhenSeasonCreatedForInvalidLeague()
+        {
+            var season = new SeasonCreationDto()
+            {
+                Name = "Error Test season 1",
+                LeagueId = 99999,
+                Active = true
+            };
+
+            var exception = Assert.Throws<AppException>(() => _seasonRepository.AddSeason(season));
+            Assert.That(exception.Message, Is.EqualTo("League does not exist"));
 
         }
 
