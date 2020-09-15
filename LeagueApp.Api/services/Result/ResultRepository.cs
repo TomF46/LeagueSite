@@ -20,7 +20,7 @@ namespace LeagueApp.Api.Services
         public Fixture AddResult(Result result)
         {
             var fixture = _context.Fixtures.FirstOrDefault(fixture => fixture.Id == result.FixtureId);
-            if (fixture == null) throw new Exception("Fixture does not exist");
+            if (fixture == null) throw new AppException("Fixture does not exist");
 
             fixture.HomeScore = result.HomeScore;
             fixture.AwayScore = result.AwayScore;
@@ -37,7 +37,7 @@ namespace LeagueApp.Api.Services
             result.HomeGoalScorers.ToList().ForEach(goal =>
             {
                 var player = _context.Players.FirstOrDefault(storedPlayer => storedPlayer.Id == goal.PlayerId);
-                if (player == null) throw new Exception("Player does not exist");
+                if (player == null) throw new AppException("Player does not exist");
 
                 goals.Add(new GoalRecord
                 {
@@ -52,7 +52,7 @@ namespace LeagueApp.Api.Services
             result.AwayGoalScorers.ToList().ForEach(goal =>
             {
                 var player = _context.Players.FirstOrDefault(storedPlayer => storedPlayer.Id == goal.PlayerId);
-                if (player == null) throw new Exception("Player does not exist");
+                if (player == null) throw new AppException("Player does not exist");
 
                 goals.Add(new GoalRecord
                 {
@@ -87,7 +87,7 @@ namespace LeagueApp.Api.Services
         public void UpdateResult(Result result)
         {
             var fixture = _context.Fixtures.FirstOrDefault(fixture => fixture.Id == result.FixtureId);
-            if (fixture == null) throw new Exception("Fixture does not exist");
+            if (fixture == null) throw new AppException("Fixture does not exist");
 
             fixture.HomeScore = result.HomeScore;
             fixture.AwayScore = result.AwayScore;

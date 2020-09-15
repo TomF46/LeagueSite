@@ -31,11 +31,18 @@ namespace LeagueApp.Api.Controllers
         [Authorize]
         public IActionResult PutResult(Result result)
         {
-            _resultRepository.UpdateResult(result);
+            try
+            {
+                _resultRepository.UpdateResult(result);
 
-            if (!_resultRepository.Save()) throw new Exception("Failed to update result");
+                if (!_resultRepository.Save()) throw new Exception("Failed to update result");
 
-            return Ok(result);
+                return Ok(result);
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(ex.Message);
+            }
 
         }
 
@@ -44,11 +51,17 @@ namespace LeagueApp.Api.Controllers
         [Authorize]
         public ActionResult<Result> PostResult(Result result)
         {
+            try
+            {
+                var fixture = _resultRepository.AddResult(result);
+                if (!_resultRepository.Save()) throw new Exception("Failed to create result");
 
-            var fixture = _resultRepository.AddResult(result);
-            if (!_resultRepository.Save()) throw new Exception("Failed to create result");
-
-            return CreatedAtAction("GetFixture", new { controller = "fixtures", id = fixture.Id }, fixture);
+                return CreatedAtAction("GetFixture", new { controller = "fixtures", id = fixture.Id }, fixture);
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
         // DELETE: api/Results/5
@@ -62,10 +75,18 @@ namespace LeagueApp.Api.Controllers
                 return NotFound();
             }
 
-            _resultRepository.DeleteResult(fixture);
-            if (!_resultRepository.Save()) throw new Exception("Failed to delete result");
+            try
+            {
 
-            return fixture;
+                _resultRepository.DeleteResult(fixture);
+                if (!_resultRepository.Save()) throw new Exception("Failed to delete result");
+
+                return fixture;
+            }
+            catch (AppException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }

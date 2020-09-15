@@ -39,7 +39,7 @@ namespace LeagueApp.Api.Services
 
         private LeagueTableRowDto GetLeagueTableRow(Squad squad, ICollection<Fixture> fixtures)
         {
-            var releventFixtures = fixtures.Where(fixture => fixture.Complete && (fixture.HomeTeam == squad || fixture.AwayTeam == squad));
+            var releventFixtures = fixtures.Where(fixture => fixture.Complete && (fixture.HomeTeam.Id == squad.Id || fixture.AwayTeam.Id == squad.Id)).ToList();
 
             var row = new LeagueTableRowDto
             {
@@ -52,7 +52,7 @@ namespace LeagueApp.Api.Services
                 GoalsConceded = 0,
             };
 
-            releventFixtures.ToList().ForEach(fixture =>
+            releventFixtures.ForEach(fixture =>
             {
                 if (fixture.HomeTeam == squad)
                 {

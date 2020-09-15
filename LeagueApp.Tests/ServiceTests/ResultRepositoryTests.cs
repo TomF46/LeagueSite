@@ -142,6 +142,24 @@ namespace Tests
         }
 
         [Test]
+        public void ItThrowsAnErrorIfAResultIsAddedForAFixtureThatDoesntExist()
+        {
+
+            var result = new Result()
+            {
+                FixtureId = 999,
+                HomeScore = 2,
+                HomeGoalScorers = new Collection<GoalScorer>(),
+                AwayScore = 0,
+                AwayGoalScorers = new Collection<GoalScorer>(),
+            };
+
+            var exception = Assert.Throws<AppException>(() => _resultRepository.AddResult(result));
+            Assert.That(exception.Message, Is.EqualTo("Fixture does not exist"));
+
+        }
+
+        [Test]
         public void CanUpdateResult()
         {
             var result = new Result()
@@ -184,6 +202,65 @@ namespace Tests
             fixtureFromDb = _context.Fixtures.FirstOrDefault(x => x.Id == addedResult.Id);
 
             Assert.IsFalse(fixtureFromDb.Complete);
+        }
+
+        [Test]
+        public void CanAddResultWithKnownGoalScorer()
+        {
+
+            var scorer = new Player
+            {
+                Id = 1,
+                FirstName = "Test",
+                LastName = "Player",
+                Position = "Forward",
+                Club = _TestClub,
+                Squad = _Participant1,
+                Goals = new Collection<GoalRecord>(),
+                isDeleted = false
+            };
+            _context.Players.Add(scorer);
+            _context.SaveChanges();
+
+            var result = new Result()
+            {
+                FixtureId = _TestFixture.Id,
+                HomeScore = 1,
+                HomeGoalScorers = new Collection<GoalScorer>(){
+                    new GoalScorer{
+                        PlayerId = scorer.Id
+                    }
+                },
+                AwayScore = 0,
+                AwayGoalScorers = new Collection<GoalScorer>(),
+            };
+
+            var addedResult = _resultRepository.AddResult(result);
+
+            var fixture = _context.Fixtures.FirstOrDefault(fixture => fixture.Id == result.FixtureId);
+
+            Assert.IsTrue(fixture.Goals.FirstOrDefault(x => x.PlayerId == scorer.Id) != null);
+        }
+
+        [Test]
+        public void ItThrowsAnErrorIfAGoalScorerWhoDoesntExistIsAdded()
+        {
+
+            var result = new Result()
+            {
+                FixtureId = _TestFixture.Id,
+                HomeScore = 1,
+                HomeGoalScorers = new Collection<GoalScorer>(){
+                    new GoalScorer{
+                        PlayerId = 999
+                    }
+                },
+                AwayScore = 0,
+                AwayGoalScorers = new Collection<GoalScorer>(),
+            };
+
+            var exception = Assert.Throws<AppException>(() => _resultRepository.AddResult(result));
+            Assert.That(exception.Message, Is.EqualTo("Player does not exist"));
         }
     }
 }
