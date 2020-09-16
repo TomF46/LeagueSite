@@ -25,7 +25,7 @@ const FixtureDetail = ({ fixture }) => (
     </section>
     <div className="box">
       {fixture.complete ? (
-        <div>
+        <div className="result-table">
           <div className="columns">
             <div className="column">
               <table className="table is-striped is-fullwidth">

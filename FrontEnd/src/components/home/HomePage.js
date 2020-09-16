@@ -24,7 +24,7 @@ const HomePage = () => {
             <p>
               <span className="has-text-weight-semibold">
                 League management:
-              </span>
+              </span>{" "}
               View and manage leagues season by season, with fixture and result
               management.
             </p>

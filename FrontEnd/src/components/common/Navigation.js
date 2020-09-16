@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { NavLink, withRouter } from "react-router-dom";
@@ -9,6 +9,8 @@ import { confirmAlert } from "react-confirm-alert";
 const activeStyle = { color: "#026440" };
 
 const Navigation = ({ user, logout, history }) => {
+  const [menuIsOpen, setMenuIsOpen] = useState(false);
+  const [menuClass, setMenuClass] = useState("navbar-menu");
   function confirmLogout() {
     confirmAlert({
       title: "Confirm logout",
@@ -31,6 +33,13 @@ const Navigation = ({ user, logout, history }) => {
     history.push("/");
   }
 
+  const toggleMenuClass = () => {
+    let menuState = !menuIsOpen;
+    setMenuIsOpen(menuState);
+    let theMenuClass = menuState ? "navbar-menu is-active" : "navbar-menu";
+    setMenuClass(theMenuClass);
+  };
+
   return (
     <div>
       <nav className="navbar" role="navigation" aria-label="main navigation">
@@ -40,14 +49,14 @@ const Navigation = ({ user, logout, history }) => {
             className="navbar-burger burger"
             aria-label="menu"
             aria-expanded="false"
-            data-target="navbarBasicExample"
+            onClick={toggleMenuClass}
           >
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
             <span aria-hidden="true"></span>
           </a>
         </div>
-        <div className="navbar-menu">
+        <div className={menuClass}>
           <div className="navbar-start">
             <NavLink
               to="/"

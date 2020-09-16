@@ -24,4 +24,16 @@ h5 {
   width: 100%;
 }
 
+table {
+  border: 1px solid #eee;
+  box-shadow: 4px 4px 2px -2px #eee;
+}
+
+.result-table {
+  table {
+    border: none;
+    box-shadow: none;
+  }
+}
+
 @import "~bulma/bulma";
