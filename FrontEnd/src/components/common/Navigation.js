@@ -44,6 +44,14 @@ const Navigation = ({ user, logout, history }) => {
     <div>
       <nav className="navbar" role="navigation" aria-label="main navigation">
         <div className="navbar-brand">
+          <h1
+            className="navbar-item has-text-weight-bold pointer"
+            onClick={() => {
+              history.push("/");
+            }}
+          >
+            LeagueApp
+          </h1>
           <a
             role="button"
             className="navbar-burger burger"

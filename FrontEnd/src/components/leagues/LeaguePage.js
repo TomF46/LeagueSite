@@ -252,39 +252,44 @@ const LeaguePage = ({
                       <div className="box">
                         <h3 className="title is-3">Current Season</h3>
                         <h4 className="title is-4">{`${currentSeason.leagueName} ${currentSeason.name}`}</h4>
-                        <button
-                          style={{ marginBottom: 20 }}
-                          className="button is-primary view-season"
-                          onClick={() =>
-                            history.push(
-                              `/league/${currentSeason.leagueId}/season/${currentSeason.id}`
-                            )
-                          }
-                        >
-                          Fixtures
-                        </button>
-                        <button
-                          style={{ marginBottom: 20, marginLeft: 20 }}
-                          className="button is-primary view-league-table"
-                          onClick={() =>
-                            history.push(
-                              `/league/${currentSeason.leagueId}/season/${currentSeason.id}/table`
-                            )
-                          }
-                        >
-                          League table
-                        </button>
-                        <button
-                          style={{ marginBottom: 20, marginLeft: 20 }}
-                          className="button is-primary view-stats"
-                          onClick={() =>
-                            history.push(
-                              `/league/${currentSeason.leagueId}/season/${currentSeason.id}/stats`
-                            )
-                          }
-                        >
-                          Stats
-                        </button>
+                        <div className="columns">
+                          <div className="column">
+                            <button
+                              className="button is-primary view-season is-fullwidth"
+                              onClick={() =>
+                                history.push(
+                                  `/league/${currentSeason.leagueId}/season/${currentSeason.id}`
+                                )
+                              }
+                            >
+                              Fixtures
+                            </button>
+                          </div>
+                          <div className="column">
+                            <button
+                              className="button is-primary view-league-table is-fullwidth"
+                              onClick={() =>
+                                history.push(
+                                  `/league/${currentSeason.leagueId}/season/${currentSeason.id}/table`
+                                )
+                              }
+                            >
+                              League table
+                            </button>
+                          </div>
+                          <div className="column">
+                            <button
+                              className="button is-primary view-stats is-fullwidth"
+                              onClick={() =>
+                                history.push(
+                                  `/league/${currentSeason.leagueId}/season/${currentSeason.id}/stats`
+                                )
+                              }
+                            >
+                              Stats
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
