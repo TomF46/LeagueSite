@@ -36,4 +36,20 @@ table {
   }
 }
 
+.button-box-row {
+  .button-box {
+    height: 100%;
+    cursor: pointer;
+  }
+
+  .button-box.box-primary {
+    background-color: $primary;
+  }
+
+  .button-box:hover {
+    box-shadow: 0 0.5em 1em -0.125em rgba(10, 10, 10, 0.25),
+      0 0px 0 1px rgba(10, 10, 10, 0.05);
+  }
+}
+
 @import "~bulma/bulma";

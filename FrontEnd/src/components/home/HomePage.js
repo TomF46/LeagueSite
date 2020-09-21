@@ -1,8 +1,9 @@
 import React from "react";
+import PropTypes from "prop-types";
 
-const HomePage = () => {
+const HomePage = ({ history }) => {
   return (
-    <div>
+    <div className="home-page">
       <section className="hero is-primary">
         <div className="hero-body">
           <div className="container">
@@ -44,8 +45,45 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+      <div className="columns mt-2 button-box-row">
+        <div className="column">
+          <div
+            className="box button-box"
+            onClick={() => history.push(`/leagues`)}
+          >
+            <h3 className="title is-3 pb-4">Leagues</h3>
+            <h4 className="subtitle">
+              View all the leagues, seasons, fixtures, league tables and stats.
+            </h4>
+          </div>
+        </div>
+        <div className="column">
+          <div
+            className="box button-box"
+            onClick={() => history.push(`/clubs`)}
+          >
+            <h3 className="title is-3 pb-4">Clubs</h3>
+            <h4 className="subtitle">
+              View all the clubs, squads and players.
+            </h4>
+          </div>
+        </div>
+        <div className="column">
+          <div
+            className="box button-box"
+            onClick={() => history.push(`/transfers`)}
+          >
+            <h3 className="title is-3 pb-4">Transfers</h3>
+            <h4 className="subtitle">View all the latest transfers.</h4>
+          </div>
+        </div>
+      </div>
     </div>
   );
+};
+
+HomePage.propTypes = {
+  history: PropTypes.object.isRequired,
 };
 
 export default HomePage;
