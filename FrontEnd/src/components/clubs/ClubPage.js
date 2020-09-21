@@ -10,6 +10,7 @@ import SquadList from "./squads/SquadList";
 import { confirmAlert } from "react-confirm-alert";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import history from "../../history";
 
 const ClubPage = ({
   clubs,
@@ -167,7 +168,8 @@ const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.id;
   const club =
     id && state.clubs.length > 0 ? getClubById(state.clubs, id) : newClub;
-  const clubSquads = club.id ? getClubSquads(state.squads, club) : [];
+  if (club == null) history.push("/404");
+  const clubSquads = club ? getClubSquads(state.squads, club) : [];
   return {
     club,
     clubSquads,

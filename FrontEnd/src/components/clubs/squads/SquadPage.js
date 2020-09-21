@@ -13,6 +13,7 @@ import PlayerList from "./players/PlayerList";
 import { confirmAlert } from "react-confirm-alert";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
+import history from "../../../history";
 
 const SquadPage = ({
   squads,
@@ -180,8 +181,9 @@ const mapStateToProps = (state, ownProps) => {
   const id = ownProps.match.params.squadId;
   const squad =
     id && state.squads.length > 0 ? getSquadById(state.squads, id) : newSquad;
+  if (squad == null) history.push("/404");
   const clubId = ownProps.match.params.clubId;
-  const squadPlayers = squad.id ? getSquadPlayers(state.players, squad) : [];
+  const squadPlayers = squad ? getSquadPlayers(state.players, squad) : [];
   return {
     clubId,
     squad,

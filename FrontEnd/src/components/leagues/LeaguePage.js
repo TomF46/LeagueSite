@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import SeasonList from "./seasons/SeasonList";
 import { confirmAlert } from "react-confirm-alert";
 import { Link } from "react-router-dom";
+import history from "../../history";
 const LeaguePage = ({
   leagues,
   squads,
@@ -381,6 +382,7 @@ const mapStateToProps = (state, ownProps) => {
     id && state.leagues.length > 0
       ? getLeagueById(state.leagues, id)
       : newLeague;
+  if (league == null) history.push("/404");
   const leagueSquads =
     state.squads.length > 0 ? getLeagueSquads(state.squads, league) : [];
   const leagueSeasons =

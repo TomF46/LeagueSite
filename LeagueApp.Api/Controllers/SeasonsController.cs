@@ -91,6 +91,14 @@ namespace LeagueApp.Api.Controllers
         [HttpGet("{id}/stats")]
         public ActionResult<SeasonDetailDto> GetSeasonStats(int id)
         {
+
+            var league = _seasonRepository.GetSeason(id);
+
+            if (league == null)
+            {
+                return NotFound();
+            }
+
             try
             {
                 var stats = _statsService.GetStats(id);

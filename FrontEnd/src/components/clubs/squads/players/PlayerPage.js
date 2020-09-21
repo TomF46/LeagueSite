@@ -7,6 +7,7 @@ import Spinner from "../../../common/Spinner";
 import PlayerDetail from "./PlayerDetail";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import history from "../../../../history";
 
 const PlayerPage = ({
   history,
@@ -108,6 +109,7 @@ const mapStateToProps = (state, ownProps) => {
     id && state.players.length > 0
       ? getPlayerById(state.players, id)
       : newPlayer;
+  if (player == null) history.push("/404");
   const squadId = ownProps.match.params.squadId;
   const clubId = ownProps.match.params.clubId;
 

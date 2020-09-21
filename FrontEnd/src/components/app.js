@@ -23,6 +23,7 @@ import ManageResultPage from "./leagues/seasons/fixtures/ManageResultPage";
 import LeagueTablePage from "./leagues/seasons/LeagueTablePage";
 import LoginPage from "./authentication/LoginPage";
 import StatsPage from "./leagues/seasons/StatsPage";
+import PageNotFound from "./error/PageNotFound";
 
 const App = () => (
   <>
@@ -84,6 +85,8 @@ const App = () => (
           <Route path="/league/:id" component={LeaguePage} />
           <Route path="/league" component={ManageLeaguePage} />
           <Route path="/login" component={LoginPage} />
+          <Route path="/404" component={PageNotFound} />
+          <Route component={PageNotFound} />
         </Switch>
       </div>
     </section>

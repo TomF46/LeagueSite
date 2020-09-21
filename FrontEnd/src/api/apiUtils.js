@@ -1,3 +1,4 @@
+import history from "../history";
 import store from "../redux/store";
 
 export async function handleResponse(response) {
@@ -7,6 +8,9 @@ export async function handleResponse(response) {
     // Server side validation returns a string error message, so parse as text instead of json.
     const error = await response.text();
     throw new Error(error);
+  }
+  if (response.status === 404) {
+    history.push("/404");
   }
   throw new Error("Network response was not ok.");
 }
