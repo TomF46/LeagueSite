@@ -30,8 +30,10 @@ const SquadPage = ({
 
   useEffect(() => {
     if (squads.length === 0) {
-      loadSquads().catch((err) => {
-        alert("Loading squads failed, " + err);
+      loadSquads().catch((error) => {
+        toast.error("Loading squads failed failed, " + error.message, {
+          autoClose: false,
+        });
       });
     } else {
       setSquad({ ...props.squad });
@@ -40,8 +42,10 @@ const SquadPage = ({
 
   useEffect(() => {
     if (players.length === 0) {
-      loadPlayers().catch((err) => {
-        alert("Loading clubs failed, " + err);
+      loadPlayers().catch((error) => {
+        toast.error("Loading clubs failed. " + error.message, {
+          autoClose: false,
+        });
       });
     }
   }, [props.players]);

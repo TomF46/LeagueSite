@@ -26,8 +26,10 @@ const ClubPage = ({
 
   useEffect(() => {
     if (clubs.length === 0) {
-      loadClubs().catch((err) => {
-        alert("Loading clubs failed, " + err);
+      loadClubs().catch((error) => {
+        toast.error("Loading clubs failed, " + error.message, {
+          autoClose: false,
+        });
       });
     } else {
       setClub({ ...props.club });
@@ -36,8 +38,10 @@ const ClubPage = ({
 
   useEffect(() => {
     if (squads.length === 0) {
-      loadSquads().catch((err) => {
-        alert("Loading squads failed, " + err);
+      loadSquads().catch((error) => {
+        toast.error("Loading squads failed, " + error.message, {
+          autoClose: false,
+        });
       });
     }
   }, [props.squads]);

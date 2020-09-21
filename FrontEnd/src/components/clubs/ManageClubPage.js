@@ -22,8 +22,10 @@ const ManageClubPage = ({
 
   useEffect(() => {
     if (clubs.length === 0) {
-      loadClubs().catch((err) => {
-        alert("Loading clubs failed, " + err);
+      loadClubs().catch((error) => {
+        toast.error("Loading clubs failed, " + error.message, {
+          autoClose: false,
+        });
       });
     } else {
       setClub({ ...props.club });

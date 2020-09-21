@@ -30,7 +30,9 @@ const TransferPage = ({
   useEffect(() => {
     if (players.length === 0) {
       loadPlayers().catch((error) => {
-        alert("Loading players failed " + error);
+        toast.error("Loading players failed, " + error.message, {
+          autoClose: false,
+        });
       });
     }
   }, [players]);
@@ -38,7 +40,9 @@ const TransferPage = ({
   useEffect(() => {
     if (squads.length === 0) {
       loadSquads().catch((error) => {
-        alert("Loading squads failed " + error);
+        toast.error("Loading squads failed, " + error.message, {
+          autoClose: false,
+        });
       });
     }
   }, [squads]);
@@ -85,7 +89,9 @@ const TransferPage = ({
     saveTransfer(transfer)
       .then(() => {
         loadPlayers().catch((error) => {
-          alert("Loading players failed " + error);
+          toast.error("Loading players failed, " + error.message, {
+            autoClose: false,
+          });
         });
         toast.success("Transfer complete.");
         history.push("/transfers");

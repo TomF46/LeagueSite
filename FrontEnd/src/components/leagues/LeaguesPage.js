@@ -18,7 +18,9 @@ const LeaguesPage = ({
   useEffect(() => {
     if (leagues.length === 0) {
       loadLeagues().catch((error) => {
-        alert("Loading leagues failed " + error);
+        toast.error("Loading leagues failed, " + error.message, {
+          autoClose: false,
+        });
       });
     }
   }, [leagues]);

@@ -27,8 +27,10 @@ const ManagePlayerPage = ({
 
   useEffect(() => {
     if (players.length === 0) {
-      loadPlayers().catch((err) => {
-        alert("Loading Players failed, " + err);
+      loadPlayers().catch((error) => {
+        toast.error("Loading players failed, " + error.message, {
+          autoClose: false,
+        });
       });
     } else {
       setPlayer({ ...props.player });

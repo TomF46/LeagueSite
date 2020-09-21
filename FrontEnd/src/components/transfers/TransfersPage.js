@@ -4,6 +4,7 @@ import { loadTransfers } from "../../redux/actions/transferActions";
 import PropTypes from "prop-types";
 import Spinner from "../common/Spinner";
 import TransferList from "./TransferList";
+import { toast } from "react-toastify";
 
 const TransfersPage = ({
   transfers,
@@ -15,7 +16,9 @@ const TransfersPage = ({
   useEffect(() => {
     if (transfers.length === 0) {
       loadTransfers().catch((error) => {
-        alert("Loading transfers failed " + error);
+        toast.error("Loading transfers failed, " + error.message, {
+          autoClose: false,
+        });
       });
     }
   }, [transfers]);

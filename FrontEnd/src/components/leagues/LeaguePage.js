@@ -43,8 +43,10 @@ const LeaguePage = ({
 
   useEffect(() => {
     if (leagues.length === 0) {
-      loadLeagues().catch((err) => {
-        alert("Loading leagues failed, " + err);
+      loadLeagues().catch((error) => {
+        toast.error("Loading leagues failed, " + error.message, {
+          autoClose: false,
+        });
       });
     } else {
       setLeague({ ...props.league });
@@ -53,16 +55,20 @@ const LeaguePage = ({
 
   useEffect(() => {
     if (squads.length === 0) {
-      loadSquads().catch((err) => {
-        alert("Loading squads failed, " + err);
+      loadSquads().catch((error) => {
+        toast.error("Loading squads failed, " + error.message, {
+          autoClose: false,
+        });
       });
     }
   }, [props.squads]);
 
   useEffect(() => {
     if (seasons.length === 0) {
-      loadSeasons().catch((err) => {
-        alert("Loading seasons failed, " + err);
+      loadSeasons().catch((error) => {
+        toast.error("Loading seasons failed, " + error.message, {
+          autoClose: false,
+        });
       });
     }
   }, [props.seasons]);
@@ -97,10 +103,14 @@ const LeaguePage = ({
     addSquadToLeague(request)
       .then(() => {
         loadLeagues().catch((error) => {
-          alert("Loading leagues failed " + error);
+          toast.error("Loading leagues failed, " + error.message, {
+            autoClose: false,
+          });
         });
         loadSquads().catch((error) => {
-          alert("Loading leagues failed " + error);
+          toast.error("Loading squads failed, " + error.message, {
+            autoClose: false,
+          });
         });
         toast.success("Team added.");
         setSaving(false);
@@ -164,10 +174,14 @@ const LeaguePage = ({
     removeSquadFromLeague(request)
       .then(() => {
         loadLeagues().catch((error) => {
-          alert("Loading leagues failed " + error);
+          toast.error("Loading leagues failed, " + error.message, {
+            autoClose: false,
+          });
         });
         loadSquads().catch((error) => {
-          alert("Loading leagues failed " + error);
+          toast.error("Loading squads failed, " + error.message, {
+            autoClose: false,
+          });
         });
         toast.success("Team removed.");
       })

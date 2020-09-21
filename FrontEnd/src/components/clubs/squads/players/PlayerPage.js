@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import Spinner from "../../../common/Spinner";
 import PlayerDetail from "./PlayerDetail";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const PlayerPage = ({
   history,
@@ -20,8 +21,10 @@ const PlayerPage = ({
 
   useEffect(() => {
     if (players.length === 0) {
-      loadPlayers().catch((err) => {
-        alert("Loading players failed, " + err);
+      loadPlayers().catch((error) => {
+        toast.error("Loading players failed, " + error.message, {
+          autoClose: false,
+        });
       });
     } else {
       setPlayer({ ...props.player });

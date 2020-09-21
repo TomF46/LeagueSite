@@ -23,8 +23,10 @@ const ManageSeasonPage = ({
 
   useEffect(() => {
     if (seasons.length === 0) {
-      loadSeasons().catch((err) => {
-        alert("Loading seasons failed, " + err);
+      loadSeasons().catch((error) => {
+        toast.error("Loading seasons failed, " + error.message, {
+          autoClose: false,
+        });
       });
     } else {
       console.log(props.season);

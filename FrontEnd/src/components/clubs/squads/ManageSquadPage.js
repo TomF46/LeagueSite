@@ -23,8 +23,10 @@ const ManageSquadPage = ({
 
   useEffect(() => {
     if (squads.length === 0) {
-      loadSquads().catch((err) => {
-        alert("Loading squads failed, " + err);
+      loadSquads().catch((error) => {
+        toast.error("Loading squads failed, " + error.message, {
+          autoClose: false,
+        });
       });
     } else {
       setSquad({ ...props.squad });

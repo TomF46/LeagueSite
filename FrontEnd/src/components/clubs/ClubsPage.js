@@ -18,7 +18,9 @@ const ClubsPage = ({
   useEffect(() => {
     if (clubs.length === 0) {
       actions.loadClubs().catch((error) => {
-        alert("Loading clubs failed " + error);
+        toast.error("Loading clubs failed, " + error.message, {
+          autoClose: false,
+        });
       });
     }
   }, [clubs]);

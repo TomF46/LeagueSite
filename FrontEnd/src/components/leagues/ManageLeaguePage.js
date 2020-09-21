@@ -22,8 +22,10 @@ const ManageLeaguePage = ({
 
   useEffect(() => {
     if (leagues.length === 0) {
-      loadLeagues().catch((err) => {
-        alert("Loading leagues failed, " + err);
+      loadLeagues().catch((error) => {
+        toast.error("Loading leagues failed, " + error.message, {
+          autoClose: false,
+        });
       });
     } else {
       setLeague({ ...props.league });
