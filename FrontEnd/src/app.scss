@@ -29,6 +29,10 @@ table {
   box-shadow: 4px 4px 2px -2px #eee;
 }
 
+a.navbar-item:hover {
+  color: $primary !important;
+}
+
 .result-table {
   table {
     border: none;
