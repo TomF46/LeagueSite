@@ -69,28 +69,34 @@ const SeasonPage = ({ id, userIsAuthenticated, history }) => {
               </div>
             </div>
           </section>
-          <button
-            style={{ marginBottom: 20 }}
-            className="button is-primary my-4 view-table"
-            onClick={() =>
-              history.push(
-                `/league/${season.leagueId}/season/${season.id}/table`
-              )
-            }
-          >
-            View league table
-          </button>
-          <button
-            style={{ marginBottom: 20, marginLeft: 20 }}
-            className="button is-primary my-4 view-stats"
-            onClick={() =>
-              history.push(
-                `/league/${season.leagueId}/season/${season.id}/stats`
-              )
-            }
-          >
-            View stats
-          </button>
+          <div className="columns my-4 button-box-row">
+            <div className="column">
+              <div
+                className="box button-box"
+                onClick={() =>
+                  history.push(
+                    `/league/${season.leagueId}/season/${season.id}/table`
+                  )
+                }
+              >
+                <h3 className="title is-3 pb-4">League table</h3>
+                <h4 className="subtitle">View this seasons league table.</h4>
+              </div>
+            </div>
+            <div className="column">
+              <div
+                className="box button-box"
+                onClick={() =>
+                  history.push(
+                    `/league/${season.leagueId}/season/${season.id}/stats`
+                  )
+                }
+              >
+                <h3 className="title is-3 pb-4">Stats</h3>
+                <h4 className="subtitle">View all the stats for this season</h4>
+              </div>
+            </div>
+          </div>
           {season.fixtures.length > 0 && (
             <FixtureList fixtures={season.fixtures} />
           )}
