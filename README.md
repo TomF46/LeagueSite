@@ -1,4 +1,4 @@
-# League management applicstion
+# League management application
 
 ## Overview
 
